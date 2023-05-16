@@ -1,6 +1,6 @@
 version=`yq -r .version conf/info.yaml`
 
-ci: clean deps deps-test lint test coverage doc package install
+ci: clean deps lint test coverage doc package install
 
 clean:
 	rm -rf stage *.egg-info build dist logconf/_pycache_/ logconf/*.pyc tests/_pycache_/ tests/*.pyc .coverage
