@@ -8,7 +8,7 @@ jobs:
       max-parallel: 1
       matrix:
         python: [ '3.8' ]
-    name: node ${{ matrix.node }}
+    name: python ${{ matrix.python }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
