@@ -1,4 +1,4 @@
-from logconf.config import Config
+import Config
 import logging
 import unittest
 from unittest.mock import patch

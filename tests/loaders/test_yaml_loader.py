@@ -1,4 +1,4 @@
-from logconf.loaders.yaml import load
+from logconf.loaders.yaml_loader import load
 import unittest
 from unittest.mock import patch, mock_open
 import yaml
@@ -18,7 +18,7 @@ YAML_EMPTY = '---'
 
 YAML_INVALID = '%%%{foobar}!!!'
 
-class TestYaml(unittest.TestCase):
+class TestYamlLoader(unittest.TestCase):
 
     @patch('builtins.open', new_callable=mock_open, read_data=YAML_WITH_PARAMS)
     def test_load_with_yaml_having_params(self, func):

@@ -1,5 +1,5 @@
 import configparser
-from logconf.loaders.ini import load
+from logconf.loaders.ini_loader import load
 import unittest
 import unittest.mock
 from unittest.mock import patch, mock_open

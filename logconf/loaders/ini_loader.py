@@ -1,3 +1,5 @@
+"""INI configuration loader.
+"""
 import configparser
 import io
 from logconf import PARAMS
@@ -6,7 +8,7 @@ def load(conf_file):
     """Get configuration values from JSON file.
     """
     conf = {}
-    with open(conf_file, 'r') as stream:
+    with open(conf_file, 'r', encoding='utf-8') as stream:
         conf_string = io.StringIO(stream.read())
         conf_ini = configparser.ConfigParser()
         conf_ini.read_file(conf_string)

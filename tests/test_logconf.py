@@ -1,4 +1,3 @@
-from logconf.logconf import get_logger
 import logging
 import unittest
 import unittest.mock
@@ -6,7 +5,7 @@ from unittest.mock import patch, MagicMock
 
 class TestLogconf(unittest.TestCase):
 
-    @patch('logconf.config.Config.__new__')
+    @patch('config.Config.__new__')
     @patch('logging.basicConfig')
     @patch('logging.getLogger')
     def test_get_logger(

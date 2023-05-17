@@ -1,12 +1,24 @@
-from logconf.config import Config
+"""This module provides a function to get a logger
+with the specified name and configuration from conf_files.
+"""
 import logging
-import yaml
+from config import Config
 
-def get_logger(name, conf_files=[]):
+PARAMS = [
+    'datefmt',
+    'filename',
+    'format',
+    'level'
+]
+
+def get_logger(name, conf_files=None):
+    """Get a logger with the specified name
+    and configuration from conf_files.
+    """
 
     config = Config(conf_files=conf_files)
     logging.basicConfig(
-        datefmt=config.get_datafmt(),
+        datefmt=config.get_datefmt(),
         filename=config.get_filename(),
         filemode=config.get_filemode(),
         format=config.get_format(),

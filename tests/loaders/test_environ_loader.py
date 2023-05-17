@@ -1,4 +1,4 @@
-from logconf.loaders.environ import load
+from logconf.loaders.environ_loader import load
 import os
 import unittest
 import unittest.mock

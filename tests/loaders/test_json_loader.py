@@ -1,5 +1,5 @@
 import json
-from logconf.loaders.json import load
+from logconf.loaders.json_loader import load
 import unittest
 from unittest.mock import patch, mock_open
 

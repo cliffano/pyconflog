@@ -1,5 +1,7 @@
-from logconf import PARAMS
+"""Environment variables configuration loader.
+"""
 import os
+from logconf import PARAMS
 
 def load():
     """Get configuration values from environment variables.

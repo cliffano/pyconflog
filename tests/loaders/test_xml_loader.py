@@ -1,4 +1,4 @@
-from logconf.loaders.xml import load
+from logconf.loaders.xml_loader import load
 import unittest
 from unittest.mock import patch, mock_open
 import xml

@@ -13,8 +13,7 @@ deps:
 	pip3 install --ignore-installed -r requirements-dev.txt
 
 lint:
-	pylint logconf/*.py
-	shellcheck -x .github/actions/ci-action/entrypoint.sh
+	pylint logconf/*.py logconf/loaders/*.py
 
 install: package
 	pip3 install dist/logconf-`yq -r .version conf/info.yaml | sed "s/-/_/g"`-py3-none-any.whl
