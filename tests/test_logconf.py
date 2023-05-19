@@ -1,11 +1,15 @@
+import logconf
 import logging
 import unittest
 import unittest.mock
 from unittest.mock import patch, MagicMock
+from logconf.logconf import (
+    get_logger,
+)
 
 class TestLogconf(unittest.TestCase):
 
-    @patch('config.Config.__new__')
+    @patch('logconf.config.Config.__new__')
     @patch('logging.basicConfig')
     @patch('logging.getLogger')
     def test_get_logger(
@@ -22,13 +26,13 @@ class TestLogconf(unittest.TestCase):
         func_basicConfig.return_value = None
         func_getLogger.return_value = mock_logger
 
-        mock_config.get_datafmt.return_value = '%d-%b-%y %H:%M:%S'
+        mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
         mock_config.get_filename.return_value = 'logconf.log'
         mock_config.get_filemode.return_value = 'w'
         mock_config.get_format.return_value = '%(asctime)s --> %(name)s - %(levelname)s - %(message)s'
         mock_config.get_level.return_value = logging.INFO
         
-        result = get_logger('someloggername', conf_files=['somefile.ini', 'somefile.json'])
+        result = logconf.logconf.get_logger('someloggername', conf_files=['somefile.ini', 'somefile.json'])
         self.assertEqual(result, mock_logger)
 
         func_basicConfig.assert_called_once_with(
@@ -39,3 +43,6 @@ class TestLogconf(unittest.TestCase):
             level=logging.INFO
         )
         func_getLogger.assert_called_once_with('someloggername')
+
+if __name__ == '__main__':
+    unittest.main()

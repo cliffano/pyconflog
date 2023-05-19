@@ -14,6 +14,7 @@ deps:
 
 lint:
 	pylint logconf/*.py logconf/loaders/*.py
+	#pylint tests/*.py tests/loaders/*.py
 
 install: package
 	pip3 install dist/logconf-`yq -r .version conf/info.yaml | sed "s/-/_/g"`-py3-none-any.whl

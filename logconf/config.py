@@ -1,7 +1,7 @@
 """A module for managing logging configurations.
 """
 import logging
-from loaders import environ_loader, ini_loader, json_loader, xml_loader, yaml_loader
+from logconf.loaders import environ_loader, ini_loader, json_loader, xml_loader, yaml_loader
 
 LEVELS = {
     'debug': logging.DEBUG,

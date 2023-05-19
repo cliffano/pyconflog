@@ -1,4 +1,4 @@
-import Config
+from logconf.config import Config
 import logging
 import unittest
 from unittest.mock import patch
@@ -29,7 +29,7 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(), '%(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.INFO)
 
-    @patch('logconf.loaders.ini.load')
+    @patch('logconf.loaders.ini_loader.load')
     def test_get_config_from_ini(self, func):
         func.return_value = CUSTOM_CONF
         config = Config(conf_files=['somefile.ini'])
@@ -39,7 +39,7 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(), 'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
 
-    @patch('logconf.loaders.json.load')
+    @patch('logconf.loaders.json_loader.load')
     def test_get_config_from_json(self, func):
         func.return_value = CUSTOM_CONF
         config = Config(conf_files=['somefile.json'])
@@ -49,7 +49,7 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(), 'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
 
-    @patch('logconf.loaders.xml.load')
+    @patch('logconf.loaders.xml_loader.load')
     def test_get_config_from_xml(self, func):
         func.return_value = CUSTOM_CONF
         config = Config(conf_files=['somefile.xml'])
@@ -59,7 +59,7 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(), 'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
     
-    @patch('logconf.loaders.yaml.load')
+    @patch('logconf.loaders.yaml_loader.load')
     def test_get_config_from_yaml(self, func):
         func.return_value = CUSTOM_CONF
         config = Config(conf_files=['somefile.yaml'])
@@ -69,7 +69,7 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(), 'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
 
-    @patch('logconf.loaders.environ.load')
+    @patch('logconf.loaders.environ_loader.load')
     def test_get_config_from_environ(self, func):
         func.return_value = CUSTOM_CONF
         config = Config()
@@ -79,8 +79,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(), 'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
 
-    @patch('logconf.loaders.ini.load')
-    @patch('logconf.loaders.environ.load')
+    @patch('logconf.loaders.ini_loader.load')
+    @patch('logconf.loaders.environ_loader.load')
     def test_get_config_with_ini_overwritten_by_environ(self, func_ini, func_environ):
         func_ini.return_value = CUSTOM_CONF
         func_environ.return_value = OVERWRITE_CONF
@@ -91,8 +91,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(), 'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.DEBUG)
 
-    @patch('logconf.loaders.ini.load')
-    @patch('logconf.loaders.yaml.load')
+    @patch('logconf.loaders.ini_loader.load')
+    @patch('logconf.loaders.yaml_loader.load')
     def test_get_config_with_ini_overwritten_by_yaml(self, func_ini, func_yaml):
         func_ini.return_value = CUSTOM_CONF
         func_yaml.return_value = OVERWRITE_CONF
@@ -103,8 +103,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(), 'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.DEBUG)
 
-    @patch('logconf.loaders.yaml.load')
-    @patch('logconf.loaders.ini.load')
+    @patch('logconf.loaders.yaml_loader.load')
+    @patch('logconf.loaders.ini_loader.load')
     def test_get_config_with_yaml_overwritten_by_ini(self, func_yaml, func_ini):
         func_yaml.return_value = CUSTOM_CONF
         func_ini.return_value = OVERWRITE_CONF

@@ -8,3 +8,10 @@ for Python applications.
 It is intended to be used with configuration files
 in various formats, including JSON, INI, XML, and YAML.
 """
+
+PARAMS = [
+    'datefmt',
+    'filename',
+    'format',
+    'level'
+]
