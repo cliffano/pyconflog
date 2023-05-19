@@ -30,7 +30,7 @@ class Config():
         self.conf = {}
 
         # Load configurations from files
-        for conf_file in conf_files:
+        for conf_file in (conf_files or []):
 
             curr_conf = {}
 
