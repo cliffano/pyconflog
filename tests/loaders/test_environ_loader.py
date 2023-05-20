@@ -1,3 +1,4 @@
+import pytest
 from logconf.loaders.environ_loader import load
 import os
 import unittest
@@ -42,6 +43,3 @@ class TestEnviron(unittest.TestCase):
         self.assertFalse('filename' in conf)
         self.assertFalse('format' in conf)
         self.assertFalse('level' in conf)
-
-if __name__ == '__main__':
-    unittest.main()

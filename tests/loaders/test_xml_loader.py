@@ -1,3 +1,4 @@
+import pytest
 from logconf.loaders.xml_loader import load
 import unittest
 from unittest.mock import patch, mock_open
@@ -56,6 +57,3 @@ class TestXml(unittest.TestCase):
         assert open('somelogconf.xml').read() == XML_INVALID
         with self.assertRaises(xml.etree.ElementTree.ParseError):
             conf = load('somelogconf.xml')
-
-if __name__ == '__main__':
-    unittest.main()

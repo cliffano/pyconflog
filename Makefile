@@ -6,15 +6,21 @@ clean:
 	rm -rf stage *.egg-info build dist logconf/_pycache_/ logconf/*.pyc tests/_pycache_/ tests/*.pyc .coverage
 
 stage:
-	mkdir -p stage stage/doc/
+	mkdir -p stage stage/ docs/
 
 deps:
 	pip3 install --ignore-installed -r requirements.txt
 	pip3 install --ignore-installed -r requirements-dev.txt
 
-lint:
+lint: stage
+	mkdir -p stage/lint/pylint/ docs/lint/pylint/
 	pylint logconf/*.py logconf/loaders/*.py
 	#pylint tests/*.py tests/loaders/*.py
+	pylint logconf/*.py logconf/loaders/*.py --output-format=pylint_report.CustomJsonReporter > stage/lint/pylint/report.json
+	pylint_report stage/lint/pylint/report.json -o docs/lint/pylint/index.html
+
+complexity: stage
+	wily build logconf/
 
 install: package
 	pip3 install dist/logconf-`yq -r .version conf/info.yaml | sed "s/-/_/g"`-py3-none-any.whl
@@ -24,11 +30,11 @@ reinstall:
 	make clean deps package install
 
 doc: stage
-	rm -rf docs/api/ && mkdir -p docs/api/
-	sphinx-apidoc -o stage/doc/ --full -H "logconf" -A "Cliffano Subagio" logconf && \
-		cd stage/doc/ && \
+	rm -rf docs/doc/sphinx/ && mkdir -p docs/doc/sphinx/
+	sphinx-apidoc -o stage/doc/sphinx/ --full -H "logconf" -A "Cliffano Subagio" logconf && \
+		cd stage/doc/sphinx/ && \
 		make html && \
-		cp -R _build/html/* ../../docs/api
+		cp -R _build/html/* ../../../docs/doc/sphinx/
 
 # Due to the difference in pre-release handling between Python setuptools and semver (which RTK supports),
 # we have to massage the version number in conf/info.yaml before and after rtk release.
@@ -46,7 +52,7 @@ publish:
 ################################################################################
 
 test:
-	python3 -m unittest discover -s tests
+	pytest -v tests --html=docs/test/pytest/index.html --self-contained-html
 
 test-integration:
 	tests-integration/test.sh

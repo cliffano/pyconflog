@@ -1,3 +1,4 @@
+import pytest
 from logconf.config import Config
 import logging
 import unittest
@@ -114,6 +115,3 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_filemode(), 'r')
         self.assertEqual(config.get_format(), 'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.DEBUG)
-
-if __name__ == '__main__':
-    unittest.main()

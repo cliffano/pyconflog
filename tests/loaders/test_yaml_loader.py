@@ -1,3 +1,4 @@
+import pytest
 from logconf.loaders.yaml_loader import load
 import unittest
 from unittest.mock import patch, mock_open
@@ -52,6 +53,3 @@ class TestYamlLoader(unittest.TestCase):
         assert open('somelogconf.yaml').read() == YAML_INVALID
         with self.assertRaises(yaml.scanner.ScannerError):
             conf = load('somelogconf.yaml')
-
-if __name__ == '__main__':
-    unittest.main()

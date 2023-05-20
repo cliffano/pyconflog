@@ -1,3 +1,4 @@
+import pytest
 import json
 from logconf.loaders.json_loader import load
 import unittest
@@ -52,6 +53,3 @@ class TestJson(unittest.TestCase):
         assert open('somelogconf.json').read() == JSON_INVALID
         with self.assertRaises(json.decoder.JSONDecodeError):
           conf = load('somelogconf.json')
-
-if __name__ == '__main__':
-    unittest.main()

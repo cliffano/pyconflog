@@ -1,3 +1,4 @@
+import pytest
 import logconf
 import logging
 import unittest
@@ -43,6 +44,3 @@ class TestLogconf(unittest.TestCase):
             level=logging.INFO
         )
         func_getLogger.assert_called_once_with('someloggername')
-
-if __name__ == '__main__':
-    unittest.main()

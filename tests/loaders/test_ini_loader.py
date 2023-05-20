@@ -1,3 +1,4 @@
+import pytest
 import configparser
 from logconf.loaders.ini_loader import load
 import unittest
@@ -53,6 +54,3 @@ class TestIni(unittest.TestCase):
         assert open('somelogconf.ini').read() == INI_INVALID
         with self.assertRaises(configparser.MissingSectionHeaderError):
             conf = load('somelogconf.ini')
-
-if __name__ == '__main__':
-    unittest.main()
