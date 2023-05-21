@@ -14,9 +14,8 @@ deps:
 
 lint: stage
 	mkdir -p stage/lint/pylint/ docs/lint/pylint/
-	pylint logconf/*.py logconf/loaders/*.py
-	#pylint tests/*.py tests/loaders/*.py
-	pylint logconf/*.py logconf/loaders/*.py --output-format=pylint_report.CustomJsonReporter > stage/lint/pylint/report.json
+	pylint logconf/*.py logconf/loaders/*.py tests/*.py tests/loaders/*.py
+	pylint logconf/*.py logconf/loaders/*.py tests/*.py tests/loaders/*.py --output-format=pylint_report.CustomJsonReporter > stage/lint/pylint/report.json
 	pylint_report stage/lint/pylint/report.json -o docs/lint/pylint/index.html
 
 complexity: stage
