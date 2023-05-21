@@ -3,11 +3,12 @@ name: CI
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       max-parallel: 1
       matrix:
-        python: [ '3.6', '3.8', '3.10' ]
+        # Available Python versions: https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
+        python: [ '3.6', '3.8', '3.10', '3.12' ]
     name: python ${{ matrix.python }}
     steps:
       - uses: actions/checkout@v3
