@@ -1,6 +1,6 @@
 {
   "datefmt": "%Y-%m-%d %H:%M:%S",
-  "filename": "logs/development.log",
+  "filename": "stage/logs/test-json-conf.log",
   "format": "%(asctime)s %(levelname)s %(message)s",
   "level": "debug"
 }
