@@ -39,6 +39,7 @@ lint: stage
 
 complexity: stage
 	wily build logconf/
+	wily report docs/complexity/wily/index.html
 
 test:
 	pytest -v tests --html=docs/test/pytest/index.html --self-contained-html
