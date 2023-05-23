@@ -9,12 +9,21 @@ def get_logger(name, conf_files=None):
     and configuration from conf_files.
     """
     config = Config(conf_files=conf_files)
+
+    datefmt = config.get_datefmt()
+    filename = config.get_filename()
+    filemode = config.get_filemode()
+    _format = config.get_format()
+    level = config.get_level()
+
+    file_handler = logging.FileHandler(filename, mode=filemode)
+    stream_handler = logging.StreamHandler()
+
     logging.basicConfig(
-        datefmt=config.get_datefmt(),
-        filename=config.get_filename(),
-        filemode=config.get_filemode(),
-        format=config.get_format(),
-        level=config.get_level()
+        datefmt=datefmt,
+        format=_format,
+        level=level,
+        handlers=[stream_handler, file_handler]
     )
-    logger = logging.getLogger(name)
-    return logger
+
+    return logging.getLogger(name)
