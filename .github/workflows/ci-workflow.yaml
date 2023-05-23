@@ -5,7 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     strategy:
-      max-parallel: 1
+      max-parallel: 2
       matrix:
         # Available Python versions: https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
         python: [ '3.8', '3.10' ]
