@@ -9,4 +9,4 @@ class TestJsonConf(unittest.TestCase):
     def test_get_logger_with_single_conf_file(self): # pylint: disable=unused-argument
         logger = get_logger('someloggername',
                             conf_files=['tests-integration/fixtures/logconf.json'])
-        logger.debug('Some log message for JSON integration test')
+        logger.info('Some log message for JSON integration test')

@@ -45,7 +45,8 @@ test:
 	pytest -v tests --html=docs/test/pytest/index.html --self-contained-html
 
 test-integration:
-	pytest -v tests-integration --html=docs/test-integration/pytest/index.html --self-contained-html
+	rm -rf stage/test-integration/ && mkdir -p stage/test-integration/
+	python3 -m unittest tests-integration/*.py
 
 coverage:
 	COVERAGE_FILE=.coverage.unit coverage run --source=./logconf -m unittest discover -s tests

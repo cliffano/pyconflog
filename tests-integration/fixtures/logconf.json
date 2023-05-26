@@ -1,6 +1,7 @@
 {
   "datefmt": "%Y-%m-%d %H:%M:%S",
-  "filename": "stage/logs/test-json-conf.log",
-  "format": "%(asctime)s %(levelname)s %(message)s",
-  "level": "debug"
+  "filename": "stage/test-integration/test-json-conf.log",
+  "filemode": "w",
+  "format": "TEST-JSON-CONF %(levelname)s %(message)s",
+  "level": "info"
 }
