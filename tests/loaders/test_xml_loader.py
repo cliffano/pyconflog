@@ -9,6 +9,7 @@ XML_WITH_PARAMS = '''<?xml version="1.0" encoding="UTF-8"?>
 <logconf>
   <datefmt>%Y</datefmt>
   <filename>somelogconf.log</filename>
+  <filemode>w</filemode>
   <format>Some Log %(asctime)s</format>
   <level>critical</level>
 </logconf>
@@ -33,6 +34,7 @@ class TestXmlLoader(unittest.TestCase):
         conf = load('somelogconf.xml')
         self.assertEqual(conf['datefmt'], '%Y')
         self.assertEqual(conf['filename'], 'somelogconf.log')
+        self.assertEqual(conf['filemode'], 'w')
         self.assertEqual(conf['format'], 'Some Log %(asctime)s')
         self.assertEqual(conf['level'], 'critical')
 
@@ -43,6 +45,7 @@ class TestXmlLoader(unittest.TestCase):
         conf = load('somelogconf.xml')
         self.assertFalse('datefmt' in conf)
         self.assertFalse('filename' in conf)
+        self.assertFalse('filemode' in conf)
         self.assertFalse('format' in conf)
         self.assertFalse('level' in conf)
 
@@ -53,6 +56,7 @@ class TestXmlLoader(unittest.TestCase):
         conf = load('somelogconf.xml')
         self.assertFalse('datefmt' in conf)
         self.assertFalse('filename' in conf)
+        self.assertFalse('filemode' in conf)
         self.assertFalse('format' in conf)
         self.assertFalse('level' in conf)
 

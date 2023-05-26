@@ -8,6 +8,7 @@ from logconf.loaders.environ_loader import load
 ENVIRON_WITH_PARAMS = {
     'LOGCONF_DATEFMT': '%Y',
     'LOGCONF_FILENAME': 'somelogconf.log',
+    'LOGCONF_FILEMODE': 'w',
     'LOGCONF_FORMAT': 'Some Log %(asctime)s',
     'LOGCONF_LEVEL': 'critical'
 }
@@ -25,6 +26,7 @@ class TestEnvironLoader(unittest.TestCase):
         conf = load()
         self.assertEqual(conf['datefmt'], '%Y')
         self.assertEqual(conf['filename'], 'somelogconf.log')
+        self.assertEqual(conf['filemode'], 'w')
         self.assertEqual(conf['format'], 'Some Log %(asctime)s')
         self.assertEqual(conf['level'], 'critical')
 
@@ -33,6 +35,7 @@ class TestEnvironLoader(unittest.TestCase):
         conf = load()
         self.assertFalse('datefmt' in conf)
         self.assertFalse('filename' in conf)
+        self.assertFalse('filemode' in conf)
         self.assertFalse('format' in conf)
         self.assertFalse('level' in conf)
 
@@ -41,5 +44,6 @@ class TestEnvironLoader(unittest.TestCase):
         conf = load()
         self.assertFalse('datefmt' in conf)
         self.assertFalse('filename' in conf)
+        self.assertFalse('filemode' in conf)
         self.assertFalse('format' in conf)
         self.assertFalse('level' in conf)

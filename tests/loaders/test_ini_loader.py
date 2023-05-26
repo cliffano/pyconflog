@@ -8,6 +8,7 @@ from logconf.loaders.ini_loader import load
 INI_WITH_PARAMS = '''[logconf]
 datefmt: %%Y
 filename: somelogconf.log
+filemode: w
 format: Some Log %%(asctime)s
 level: critical
 '''
@@ -29,6 +30,7 @@ class TestIniLoader(unittest.TestCase):
         conf = load('somelogconf.ini')
         self.assertEqual(conf['datefmt'], '%Y')
         self.assertEqual(conf['filename'], 'somelogconf.log')
+        self.assertEqual(conf['filemode'], 'w')
         self.assertEqual(conf['format'], 'Some Log %(asctime)s')
         self.assertEqual(conf['level'], 'critical')
 
@@ -39,6 +41,7 @@ class TestIniLoader(unittest.TestCase):
         conf = load('somelogconf.ini')
         self.assertFalse('datefmt' in conf)
         self.assertFalse('filename' in conf)
+        self.assertFalse('filemode' in conf)
         self.assertFalse('format' in conf)
         self.assertFalse('level' in conf)
 
@@ -49,6 +52,7 @@ class TestIniLoader(unittest.TestCase):
         conf = load('somelogconf.ini')
         self.assertFalse('datefmt' in conf)
         self.assertFalse('filename' in conf)
+        self.assertFalse('filemode' in conf)
         self.assertFalse('format' in conf)
         self.assertFalse('level' in conf)
 

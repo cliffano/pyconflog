@@ -12,6 +12,7 @@ in various formats, including JSON, INI, XML, and YAML.
 PARAMS = [
     'datefmt',
     'filename',
+    'filemode',
     'format',
     'level'
 ]
