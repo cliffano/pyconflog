@@ -24,7 +24,7 @@ XML_EMPTY = '<?xml version="1.0" encoding="UTF-8"?><logconf></logconf>'
 
 XML_INVALID = '>%%%{foobar}!!!<'
 
-class TestXml(unittest.TestCase):
+class TestXmlLoader(unittest.TestCase):
 
     @patch('builtins.open', new_callable=mock_open, read_data=XML_WITH_PARAMS)
     def test_load_with_xml_having_params(self, func): # pylint: disable=unused-argument

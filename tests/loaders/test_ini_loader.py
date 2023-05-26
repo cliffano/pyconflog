@@ -20,7 +20,7 @@ INI_EMPTY = '[logconf]'
 
 INI_INVALID = 'def[ault]'
 
-class TestIni(unittest.TestCase):
+class TestIniLoader(unittest.TestCase):
 
     @patch('builtins.open', new_callable=mock_open, read_data=INI_WITH_PARAMS)
     def test_load_with_ini_having_params(self, func): # pylint: disable=unused-argument

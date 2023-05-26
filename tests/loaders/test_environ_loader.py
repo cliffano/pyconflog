@@ -18,7 +18,7 @@ ENVIRON_WITHOUT_PARAMS = {
 
 ENVIRON_EMPTY = {}
 
-class TestEnviron(unittest.TestCase):
+class TestEnvironLoader(unittest.TestCase):
 
     @patch.dict(os.environ, ENVIRON_WITH_PARAMS, clear=True)
     def test_load_with_environ_having_params(self):

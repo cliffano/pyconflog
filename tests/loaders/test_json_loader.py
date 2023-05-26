@@ -20,7 +20,7 @@ JSON_EMPTY = '{}'
 
 JSON_INVALID = '---\nhello'
 
-class TestJson(unittest.TestCase):
+class TestJsonLoader(unittest.TestCase):
 
     @patch('builtins.open', new_callable=mock_open, read_data=JSON_WITH_PARAMS)
     def test_load_with_json_having_params(self, func): # pylint: disable=unused-argument
