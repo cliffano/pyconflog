@@ -1,8 +1,6 @@
 {
-  "handlers": "stream,file",
+  "handlers": "stream",
   "datefmt": "%Y-%m-%d %H:%M:%S",
-  "filename": "stage/test-integration/test-json-conf.log",
-  "filemode": "w",
   "format": "[JSON-LOGCONF] %(levelname)s %(message)s",
   "level": "info"
 }
