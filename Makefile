@@ -12,6 +12,9 @@ deps:
 	pip3 install --ignore-installed -r requirements.txt
 	pip3 install --ignore-installed -r requirements-dev.txt
 
+deps-extra:
+	apt-get install jq
+
 doc: stage
 	rm -rf docs/doc/sphinx/ && mkdir -p docs/doc/sphinx/
 	sphinx-apidoc -o stage/doc/sphinx/ --full -H "logconf" -A "Cliffano Subagio" logconf && \
@@ -71,4 +74,4 @@ package:
 publish:
 	# TODO: publish to pypi
 
-.PHONY: ci clean stage deps doc release lint complexity test test-integration coverage install reinstall package publish
+.PHONY: ci clean stage deps deps-extra doc release lint complexity test test-integration coverage install reinstall package publish
