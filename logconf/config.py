@@ -11,6 +11,7 @@ LEVELS = {
     'critical': logging.CRITICAL
 }
 
+DEFAULT_HANDLERS = 'stream'
 DEFAULT_DATEFMT = '%d-%b-%y %H:%M:%S'
 DEFAULT_FILENAME = 'logconf.log'
 DEFAULT_FILEMODE = 'w'
@@ -47,6 +48,15 @@ class Config():
 
         # Load configurations from environment variables
         self.conf = {**environ_loader.load(), **self.conf}
+
+    def get_handlers(self):
+        """Get handlers.
+        Handlers is a comma separated value of the handler
+        types to be used.
+        If handlers is not specified, default to 'stream'.
+        Currently supported handlers are 'stream' and 'file'.
+        """
+        return self.conf.get('handlers', DEFAULT_HANDLERS).split(',')
 
     def get_datefmt(self):
         """Get date format.

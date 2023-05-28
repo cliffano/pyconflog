@@ -5,6 +5,7 @@ import logging
 from logconf.config import Config
 
 CUSTOM_CONF = {
+    'handlers': 'file',
     'datefmt': '%y%m%d',
     'filename': 'somelogconf.log',
     'filemode': 'rw',
@@ -13,6 +14,7 @@ CUSTOM_CONF = {
 }
 
 OVERWRITE_CONF = {
+    'handlers': 'stream,file',
     'datefmt': '%d%m%y',
     'filename': 'overwritelogconf.log',
     'filemode': 'r',
@@ -24,6 +26,7 @@ class TestConfig(unittest.TestCase):
 
     def test_get_defaults(self):
         config = Config()
+        self.assertEqual(config.get_handlers(), ['stream'])
         self.assertEqual(config.get_datefmt(), '%d-%b-%y %H:%M:%S')
         self.assertEqual(config.get_filename(), 'logconf.log')
         self.assertEqual(config.get_filemode(), 'w')
@@ -35,6 +38,7 @@ class TestConfig(unittest.TestCase):
     def test_get_config_from_ini(self, func): # pylint: disable=unused-argument
         func.return_value = CUSTOM_CONF
         config = Config(conf_files=['somefile.ini'])
+        self.assertEqual(config.get_handlers(), ['file'])
         self.assertEqual(config.get_datefmt(), '%y%m%d')
         self.assertEqual(config.get_filename(), 'somelogconf.log')
         self.assertEqual(config.get_filemode(), 'rw')
@@ -46,6 +50,7 @@ class TestConfig(unittest.TestCase):
     def test_get_config_from_json(self, func): # pylint: disable=unused-argument
         func.return_value = CUSTOM_CONF
         config = Config(conf_files=['somefile.json'])
+        self.assertEqual(config.get_handlers(), ['file'])
         self.assertEqual(config.get_datefmt(), '%y%m%d')
         self.assertEqual(config.get_filename(), 'somelogconf.log')
         self.assertEqual(config.get_filemode(), 'rw')
@@ -57,6 +62,7 @@ class TestConfig(unittest.TestCase):
     def test_get_config_from_xml(self, func): # pylint: disable=unused-argument
         func.return_value = CUSTOM_CONF
         config = Config(conf_files=['somefile.xml'])
+        self.assertEqual(config.get_handlers(), ['file'])
         self.assertEqual(config.get_datefmt(), '%y%m%d')
         self.assertEqual(config.get_filename(), 'somelogconf.log')
         self.assertEqual(config.get_filemode(), 'rw')
@@ -68,6 +74,7 @@ class TestConfig(unittest.TestCase):
     def test_get_config_from_yaml(self, func): # pylint: disable=unused-argument
         func.return_value = CUSTOM_CONF
         config = Config(conf_files=['somefile.yaml'])
+        self.assertEqual(config.get_handlers(), ['file'])
         self.assertEqual(config.get_datefmt(), '%y%m%d')
         self.assertEqual(config.get_filename(), 'somelogconf.log')
         self.assertEqual(config.get_filemode(), 'rw')
@@ -79,6 +86,7 @@ class TestConfig(unittest.TestCase):
     def test_get_config_from_environ(self, func): # pylint: disable=unused-argument
         func.return_value = CUSTOM_CONF
         config = Config()
+        self.assertEqual(config.get_handlers(), ['file'])
         self.assertEqual(config.get_datefmt(), '%y%m%d')
         self.assertEqual(config.get_filename(), 'somelogconf.log')
         self.assertEqual(config.get_filemode(), 'rw')
@@ -92,6 +100,7 @@ class TestConfig(unittest.TestCase):
         func_ini.return_value = CUSTOM_CONF
         func_environ.return_value = OVERWRITE_CONF
         config = Config(conf_files=['somefile.ini'])
+        self.assertEqual(config.get_handlers(), ['stream', 'file'])
         self.assertEqual(config.get_datefmt(), '%d%m%y')
         self.assertEqual(config.get_filename(), 'overwritelogconf.log')
         self.assertEqual(config.get_filemode(), 'r')
@@ -105,6 +114,7 @@ class TestConfig(unittest.TestCase):
         func_ini.return_value = CUSTOM_CONF
         func_yaml.return_value = OVERWRITE_CONF
         config = Config(conf_files=['somefile.ini', 'somefile.yaml'])
+        self.assertEqual(config.get_handlers(), ['stream', 'file'])
         self.assertEqual(config.get_datefmt(), '%d%m%y')
         self.assertEqual(config.get_filename(), 'overwritelogconf.log')
         self.assertEqual(config.get_filemode(), 'r')
@@ -118,6 +128,7 @@ class TestConfig(unittest.TestCase):
         func_yaml.return_value = CUSTOM_CONF
         func_ini.return_value = OVERWRITE_CONF
         config = Config(conf_files=['somefile.yaml', 'somefile.ini'])
+        self.assertEqual(config.get_handlers(), ['stream', 'file'])
         self.assertEqual(config.get_datefmt(), '%d%m%y')
         self.assertEqual(config.get_filename(), 'overwritelogconf.log')
         self.assertEqual(config.get_filemode(), 'r')

@@ -10,6 +10,7 @@ in various formats, including JSON, INI, XML, and YAML.
 """
 
 PARAMS = [
+    'handlers',
     'datefmt',
     'filename',
     'filemode',
