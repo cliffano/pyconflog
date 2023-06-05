@@ -28,7 +28,8 @@ class TestJsonConf(unittest.TestCase):
         logger.critical('Some critical log message')
         with open(self.log_file, 'r', encoding='utf-8') as stream:
             content = stream.read()
-        # should exclude debug, should include info, warning, error, critical
+        # should exclude debug
+        # should include info, warning, error, critical
         self.assertEqual(content,
                             '[JSON-LOGCONF] INFO Some info log message\n'\
                             '[JSON-LOGCONF] WARNING Some warning log message\n'\
@@ -51,4 +52,12 @@ class TestJsonConf(unittest.TestCase):
         logger = self.logconf.get_logger(self.logger_name)
         logger.info('Some info log message')
         # should not create any log file because file handler is not defined
+        self.assertFalse(os.path.exists(self.log_file))
+
+    def test_get_logger_with_single_conf_file_with_empty_config(self):
+        self.logger_name = 'test_get_logger_with_single_conf_file_with_empty_config'
+        self.logconf = Logconf(conf_files=['tests-integration/fixtures/logconf-empty.json'])
+        logger = self.logconf.get_logger(self.logger_name)
+        logger.info('Some info log message')
+        # should not create any log file because file handler is not defined in default handlers config
         self.assertFalse(os.path.exists(self.log_file))
