@@ -13,7 +13,7 @@ class TestJsonConf(unittest.TestCase):
 
     # close handlers and remove log file on tearDown
     def tearDown(self):
-        self.logconf.close_handlers(self.logger_name)
+        self.logconf.close_logger_handlers(self.logger_name)
         if os.path.exists(self.log_file):
             os.remove(self.log_file)
 

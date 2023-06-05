@@ -3,6 +3,8 @@ which allows the management of Python logging
 via configuration files.
 """
 import logging
+from logconf.handlers.file_handler import init as init_file_handler
+from logconf.handlers.stream_handler import init as init_stream_handler
 from logconf.config import Config
 
 class Logconf():
@@ -16,37 +18,18 @@ class Logconf():
         config = Config(conf_files=conf_files)
         handlers = config.get_handlers()
         datefmt = config.get_datefmt()
-        _format = config.get_format()
         level = config.get_level()
 
         self.handlers = []
         if 'stream' in handlers:
-            self.handlers.append(self._init_stream_handler(config))
+            self.handlers.append(init_stream_handler(config))
         if 'file' in handlers:
-            self.handlers.append(self._init_file_handler(config))
+            self.handlers.append(init_file_handler(config))
 
         logging.basicConfig(
             datefmt=datefmt,
             level=level
         )
-
-    def _init_stream_handler(self, config):
-        """Initialise stream handler.
-        """
-        _format = config.get_format()
-        stream_handler = logging.StreamHandler()
-        stream_handler.setFormatter(logging.Formatter(_format))
-        return stream_handler
-
-    def _init_file_handler(self, config):
-        """Initialise file handler.
-        """
-        _format = config.get_format()
-        filename = config.get_filename()
-        filemode = config.get_filemode()
-        file_handler = logging.FileHandler(filename, mode=filemode)
-        file_handler.setFormatter(logging.Formatter(_format))
-        return file_handler
 
     def get_logger(self, name):
         """Get the logger based on the given name
@@ -57,11 +40,11 @@ class Logconf():
             logger.addHandler(handler)
         return logger
 
-    def close_handlers(self, name):
+    def close_logger_handlers(self, name):
         """Close logger handlers
         and clear the handlers from logger.
         """
-        logger = self.get_logger(name)
+        logger = logging.getLogger(name)
         for handler in logger.handlers:
             handler.close()
         logger.handlers.clear()
