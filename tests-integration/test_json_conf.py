@@ -59,5 +59,6 @@ class TestJsonConf(unittest.TestCase):
         self.logconf = Logconf(conf_files=['tests-integration/fixtures/logconf-empty.json'])
         logger = self.logconf.get_logger(self.logger_name)
         logger.info('Some info log message')
-        # should not create any log file because file handler is not defined in default handlers config
+        # should not create any log file because
+        # file handler is not defined in default handlers config
         self.assertFalse(os.path.exists(self.log_file))
