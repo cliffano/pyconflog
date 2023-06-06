@@ -2,7 +2,7 @@
 import unittest
 import os
 import os.path
-from logconf.logconf import Logconf
+from logconf import Logconf
 
 class TestNoConf(unittest.TestCase):
 

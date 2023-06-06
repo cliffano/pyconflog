@@ -3,7 +3,7 @@ from unittest.mock import patch
 import unittest.mock
 import unittest
 import logging
-from logconf.logconf import Logconf
+from logconf import Logconf
 
 class TestLogconf(unittest.TestCase):
 
