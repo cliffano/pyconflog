@@ -14,6 +14,7 @@ class TestStreamHandler(unittest.TestCase):
             func_stream_handler):
 
         mock_config = unittest.mock.Mock()
+        mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
         mock_config.get_format.return_value = '%(asctime)s --> '\
                                               '%(name)s - %(levelname)s - %(message)s'
 
