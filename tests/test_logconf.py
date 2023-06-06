@@ -1,4 +1,4 @@
-# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,duplicate-code,relative-beyond-top-level
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,duplicate-code,too-many-locals
 from unittest.mock import patch
 import unittest.mock
 import unittest
@@ -13,8 +13,10 @@ class TestLogconf(unittest.TestCase):
     @patch('logging.Formatter.__new__')
     @patch('logging.basicConfig')
     @patch('logging.getLogger')
+    @patch('logging.LoggerAdapter.__new__')
     def test_logconf( # pylint: disable=too-many-arguments
             self,
+            func_logger_adapter,
             func_get_logger,
             func_basic_config,
             func_formatter,
@@ -27,6 +29,7 @@ class TestLogconf(unittest.TestCase):
         mock_file_handler = unittest.mock.Mock()
         mock_formatter = unittest.mock.Mock()
         mock_logger = unittest.mock.Mock()
+        mock_adapted_logger = unittest.mock.Mock()
         mock_logger.handlers = [mock_stream_handler, mock_file_handler]
 
         func_config.return_value = mock_config
@@ -34,6 +37,7 @@ class TestLogconf(unittest.TestCase):
         func_file_handler.return_value = mock_file_handler
         func_formatter.return_value = mock_formatter
         func_get_logger.return_value = mock_logger
+        func_logger_adapter.return_value = mock_adapted_logger
 
         mock_config.get_handlers.return_value = ['stream', 'file']
         mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
@@ -49,7 +53,7 @@ class TestLogconf(unittest.TestCase):
 
         logger = logconf.get_logger('someloggername')
         func_get_logger.assert_called_with('someloggername')
-        self.assertEqual(logger, mock_logger)
+        self.assertEqual(logger, mock_adapted_logger)
         self.assertFalse(mock_logger.propagate)
         mock_logger.addHandler.assert_any_call(mock_stream_handler)
         mock_logger.addHandler.assert_any_call(mock_file_handler)

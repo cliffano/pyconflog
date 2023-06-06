@@ -9,5 +9,6 @@ PARAMS = [
     'filename',
     'filemode',
     'format',
-    'level'
+    'level',
+    'extras'
 ]

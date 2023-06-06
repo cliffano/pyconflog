@@ -1,4 +1,4 @@
-# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,duplicate-code
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,duplicate-code,too-many-locals
 import unittest
 import os
 import os.path
@@ -31,10 +31,10 @@ class TestJsonConf(unittest.TestCase):
         # should exclude debug
         # should include info, warning, error, critical
         self.assertEqual(content,
-                            '[JSON-LOGCONF] INFO Some info log message\n'\
-                            '[JSON-LOGCONF] WARNING Some warning log message\n'\
-                            '[JSON-LOGCONF] ERROR Some error log message\n'\
-                            '[JSON-LOGCONF] CRITICAL Some critical log message\n')
+                            '[JSON-LOGCONF] [someenv-someid] INFO Some info log message\n'\
+                            '[JSON-LOGCONF] [someenv-someid] WARNING Some warning log message\n'\
+                            '[JSON-LOGCONF] [someenv-someid] ERROR Some error log message\n'\
+                            '[JSON-LOGCONF] [someenv-someid] CRITICAL Some critical log message\n')
 
     def test_get_logger_with_single_conf_file_with_excluded_level(self):
         self.logger_name = 'test_get_logger_with_single_conf_file_with_excluded_level'

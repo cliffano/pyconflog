@@ -19,6 +19,7 @@ class Logconf():
         handlers = config.get_handlers()
         datefmt = config.get_datefmt()
         level = config.get_level()
+        self.extras = config.get_extras()
 
         self.handlers = []
         if 'stream' in handlers:
@@ -39,6 +40,8 @@ class Logconf():
         logger.propagate = False # prevent duplicate logging from parent propagation
         for handler in self.handlers:
             logger.addHandler(handler)
+
+        logger = logging.LoggerAdapter(logger, self.extras)
         return logger
 
     def close_logger_handlers(self, name):

@@ -1,4 +1,4 @@
-# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,duplicate-code
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,duplicate-code,too-many-locals
 from unittest.mock import patch
 import unittest
 import logging
@@ -10,7 +10,8 @@ CUSTOM_CONF = {
     'filename': 'somelogconf.log',
     'filemode': 'rw',
     'format': 'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s',
-    'level': 'critical'
+    'level': 'critical',
+    'extras': 'some_extra1=some_value1,some_extra2=some_value2'
 }
 
 OVERWRITE_CONF = {
@@ -19,7 +20,8 @@ OVERWRITE_CONF = {
     'filename': 'overwritelogconf.log',
     'filemode': 'r',
     'format': 'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s',
-    'level': 'debug'
+    'level': 'debug',
+    'extras': 'some_overwrite_extra1=some_overwrite_value1'
 }
 
 class TestConfig(unittest.TestCase):
@@ -33,6 +35,7 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(),
                          '%(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.INFO)
+        self.assertEqual(config.get_extras(), {})
 
     @patch('logconf.loaders.ini_loader.load')
     def test_get_config_from_ini(self, func): # pylint: disable=unused-argument
@@ -45,6 +48,10 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(),
                          'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 2)
+        self.assertEqual(extras['some_extra1'], 'some_value1')
+        self.assertEqual(extras['some_extra2'], 'some_value2')
 
     @patch('logconf.loaders.json_loader.load')
     def test_get_config_from_json(self, func): # pylint: disable=unused-argument
@@ -57,6 +64,10 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(),
                          'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 2)
+        self.assertEqual(extras['some_extra1'], 'some_value1')
+        self.assertEqual(extras['some_extra2'], 'some_value2')
 
     @patch('logconf.loaders.xml_loader.load')
     def test_get_config_from_xml(self, func): # pylint: disable=unused-argument
@@ -69,6 +80,10 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(),
                          'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 2)
+        self.assertEqual(extras['some_extra1'], 'some_value1')
+        self.assertEqual(extras['some_extra2'], 'some_value2')
 
     @patch('logconf.loaders.yaml_loader.load')
     def test_get_config_from_yaml(self, func): # pylint: disable=unused-argument
@@ -81,6 +96,10 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(),
                          'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 2)
+        self.assertEqual(extras['some_extra1'], 'some_value1')
+        self.assertEqual(extras['some_extra2'], 'some_value2')
 
     @patch('logconf.loaders.environ_loader.load')
     def test_get_config_from_environ(self, func): # pylint: disable=unused-argument
@@ -93,6 +112,10 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(),
                          'somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 2)
+        self.assertEqual(extras['some_extra1'], 'some_value1')
+        self.assertEqual(extras['some_extra2'], 'some_value2')
 
     @patch('logconf.loaders.ini_loader.load')
     @patch('logconf.loaders.environ_loader.load')
@@ -107,6 +130,9 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(),
                          'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.DEBUG)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 1)
+        self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')
 
     @patch('logconf.loaders.ini_loader.load')
     @patch('logconf.loaders.yaml_loader.load')
@@ -121,6 +147,9 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(),
                          'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.DEBUG)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 1)
+        self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')
 
     @patch('logconf.loaders.yaml_loader.load')
     @patch('logconf.loaders.ini_loader.load')
@@ -135,3 +164,6 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_format(),
                          'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
         self.assertEqual(config.get_level(), logging.DEBUG)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 1)
+        self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')

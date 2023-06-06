@@ -17,6 +17,7 @@ DEFAULT_FILENAME = 'logconf.log'
 DEFAULT_FILEMODE = 'w'
 DEFAULT_FORMAT = '%(asctime)s --> %(name)s - %(levelname)s - %(message)s'
 DEFAULT_LEVEL = 'info'
+DEFAULT_EXTRAS = {}
 
 class Config():
     """A class for managing logging configurations.
@@ -89,3 +90,18 @@ class Config():
         """
         level = self.conf.get('level', DEFAULT_LEVEL)
         return LEVELS[level]
+
+    def get_extras(self):
+        """Get extras.
+        Extras is a dictionary of extra message parameters
+        to be added to the log.
+        If extras is not specified, default to an empty dictionary.
+        """
+        extras = self.conf.get('extras', DEFAULT_EXTRAS)
+        if isinstance(extras, str):
+            _extras = {}
+            for pair in extras.split(','):
+                key, value = pair.split('=')
+                _extras[key] = value
+            extras = _extras
+        return extras
