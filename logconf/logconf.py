@@ -3,9 +3,9 @@ which allows the management of Python logging
 via configuration files.
 """
 import logging
-from logconf.handlers.file_handler import init as init_file_handler
-from logconf.handlers.stream_handler import init as init_stream_handler
-from logconf.config import Config
+from .handlers.file_handler import init as init_file_handler
+from .handlers.stream_handler import init as init_stream_handler
+from .config import Config
 
 class Logconf():
     """A class for managing Python logging logger and handlers.

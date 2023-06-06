@@ -1,7 +1,7 @@
 """YAML configuration loader.
 """
 import yaml
-from logconf import PARAMS
+from . import PARAMS
 
 def load(conf_file):
     """Get configuration values from YAML file.

@@ -1,7 +1,7 @@
 """XML configuration loader.
 """
 import xml.etree.ElementTree as ET
-from logconf import PARAMS
+from . import PARAMS
 
 def load(conf_file):
     """Get configuration values from XML file.

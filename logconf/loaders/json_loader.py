@@ -1,7 +1,7 @@
 """JSON configuration loader.
 """
 import json
-from logconf import PARAMS
+from . import PARAMS
 
 def load(conf_file):
     """Get configuration values from JSON file.
