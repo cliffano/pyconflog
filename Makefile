@@ -36,8 +36,8 @@ release:
 
 lint: stage
 	mkdir -p stage/lint/pylint/ docs/lint/pylint/
-	pylint logconf/*.py logconf/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py
-	pylint logconf/*.py logconf/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py --output-format=pylint_report.CustomJsonReporter > stage/lint/pylint/report.json
+	pylint logconf/*.py logconf/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py examples/*.py
+	pylint logconf/*.py logconf/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py examples/*.py --output-format=pylint_report.CustomJsonReporter > stage/lint/pylint/report.json
 	pylint_report stage/lint/pylint/report.json -o docs/lint/pylint/index.html
 
 complexity: stage
@@ -50,6 +50,7 @@ test:
 test-integration:
 	rm -rf stage/test-integration/ && mkdir -p stage/test-integration/
 	python3 -m unittest tests-integration/*.py
+	cd examples/ && python3 log.py
 
 coverage:
 	COVERAGE_FILE=.coverage.unit coverage run --source=./logconf -m unittest discover -s tests

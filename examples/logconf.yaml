@@ -1,0 +1,7 @@
+---
+handlers: 'stream'
+datefmt: "%Y%m%d%H%M%S"
+format: "[%(project)s] [%(levelname)s] [%(asctime)s] %(message)s"
+level: "debug"
+extras:
+  project: "logconf"
