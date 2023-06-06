@@ -64,8 +64,11 @@ coverage:
 install: package
 	pip3 install dist/logconf-`yq -r .version conf/info.yaml | sed "s/-/_/g"`-py3-none-any.whl
 
+uninstall:
+	pip3 uninstall logconf -y
+
 reinstall:
-	pip3 uninstall logconf -y || echo "Nothing to uninstall..."
+	make uninstall || echo "Nothing to uninstall..."
 	make clean deps package install
 
 package:
@@ -74,4 +77,4 @@ package:
 publish:
 	# TODO: publish to pypi
 
-.PHONY: ci clean stage deps deps-extra doc release lint complexity test test-integration coverage install reinstall package publish
+.PHONY: ci clean stage deps deps-extra doc release lint complexity test test-integration coverage install uninstall reinstall package publish
