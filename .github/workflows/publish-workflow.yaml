@@ -1,0 +1,23 @@
+---
+name: Publish
+'on':
+  push:
+    tags:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip3 install twine
+      - run: make publish
+        env:
+          TWINE_USERNAME: cliffano
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+          TWINE_REPOSITORY_URL: https://upload.pypi.org/legacy/
+          TWINE_NON_INTERACTIVE: '1'
+          TWINE_REPOSITORY: pypi
+          TWINE_CHECK_REPOSITORY: '1'
