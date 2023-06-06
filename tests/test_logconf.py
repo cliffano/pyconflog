@@ -1,4 +1,4 @@
-# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,duplicate-code
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,duplicate-code,relative-beyond-top-level
 from unittest.mock import patch
 import unittest.mock
 import unittest
@@ -40,20 +40,20 @@ class TestLogconf(unittest.TestCase):
         mock_config.get_level.return_value = logging.INFO
 
         logconf = Logconf(conf_files=['somefile.ini', 'somefile.json'])
-        logger = logconf.get_logger('someloggername')
-        self.assertEqual(logger, mock_logger)
-        logconf.close_logger_handlers('someloggername')
-
         mock_stream_handler.setFormatter.assert_called_once_with(mock_formatter)
         mock_file_handler.setFormatter.assert_called_once_with(mock_formatter)
-
         func_basic_config.assert_called_once_with(
             datefmt='%d-%b-%y %H:%M:%S',
             level=logging.INFO,
         )
 
+        logger = logconf.get_logger('someloggername')
         func_get_logger.assert_called_with('someloggername')
+        self.assertEqual(logger, mock_logger)
+        self.assertFalse(mock_logger.propagate)
         mock_logger.addHandler.assert_any_call(mock_stream_handler)
         mock_logger.addHandler.assert_any_call(mock_file_handler)
+
+        logconf.close_logger_handlers('someloggername')
         mock_stream_handler.close.assert_called_once_with()
         mock_file_handler.close.assert_called_once_with()

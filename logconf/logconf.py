@@ -36,6 +36,7 @@ class Logconf():
         and add the handlers to the logger.
         """
         logger = logging.getLogger(name)
+        logger.propagate = False # prevent duplicate logging from parent propagation
         for handler in self.handlers:
             logger.addHandler(handler)
         return logger
