@@ -1,6 +1,6 @@
 ---
 handlers: "stream"
 datefmt: "%Y-%m-%d %H:%M:%S"
-format: "[JSON-LOGCONF] [%(env)s-%(id)s] %(levelname)s %(message)s"
+format: "[YAML-LOGCONF] [%(env)s-%(id)s] %(levelname)s %(message)s"
 level: "info"
 extras: "env=someenv,id=someid"
