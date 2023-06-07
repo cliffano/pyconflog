@@ -24,9 +24,21 @@ doc: stage
 
 # Due to the difference in pre-release handling between Python setuptools and semver (which RTK supports),
 # we have to massage the version number in conf/info.yaml before and after rtk release.
-release:
+release-major:
 	sed -i '' -e 's/rc0/-rc0/' conf/info.yaml
-	rtk release
+	rtk release --release-increment-type major
+	sed -i '' -e 's/-rc0.0/rc0/' conf/info.yaml
+	git commit conf/info.yaml -m "Switch version to Python setuptools versioning scheme"
+
+release-minor:
+	sed -i '' -e 's/rc0/-rc0/' conf/info.yaml
+	rtk release --release-increment-type minor
+	sed -i '' -e 's/-rc0.0/rc0/' conf/info.yaml
+	git commit conf/info.yaml -m "Switch version to Python setuptools versioning scheme"
+
+release-patch:
+	sed -i '' -e 's/rc0/-rc0/' conf/info.yaml
+	rtk release --release-increment-type patch
 	sed -i '' -e 's/-rc0.0/rc0/' conf/info.yaml
 	git commit conf/info.yaml -m "Switch version to Python setuptools versioning scheme"
 
