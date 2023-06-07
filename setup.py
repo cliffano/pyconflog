@@ -13,7 +13,7 @@ with open(readme_file, 'r', encoding='utf8') as readme_fh:
 
 setuptools.setup(
     name='logconf',
-    description='Configuration support for Python logging',
+    description='Python logging setup via environment variables and configuration files',
     version=sic(info['version']),
     author='Cliffano Subagio',
     author_email='cliffano@gmail.com',
