@@ -7,6 +7,9 @@ from logconf import Logconf
 class TestXmlConf(unittest.TestCase):
 
     def setUp(self):
+        os.unsetenv('LOGCONF_FORMAT')
+        if 'LOGCONF_FORMAT' in os.environ:
+            os.environ.pop('LOGCONF_FORMAT')
         self.logger_name = None
         self.logconf = None
         self.log_file = 'stage/test-integration/test-xml-conf.log'

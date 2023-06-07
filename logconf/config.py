@@ -45,10 +45,10 @@ class Config():
             elif conf_file.endswith('.yaml'):
                 curr_conf = yaml_loader.load(conf_file)
 
-            self.conf = {**curr_conf, **self.conf}
+            self.conf = {**self.conf, **curr_conf}
 
         # Load configurations from environment variables
-        self.conf = {**environ_loader.load(), **self.conf}
+        self.conf = {**self.conf, **environ_loader.load()}
 
     def get_handlers(self):
         """Get handlers.

@@ -117,8 +117,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(extras['some_extra1'], 'some_value1')
         self.assertEqual(extras['some_extra2'], 'some_value2')
 
-    @patch('logconf.loaders.ini_loader.load')
     @patch('logconf.loaders.environ_loader.load')
+    @patch('logconf.loaders.ini_loader.load')
     def test_get_config_with_ini_overwritten_by_environ(self, func_ini, func_environ):
         func_ini.return_value = CUSTOM_CONF
         func_environ.return_value = OVERWRITE_CONF
@@ -134,8 +134,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(len(extras.keys()), 1)
         self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')
 
-    @patch('logconf.loaders.ini_loader.load')
     @patch('logconf.loaders.yaml_loader.load')
+    @patch('logconf.loaders.ini_loader.load')
     def test_get_config_with_ini_overwritten_by_yaml(self, func_ini, func_yaml):
         func_ini.return_value = CUSTOM_CONF
         func_yaml.return_value = OVERWRITE_CONF
@@ -151,8 +151,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(len(extras.keys()), 1)
         self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')
 
-    @patch('logconf.loaders.yaml_loader.load')
     @patch('logconf.loaders.ini_loader.load')
+    @patch('logconf.loaders.yaml_loader.load')
     def test_get_config_with_yaml_overwritten_by_ini(self, func_yaml, func_ini):
         func_yaml.return_value = CUSTOM_CONF
         func_ini.return_value = OVERWRITE_CONF
