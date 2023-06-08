@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- Fix publish workflow, shift commands to Makefile
+
 ## 1.0.0 - 2023-06-08
 ### Added
 - Add single conf file string arg support for Conflog constructor

@@ -91,6 +91,6 @@ package:
 	python3 setup.py sdist bdist_wheel
 
 publish:
-	# TODO: publish to pypi
+	twine upload dist/*
 
 .PHONY: ci dev clean stage deps deps-extra doc release lint complexity test test-integration coverage install uninstall reinstall package publish
