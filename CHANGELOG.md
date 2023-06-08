@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Add single conf file string arg support for Conflog constructor
+
 ### Fixed
 - Fix missing dist/ folder prior to publishing to Pypi
 

@@ -2,6 +2,9 @@ version=`yq -r .version conf/info.yaml`
 
 ci: clean deps lint test coverage complexity doc package reinstall test-integration
 
+# Exclude complexity due to complexity requiring no uncommited local change
+dev: clean deps lint test coverage doc package reinstall test-integration
+
 clean:
 	rm -rf stage *.egg-info build dist docs/ conflog/_pycache_/ conflog/*.pyc tests/_pycache_/ tests/*.pyc .coverage
 
@@ -90,4 +93,4 @@ package:
 publish:
 	# TODO: publish to pypi
 
-.PHONY: ci clean stage deps deps-extra doc release lint complexity test test-integration coverage install uninstall reinstall package publish
+.PHONY: ci dev clean stage deps deps-extra doc release lint complexity test test-integration coverage install uninstall reinstall package publish

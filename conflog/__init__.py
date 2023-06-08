@@ -22,6 +22,9 @@ class Conflog():
         """Initialise Python logging with configuration from conf_files.
         """
 
+        if isinstance(conf_files, str):
+            conf_files = [conf_files]
+
         config = Config(conf_files=conf_files)
         handlers = config.get_handlers()
         datefmt = config.get_datefmt()
