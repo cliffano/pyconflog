@@ -2,7 +2,7 @@
 from unittest.mock import patch
 import unittest.mock
 import unittest
-from logconf.handlers.file_handler import init
+from conflog.handlers.file_handler import init
 
 class TestFileHandler(unittest.TestCase):
 
@@ -17,7 +17,7 @@ class TestFileHandler(unittest.TestCase):
         mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
         mock_config.get_format.return_value = '%(asctime)s --> '\
                                               '%(name)s - %(levelname)s - %(message)s'
-        mock_config.get_filename.return_value = 'logconf.log'
+        mock_config.get_filename.return_value = 'conflog.log'
         mock_config.get_filemode.return_value = 'w'
 
         mock_formatter = unittest.mock.Mock()

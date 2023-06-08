@@ -3,18 +3,18 @@ from unittest.mock import patch
 import unittest.mock
 import unittest
 import logging
-from logconf import Logconf
+from conflog import Conflog
 
-class TestLogconf(unittest.TestCase):
+class TestConflog(unittest.TestCase):
 
-    @patch('logconf.config.Config.__new__')
+    @patch('conflog.config.Config.__new__')
     @patch('logging.FileHandler.__new__')
     @patch('logging.StreamHandler.__new__')
     @patch('logging.Formatter.__new__')
     @patch('logging.basicConfig')
     @patch('logging.getLogger')
     @patch('logging.LoggerAdapter.__new__')
-    def test_logconf( # pylint: disable=too-many-arguments
+    def test_conflog( # pylint: disable=too-many-arguments
             self,
             func_logger_adapter,
             func_get_logger,
@@ -43,7 +43,7 @@ class TestLogconf(unittest.TestCase):
         mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
         mock_config.get_level.return_value = logging.INFO
 
-        logconf = Logconf(conf_files=['somefile.ini', 'somefile.json'])
+        conflog = Conflog(conf_files=['somefile.ini', 'somefile.json'])
         mock_stream_handler.setFormatter.assert_called_once_with(mock_formatter)
         mock_file_handler.setFormatter.assert_called_once_with(mock_formatter)
         func_basic_config.assert_called_once_with(
@@ -51,13 +51,13 @@ class TestLogconf(unittest.TestCase):
             level=logging.INFO,
         )
 
-        logger = logconf.get_logger('someloggername')
+        logger = conflog.get_logger('someloggername')
         func_get_logger.assert_called_with('someloggername')
         self.assertEqual(logger, mock_adapted_logger)
         self.assertFalse(mock_logger.propagate)
         mock_logger.addHandler.assert_any_call(mock_stream_handler)
         mock_logger.addHandler.assert_any_call(mock_file_handler)
 
-        logconf.close_logger_handlers('someloggername')
+        conflog.close_logger_handlers('someloggername')
         mock_stream_handler.close.assert_called_once_with()
         mock_file_handler.close.assert_called_once_with()

@@ -2,7 +2,7 @@
 from unittest.mock import patch
 import unittest.mock
 import unittest
-from logconf.handlers.stream_handler import init
+from conflog.handlers.stream_handler import init
 
 class TestStreamHandler(unittest.TestCase):
 

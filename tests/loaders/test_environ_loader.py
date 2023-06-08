@@ -3,19 +3,19 @@ from unittest.mock import patch
 import unittest.mock
 import unittest
 import os
-from logconf.loaders.environ_loader import load
+from conflog.loaders.environ_loader import load
 
 ENVIRON_WITH_PARAMS = {
-    'LOGCONF_DATEFMT': '%Y',
-    'LOGCONF_FILENAME': 'somelogconf.log',
-    'LOGCONF_FILEMODE': 'w',
-    'LOGCONF_FORMAT': '%(some_extra1)s Some Log %(asctime)s',
-    'LOGCONF_LEVEL': 'critical',
-    'LOGCONF_EXTRAS': 'some_extra1=some_value1,some_extra2=some_value2'
+    'CONFLOG_DATEFMT': '%Y',
+    'CONFLOG_FILENAME': 'someconflog.log',
+    'CONFLOG_FILEMODE': 'w',
+    'CONFLOG_FORMAT': '%(some_extra1)s Some Log %(asctime)s',
+    'CONFLOG_LEVEL': 'critical',
+    'CONFLOG_EXTRAS': 'some_extra1=some_value1,some_extra2=some_value2'
 }
 
 ENVIRON_WITHOUT_PARAMS = {
-    'LOGCONF_FOO': 'bar'
+    'CONFLOG_FOO': 'bar'
 }
 
 ENVIRON_EMPTY = {}
@@ -26,7 +26,7 @@ class TestEnvironLoader(unittest.TestCase):
     def test_load_with_environ_having_params(self):
         conf = load()
         self.assertEqual(conf['datefmt'], '%Y')
-        self.assertEqual(conf['filename'], 'somelogconf.log')
+        self.assertEqual(conf['filename'], 'someconflog.log')
         self.assertEqual(conf['filemode'], 'w')
         self.assertEqual(conf['format'], '%(some_extra1)s Some Log %(asctime)s')
         self.assertEqual(conf['level'], 'critical')

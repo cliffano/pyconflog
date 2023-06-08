@@ -1,4 +1,4 @@
-"""File handler module for logconf.
+"""File handler module for conflog.
 """
 import logging
 

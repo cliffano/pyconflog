@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<logconf>
+<conflog>
   <handlers>stream</handlers>
   <datefmt>%Y-%m-%d %H:%M:%S</datefmt>
-  <format>[XML-LOGCONF] [%(env)s-%(id)s] %(levelname)s %(message)s</format>
+  <format>[XML-CONFLOG] [%(env)s-%(id)s] %(levelname)s %(message)s</format>
   <level>info</level>
   <extras>env=someenv,id=someid</extras>
-</logconf>
+</conflog>

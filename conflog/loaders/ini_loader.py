@@ -13,6 +13,6 @@ def load(conf_file):
         conf_ini = configparser.ConfigParser()
         conf_ini.read_file(conf_string)
         for param in PARAMS:
-            if param in conf_ini['logconf']:
-                conf[param] = conf_ini['logconf'][param]
+            if param in conf_ini['conflog']:
+                conf[param] = conf_ini['conflog'][param]
     return conf

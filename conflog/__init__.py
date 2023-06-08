@@ -1,5 +1,5 @@
 """
-logconf
+conflog
 =======
 A simple logging configuration library.
 
@@ -14,7 +14,7 @@ from .handlers.file_handler import init as init_file_handler
 from .handlers.stream_handler import init as init_stream_handler
 from .config import Config
 
-class Logconf():
+class Conflog():
     """A class for managing Python logging logger and handlers.
     """
 

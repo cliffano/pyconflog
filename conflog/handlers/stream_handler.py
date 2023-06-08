@@ -1,4 +1,4 @@
-"""Stream handler module for logconf.
+"""Stream handler module for conflog.
 """
 import logging
 

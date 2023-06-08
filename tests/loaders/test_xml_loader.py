@@ -3,26 +3,26 @@ from unittest.mock import patch, mock_open
 import unittest.mock
 import unittest
 import xml
-from logconf.loaders.xml_loader import load
+from conflog.loaders.xml_loader import load
 
 XML_WITH_PARAMS = '''<?xml version="1.0" encoding="UTF-8"?>
-<logconf>
+<conflog>
   <datefmt>%Y</datefmt>
-  <filename>somelogconf.log</filename>
+  <filename>someconflog.log</filename>
   <filemode>w</filemode>
   <format>%(some_extra1)s Some Log %(asctime)s</format>
   <level>critical</level>
   <extras>some_extra1=some_value1,some_extra2=some_value2</extras>
-</logconf>
+</conflog>
 '''
 
 XML_WITHOUT_PARAMS = '''<?xml version="1.0" encoding="UTF-8"?>
-<logconf>
+<conflog>
   <foo>bar</foo>
-</logconf>
+</conflog>
 '''
 
-XML_EMPTY = '<?xml version="1.0" encoding="UTF-8"?><logconf></logconf>'
+XML_EMPTY = '<?xml version="1.0" encoding="UTF-8"?><conflog></conflog>'
 
 XML_INVALID = '>%%%{foobar}!!!<'
 
@@ -30,11 +30,11 @@ class TestXmlLoader(unittest.TestCase):
 
     @patch('builtins.open', new_callable=mock_open, read_data=XML_WITH_PARAMS)
     def test_load_with_xml_having_params(self, func): # pylint: disable=unused-argument
-        with open('somelogconf.xml', 'r', encoding='utf8') as file_handle:
+        with open('someconflog.xml', 'r', encoding='utf8') as file_handle:
             assert file_handle.read() == XML_WITH_PARAMS
-        conf = load('somelogconf.xml')
+        conf = load('someconflog.xml')
         self.assertEqual(conf['datefmt'], '%Y')
-        self.assertEqual(conf['filename'], 'somelogconf.log')
+        self.assertEqual(conf['filename'], 'someconflog.log')
         self.assertEqual(conf['filemode'], 'w')
         self.assertEqual(conf['format'], '%(some_extra1)s Some Log %(asctime)s')
         self.assertEqual(conf['level'], 'critical')
@@ -42,9 +42,9 @@ class TestXmlLoader(unittest.TestCase):
 
     @patch('builtins.open', new_callable=mock_open, read_data=XML_WITHOUT_PARAMS)
     def test_load_with_xml_not_having_params(self, func): # pylint: disable=unused-argument
-        with open('somelogconf.xml', 'r', encoding='utf8') as file_handle:
+        with open('someconflog.xml', 'r', encoding='utf8') as file_handle:
             assert file_handle.read() == XML_WITHOUT_PARAMS
-        conf = load('somelogconf.xml')
+        conf = load('someconflog.xml')
         self.assertFalse('datefmt' in conf)
         self.assertFalse('filename' in conf)
         self.assertFalse('filemode' in conf)
@@ -54,9 +54,9 @@ class TestXmlLoader(unittest.TestCase):
 
     @patch('builtins.open', new_callable=mock_open, read_data=XML_EMPTY)
     def test_load_with_empty_xml(self, func): # pylint: disable=unused-argument
-        with open('somelogconf.xml', 'r', encoding='utf8') as file_handle:
+        with open('someconflog.xml', 'r', encoding='utf8') as file_handle:
             assert file_handle.read() == XML_EMPTY
-        conf = load('somelogconf.xml')
+        conf = load('someconflog.xml')
         self.assertFalse('datefmt' in conf)
         self.assertFalse('filename' in conf)
         self.assertFalse('filemode' in conf)
@@ -66,7 +66,7 @@ class TestXmlLoader(unittest.TestCase):
 
     @patch('builtins.open', new_callable=mock_open, read_data=XML_INVALID)
     def test_load_with_invalid_xml(self, func): # pylint: disable=unused-argument
-        with open('somelogconf.xml', 'r', encoding='utf8') as file_handle:
+        with open('someconflog.xml', 'r', encoding='utf8') as file_handle:
             assert file_handle.read() == XML_INVALID
         with self.assertRaises(xml.etree.ElementTree.ParseError):
-            load('somelogconf.xml')
+            load('someconflog.xml')

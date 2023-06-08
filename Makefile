@@ -3,7 +3,7 @@ version=`yq -r .version conf/info.yaml`
 ci: clean deps lint test coverage complexity doc package reinstall test-integration
 
 clean:
-	rm -rf stage *.egg-info build dist docs/ logconf/_pycache_/ logconf/*.pyc tests/_pycache_/ tests/*.pyc .coverage
+	rm -rf stage *.egg-info build dist docs/ conflog/_pycache_/ conflog/*.pyc tests/_pycache_/ tests/*.pyc .coverage
 
 stage:
 	mkdir -p stage stage/ docs/
@@ -17,7 +17,7 @@ deps-extra:
 
 doc: stage
 	rm -rf docs/doc/sphinx/ && mkdir -p docs/doc/sphinx/
-	sphinx-apidoc -o stage/doc/sphinx/ --full -H "logconf" -A "Cliffano Subagio" logconf && \
+	sphinx-apidoc -o stage/doc/sphinx/ --full -H "conflog" -A "Cliffano Subagio" conflog && \
 		cd stage/doc/sphinx/ && \
 		make html && \
 		cp -R _build/html/* ../../../docs/doc/sphinx/
@@ -48,12 +48,12 @@ release-patch:
 
 lint: stage
 	mkdir -p stage/lint/pylint/ docs/lint/pylint/
-	pylint logconf/*.py logconf/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py examples/*.py
-	pylint logconf/*.py logconf/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py examples/*.py --output-format=pylint_report.CustomJsonReporter > stage/lint/pylint/report.json
+	pylint conflog/*.py conflog/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py examples/*.py
+	pylint conflog/*.py conflog/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py examples/*.py --output-format=pylint_report.CustomJsonReporter > stage/lint/pylint/report.json
 	pylint_report stage/lint/pylint/report.json -o docs/lint/pylint/index.html
 
 complexity: stage
-	wily build logconf/
+	wily build conflog/
 	wily report docs/complexity/wily/index.html
 
 test:
@@ -65,7 +65,7 @@ test-integration:
 	cd examples/ && python3 log.py
 
 coverage:
-	COVERAGE_FILE=.coverage.unit coverage run --source=./logconf -m unittest discover -s tests
+	COVERAGE_FILE=.coverage.unit coverage run --source=./conflog -m unittest discover -s tests
 	coverage combine
 	coverage report
 	coverage html
@@ -75,10 +75,10 @@ coverage:
 ################################################################################
 
 install: package
-	pip3 install dist/logconf-`yq -r .version conf/info.yaml | sed "s/-/_/g"`-py3-none-any.whl
+	pip3 install dist/conflog-`yq -r .version conf/info.yaml | sed "s/-/_/g"`-py3-none-any.whl
 
 uninstall:
-	pip3 uninstall logconf -y
+	pip3 uninstall conflog -y
 
 reinstall:
 	make uninstall || echo "Nothing to uninstall..."

@@ -12,14 +12,14 @@ with open(readme_file, 'r', encoding='utf8') as readme_fh:
     readme = readme_fh.read()
 
 setuptools.setup(
-    name='logconf',
+    name='conflog',
     description='Python logging setup via environment variables and configuration files',
     version=sic(info['version']),
     author='Cliffano Subagio',
     author_email='cliffano@gmail.com',
     long_description=readme,
     long_description_content_type='text/markdown',
-    url='https://github.com/cliffano/pylogconf',
+    url='https://github.com/cliffano/pyconflog',
     keywords=['log', 'logger', 'logging', 'config', 'configuration', 'environment', 'envvar', 'ini', 'json', 'xml', 'yaml'],
     packages=setuptools.find_packages(),
     include_package_data=True,

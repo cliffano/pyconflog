@@ -13,7 +13,7 @@ LEVELS = {
 
 DEFAULT_HANDLERS = 'stream'
 DEFAULT_DATEFMT = '%d-%b-%y %H:%M:%S'
-DEFAULT_FILENAME = 'logconf.log'
+DEFAULT_FILENAME = 'conflog.log'
 DEFAULT_FILEMODE = 'w'
 DEFAULT_FORMAT = '%(asctime)s --> %(name)s - %(levelname)s - %(message)s'
 DEFAULT_LEVEL = 'info'
@@ -67,7 +67,7 @@ class Config():
 
     def get_filename(self):
         """Get log filename.
-        If log filename is not specified, default to 'logconf.log'.
+        If log filename is not specified, default to 'conflog.log'.
         """
         return self.conf.get('filename', DEFAULT_FILENAME)
 
