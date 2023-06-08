@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- Fix missing dist/ folder prior to publishing to Pypi
+
 ## 0.10.0 - 2023-06-07
 ### Added
 - Initial version
