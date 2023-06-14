@@ -52,6 +52,8 @@ class Conflog():
             logger.addHandler(handler)
 
         logger = logging.LoggerAdapter(logger, self.extras)
+        logger.setLevel(self.config.get_level())
+
         return logger
 
     def close_logger_handlers(self, name):

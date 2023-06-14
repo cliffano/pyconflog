@@ -59,6 +59,7 @@ class TestConflog(unittest.TestCase):
         self.assertFalse(mock_logger.propagate)
         mock_logger.addHandler.assert_any_call(mock_stream_handler)
         mock_logger.addHandler.assert_any_call(mock_file_handler)
+        mock_adapted_logger.setLevel.assert_called_once_with(logging.INFO)
 
         conflog.close_logger_handlers('someloggername')
         mock_stream_handler.close.assert_called_once_with()
