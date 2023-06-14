@@ -2,6 +2,7 @@
 from unittest.mock import patch
 import unittest.mock
 import unittest
+import logging
 from conflog.handlers.file_handler import init
 
 class TestFileHandler(unittest.TestCase):
@@ -15,6 +16,7 @@ class TestFileHandler(unittest.TestCase):
 
         mock_config = unittest.mock.Mock()
         mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
+        mock_config.get_level.return_value = logging.INFO
         mock_config.get_format.return_value = '%(asctime)s --> '\
                                               '%(name)s - %(levelname)s - %(message)s'
         mock_config.get_filename.return_value = 'conflog.log'
@@ -29,3 +31,4 @@ class TestFileHandler(unittest.TestCase):
         result = init(mock_config)
         self.assertEqual(result, mock_file_handler)
         mock_file_handler.setFormatter.assert_called_once_with(mock_formatter)
+        mock_file_handler.setLevel.assert_called_once_with(logging.INFO)

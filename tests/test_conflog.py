@@ -45,7 +45,9 @@ class TestConflog(unittest.TestCase):
 
         conflog = Conflog(conf_files=['somefile.ini', 'somefile.json'])
         mock_stream_handler.setFormatter.assert_called_once_with(mock_formatter)
+        mock_stream_handler.setLevel.assert_called_once_with(logging.INFO)
         mock_file_handler.setFormatter.assert_called_once_with(mock_formatter)
+        mock_file_handler.setLevel.assert_called_once_with(logging.INFO)
         func_basic_config.assert_called_once_with(
             datefmt='%d-%b-%y %H:%M:%S',
             level=logging.INFO,

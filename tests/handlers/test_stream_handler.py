@@ -2,6 +2,7 @@
 from unittest.mock import patch
 import unittest.mock
 import unittest
+import logging
 from conflog.handlers.stream_handler import init
 
 class TestStreamHandler(unittest.TestCase):
@@ -15,6 +16,7 @@ class TestStreamHandler(unittest.TestCase):
 
         mock_config = unittest.mock.Mock()
         mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
+        mock_config.get_level.return_value = logging.INFO
         mock_config.get_format.return_value = '%(asctime)s --> '\
                                               '%(name)s - %(levelname)s - %(message)s'
 
@@ -27,3 +29,4 @@ class TestStreamHandler(unittest.TestCase):
         result = init(mock_config)
         self.assertEqual(result, mock_stream_handler)
         mock_stream_handler.setFormatter.assert_called_once_with(mock_formatter)
+        mock_stream_handler.setLevel.assert_called_once_with(logging.INFO)
