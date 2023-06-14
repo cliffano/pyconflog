@@ -61,3 +61,6 @@ class TestConflog(unittest.TestCase):
         conflog.close_logger_handlers('someloggername')
         mock_stream_handler.close.assert_called_once_with()
         mock_file_handler.close.assert_called_once_with()
+
+        config = conflog.get_config_properties()
+        self.assertEqual(config, mock_config.conf)

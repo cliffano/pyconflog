@@ -45,10 +45,6 @@ release-patch:
 	sed -i -e 's/-rc0.0/rc0/' conf/info.yaml
 	git commit conf/info.yaml -m "Switch version to Python setuptools versioning scheme"
 
-################################################################################
-# Test targets
-################################################################################
-
 lint: stage
 	mkdir -p stage/lint/pylint/ docs/lint/pylint/
 	pylint conflog/*.py conflog/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py examples/*.py
@@ -72,10 +68,6 @@ coverage:
 	coverage combine
 	coverage report
 	coverage html
-
-################################################################################
-# Package targets
-################################################################################
 
 install: package
 	pip3 install dist/conflog-`yq -r .version conf/info.yaml | sed "s/-/_/g"`-py3-none-any.whl

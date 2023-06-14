@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Add Conflog.get_config_properties method
+
 ### Fixed
 - Fix missing PyYAML dependency
 

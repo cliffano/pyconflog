@@ -25,17 +25,17 @@ class Conflog():
         if isinstance(conf_files, str):
             conf_files = [conf_files]
 
-        config = Config(conf_files=conf_files)
-        handlers = config.get_handlers()
-        datefmt = config.get_datefmt()
-        level = config.get_level()
-        self.extras = config.get_extras()
+        self.config = Config(conf_files=conf_files)
+        handlers = self.config.get_handlers()
+        datefmt = self.config.get_datefmt()
+        level = self.config.get_level()
+        self.extras = self.config.get_extras()
 
         self.handlers = []
         if 'stream' in handlers:
-            self.handlers.append(init_stream_handler(config))
+            self.handlers.append(init_stream_handler(self.config))
         if 'file' in handlers:
-            self.handlers.append(init_file_handler(config))
+            self.handlers.append(init_file_handler(self.config))
 
         logging.basicConfig(
             datefmt=datefmt,
@@ -62,3 +62,8 @@ class Conflog():
         for handler in logger.handlers:
             handler.close()
         logger.handlers.clear()
+
+    def get_config_properties(self):
+        """Get the configuration properties dictionary.
+        """
+        return self.config.conf

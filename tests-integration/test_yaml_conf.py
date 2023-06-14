@@ -7,9 +7,21 @@ from conflog import Conflog
 class TestYamlConf(unittest.TestCase):
 
     def setUp(self):
+        os.unsetenv('CONFLOG_HANDLERS')
+        if 'CONFLOG_HANDLERS' in os.environ:
+            os.environ.pop('CONFLOG_HANDLERS')
+        os.unsetenv('CONFLOG_DATEFMT')
+        if 'CONFLOG_DATEFMT' in os.environ:
+            os.environ.pop('CONFLOG_DATEFMT')
         os.unsetenv('CONFLOG_FORMAT')
         if 'CONFLOG_FORMAT' in os.environ:
             os.environ.pop('CONFLOG_FORMAT')
+        os.unsetenv('CONFLOG_LEVEL')
+        if 'CONFLOG_LEVEL' in os.environ:
+            os.environ.pop('CONFLOG_LEVEL')
+        os.unsetenv('CONFLOG_EXTRAS')
+        if 'CONFLOG_EXTRAS' in os.environ:
+            os.environ.pop('CONFLOG_EXTRAS')
         self.logger_name = None
         self.conflog = None
         self.log_file = 'stage/test-integration/test-yaml-conf.log'
