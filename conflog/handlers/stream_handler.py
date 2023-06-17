@@ -1,8 +1,9 @@
 """Stream handler module for conflog.
 """
 import logging
+from ..config import Config
 
-def init(config):
+def init(config: Config) -> logging.StreamHandler:
     """Initialise stream handler.
     """
     _format = config.get_format()

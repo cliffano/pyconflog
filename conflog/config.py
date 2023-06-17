@@ -1,5 +1,6 @@
 """A module for managing logging configurations.
 """
+from typing import Union
 import logging
 from .loaders import environ_loader, ini_loader, json_loader, xml_loader, yaml_loader
 
@@ -23,7 +24,7 @@ class Config():
     """A class for managing logging configurations.
     """
 
-    def __init__(self, conf_files=None):
+    def __init__(self, conf_files: Union[None, list]=None):
         """Initialise config by loading and merging
         the configuration options from files and environment
         variables.
@@ -50,7 +51,7 @@ class Config():
         # Load configurations from environment variables
         self.conf = {**self.conf, **environ_loader.load()}
 
-    def get_handlers(self):
+    def get_handlers(self) -> str:
         """Get handlers.
         Handlers is a comma separated value of the handler
         types to be used.
@@ -59,39 +60,39 @@ class Config():
         """
         return self.conf.get('handlers', DEFAULT_HANDLERS).split(',')
 
-    def get_datefmt(self):
+    def get_datefmt(self) -> str:
         """Get date format.
         If date format is not specified, default to '%d-%b-%y %H:%M:%S'.
         """
         return self.conf.get('datefmt', DEFAULT_DATEFMT)
 
-    def get_filename(self):
+    def get_filename(self) -> str:
         """Get log filename.
         If log filename is not specified, default to 'conflog.log'.
         """
         return self.conf.get('filename', DEFAULT_FILENAME)
 
-    def get_filemode(self):
+    def get_filemode(self) -> str:
         """Get file mode.
         If file mode is not specified, default to 'w'.
         """
         return self.conf.get('filemode', DEFAULT_FILEMODE)
 
-    def get_format(self):
+    def get_format(self) -> str:
         """Get log format.
         If log format is not specified, default to
         '%(asctime)s --> %(name)s - %(levelname)s - %(message)s'.
         """
         return self.conf.get('format', DEFAULT_FORMAT)
 
-    def get_level(self):
+    def get_level(self) -> int:
         """Get log level.
         If log level is not specified, default to 'info'.
         """
         level = self.conf.get('level', DEFAULT_LEVEL)
         return LEVELS[level]
 
-    def get_extras(self):
+    def get_extras(self) -> dict:
         """Get extras.
         Extras is a dictionary of extra message parameters
         to be added to the log.

@@ -1,8 +1,9 @@
 """File handler module for conflog.
 """
 import logging
+from ..config import Config
 
-def init(config):
+def init(config: Config) -> logging.FileHandler:
     """Initialise file handler with specified configuration.
     """
     _format = config.get_format()

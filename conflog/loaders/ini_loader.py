@@ -4,7 +4,7 @@ import configparser
 import io
 from . import PARAMS
 
-def load(conf_file):
+def load(conf_file: str) -> dict:
     """Get configuration values from JSON file.
     """
     conf = {}

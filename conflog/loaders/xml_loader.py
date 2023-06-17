@@ -3,7 +3,7 @@
 import xml.etree.ElementTree as ET
 from . import PARAMS
 
-def load(conf_file):
+def load(conf_file: str) -> dict:
     """Get configuration values from XML file.
     """
     conf = {}

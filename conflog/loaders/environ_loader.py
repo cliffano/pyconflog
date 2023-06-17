@@ -3,7 +3,7 @@
 import os
 from . import PARAMS
 
-def load():
+def load() -> dict:
     """Get configuration values from environment variables.
     Configuration values are prefixed with CONFLOG_.
     """

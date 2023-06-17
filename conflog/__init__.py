@@ -9,6 +9,7 @@ It is intended to be used with configuration files
 in various formats, including JSON, INI, XML, and YAML.
 """
 
+from typing import Union
 import logging
 from .handlers.file_handler import init as init_file_handler
 from .handlers.stream_handler import init as init_stream_handler
@@ -18,7 +19,7 @@ class Conflog():
     """A class for managing Python logging logger and handlers.
     """
 
-    def __init__(self, conf_files=None):
+    def __init__(self, conf_files: Union[None, str, list]=None):
         """Initialise Python logging with configuration from conf_files.
         """
 
@@ -42,7 +43,7 @@ class Conflog():
             level=level
         )
 
-    def get_logger(self, name):
+    def get_logger(self, name: str) -> logging.Logger:
         """Get the logger based on the given name
         and add the handlers to the logger.
         """
@@ -56,7 +57,7 @@ class Conflog():
 
         return logger
 
-    def close_logger_handlers(self, name):
+    def close_logger_handlers(self, name: str) -> None:
         """Close logger handlers
         and clear the handlers from logger.
         """
@@ -65,7 +66,7 @@ class Conflog():
             handler.close()
         logger.handlers.clear()
 
-    def get_config_properties(self):
+    def get_config_properties(self) -> dict:
         """Get the configuration properties dictionary.
         """
         return self.config.conf
