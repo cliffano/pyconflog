@@ -1,12 +1,12 @@
 """
 conflog
 =======
-A simple logging configuration library.
+Python logging setup via environment variables and configuration files.
 
-This library provides a way to configure logging
-for Python applications.
-It is intended to be used with configuration files
-in various formats, including JSON, INI, XML, and YAML.
+This library provides a way to configure logging for Python applications.
+It is intended to be used with configuration files in various formats,
+including JSON, INI, XML, and YAML, along with the ability to overwrite
+a configuration via environment variables.
 """
 
 from typing import Union
