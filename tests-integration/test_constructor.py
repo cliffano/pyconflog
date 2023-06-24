@@ -4,7 +4,7 @@ import os
 import os.path
 from conflog import Conflog
 
-class TestNoConf(unittest.TestCase):
+class TestConstructor(unittest.TestCase):
 
     def setUp(self):
         os.unsetenv('CONFLOG_HANDLERS')
