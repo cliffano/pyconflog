@@ -98,7 +98,6 @@ class TestConstructor(unittest.TestCase):
 
     def test_constructor_with_string_arg_and_envvar_overwrites(self):
 
-        # # set env var CONFLOG_FORMAT
         os.environ['CONFLOG_HANDLERS'] = 'file'
         os.environ['CONFLOG_DATEFMT'] = '%Y'
         os.environ['CONFLOG_FORMAT'] = '[ENVVAR-CONFLOG] [%(env)s-%(id)s] %(levelname)s %(message)s'
