@@ -117,6 +117,40 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(extras['some_extra1'], 'some_value1')
         self.assertEqual(extras['some_extra2'], 'some_value2')
 
+    @patch('conflog.loaders.yaml_loader.load')
+    @patch('conflog.loaders.ini_loader.load')
+    def test_get_config_with_ini_overwritten_by_yaml_sequence(self, func_ini, func_yaml):
+        func_ini.return_value = CUSTOM_CONF
+        func_yaml.return_value = OVERWRITE_CONF
+        config = Config(conf_files=['somefile.ini', 'somefile.yaml'])
+        self.assertEqual(config.get_handlers(), ['stream', 'file'])
+        self.assertEqual(config.get_datefmt(), '%d%m%y')
+        self.assertEqual(config.get_filename(), 'overwriteconflog.log')
+        self.assertEqual(config.get_filemode(), 'r')
+        self.assertEqual(config.get_format(),
+                         'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
+        self.assertEqual(config.get_level(), logging.DEBUG)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 1)
+        self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')
+
+    @patch('conflog.loaders.ini_loader.load')
+    @patch('conflog.loaders.yaml_loader.load')
+    def test_get_config_with_yaml_overwritten_by_ini_sequence(self, func_yaml, func_ini):
+        func_yaml.return_value = CUSTOM_CONF
+        func_ini.return_value = OVERWRITE_CONF
+        config = Config(conf_files=['somefile.yaml', 'somefile.ini'])
+        self.assertEqual(config.get_handlers(), ['stream', 'file'])
+        self.assertEqual(config.get_datefmt(), '%d%m%y')
+        self.assertEqual(config.get_filename(), 'overwriteconflog.log')
+        self.assertEqual(config.get_filemode(), 'r')
+        self.assertEqual(config.get_format(),
+                         'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
+        self.assertEqual(config.get_level(), logging.DEBUG)
+        extras = config.get_extras()
+        self.assertEqual(len(extras.keys()), 1)
+        self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')
+
     @patch('conflog.loaders.environ_loader.load')
     @patch('conflog.loaders.ini_loader.load')
     def test_get_config_with_ini_overwritten_by_environ(self, func_ini, func_environ):
@@ -134,36 +168,23 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(len(extras.keys()), 1)
         self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')
 
-    @patch('conflog.loaders.yaml_loader.load')
+    @patch('conflog.loaders.environ_loader.load')
     @patch('conflog.loaders.ini_loader.load')
-    def test_get_config_with_ini_overwritten_by_yaml(self, func_ini, func_yaml):
+    def test_get_config_with_ini_overwritten_by_conf_dict(self, func_ini, func_environ):
         func_ini.return_value = CUSTOM_CONF
-        func_yaml.return_value = OVERWRITE_CONF
-        config = Config(conf_files=['somefile.ini', 'somefile.yaml'])
-        self.assertEqual(config.get_handlers(), ['stream', 'file'])
-        self.assertEqual(config.get_datefmt(), '%d%m%y')
-        self.assertEqual(config.get_filename(), 'overwriteconflog.log')
-        self.assertEqual(config.get_filemode(), 'r')
-        self.assertEqual(config.get_format(),
-                         'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
-        self.assertEqual(config.get_level(), logging.DEBUG)
-        extras = config.get_extras()
-        self.assertEqual(len(extras.keys()), 1)
-        self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')
-
-    @patch('conflog.loaders.ini_loader.load')
-    @patch('conflog.loaders.yaml_loader.load')
-    def test_get_config_with_yaml_overwritten_by_ini(self, func_yaml, func_ini):
-        func_yaml.return_value = CUSTOM_CONF
-        func_ini.return_value = OVERWRITE_CONF
-        config = Config(conf_files=['somefile.yaml', 'somefile.ini'])
-        self.assertEqual(config.get_handlers(), ['stream', 'file'])
-        self.assertEqual(config.get_datefmt(), '%d%m%y')
-        self.assertEqual(config.get_filename(), 'overwriteconflog.log')
-        self.assertEqual(config.get_filemode(), 'r')
-        self.assertEqual(config.get_format(),
-                         'overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s')
-        self.assertEqual(config.get_level(), logging.DEBUG)
-        extras = config.get_extras()
-        self.assertEqual(len(extras.keys()), 1)
-        self.assertEqual(extras['some_overwrite_extra1'], 'some_overwrite_value1')
+        func_environ.return_value = OVERWRITE_CONF
+        conf_dict = {
+            'handlers': 'stream',
+            'datefmt': '%y',
+            'filename': 'overwriteconfdictlog.log',
+            'filemode': 'w',
+            'format': '%(message)s',
+            'level': 'critical'
+        }
+        config = Config(conf_files=['somefile.ini'], conf_dict=conf_dict)
+        self.assertEqual(config.get_handlers(), ['stream'])
+        self.assertEqual(config.get_datefmt(), '%y')
+        self.assertEqual(config.get_filename(), 'overwriteconfdictlog.log')
+        self.assertEqual(config.get_filemode(), 'w')
+        self.assertEqual(config.get_format(), '%(message)s')
+        self.assertEqual(config.get_level(), logging.CRITICAL)

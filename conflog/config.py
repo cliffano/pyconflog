@@ -24,10 +24,11 @@ class Config():
     """A class for managing logging configurations.
     """
 
-    def __init__(self, conf_files: Union[None, list]=None):
+    def __init__(self, conf_files: Union[None, list]=None, conf_dict: Union[None, list]=None):
         """Initialise config by loading and merging
         the configuration options from files and environment
-        variables.
+        variables, with optional configuration dictionary overwriting
+        everything being specified.
         """
 
         self.conf = {}
@@ -49,7 +50,13 @@ class Config():
             self.conf = {**self.conf, **curr_conf}
 
         # Load configurations from environment variables
+        # Environment variables configuration overwrites all configuration
+        # files supplied
         self.conf = {**self.conf, **environ_loader.load()}
+
+        # Overwrite everything if configuration dictionary is supplied
+        if conf_dict:
+            self.conf = {**self.conf, **conf_dict}
 
     def get_handlers(self) -> str:
         """Get handlers.

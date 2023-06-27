@@ -43,7 +43,10 @@ class TestConflog(unittest.TestCase):
         mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
         mock_config.get_level.return_value = logging.INFO
 
-        conflog = Conflog(conf_files=['somefile.ini', 'somefile.json'])
+        conflog = Conflog(
+            conf_files=['somefile.ini', 'somefile.json'],
+            conf_dict={'format': '[SOMEAPP] %(message)s'}
+        )
         mock_stream_handler.setFormatter.assert_called_once_with(mock_formatter)
         mock_stream_handler.setLevel.assert_called_once_with(logging.INFO)
         mock_file_handler.setFormatter.assert_called_once_with(mock_formatter)
@@ -57,13 +60,19 @@ class TestConflog(unittest.TestCase):
         func_get_logger.assert_called_with('someloggername')
         self.assertEqual(logger, mock_adapted_logger)
         self.assertFalse(mock_logger.propagate)
+
+        # should add configured handlers
         mock_logger.addHandler.assert_any_call(mock_stream_handler)
         mock_logger.addHandler.assert_any_call(mock_file_handler)
+
+        # should set configured log level
         mock_adapted_logger.setLevel.assert_called_once_with(logging.INFO)
 
         conflog.close_logger_handlers('someloggername')
+        # should close configured handlers
         mock_stream_handler.close.assert_called_once_with()
         mock_file_handler.close.assert_called_once_with()
 
         config = conflog.get_config_properties()
+        # should retrieve the correct configuration
         self.assertEqual(config, mock_config.conf)

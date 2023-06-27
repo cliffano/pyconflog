@@ -19,14 +19,15 @@ class Conflog():
     """A class for managing Python logging logger and handlers.
     """
 
-    def __init__(self, conf_files: Union[None, str, list]=None):
-        """Initialise Python logging with configuration from conf_files.
+    def __init__(self, conf_files: Union[None, str, list]=None, conf_dict: Union[None, dict]=None):
+        """Initialise Python logging with configuration from
+        configuration files and configuration dictionary.
         """
 
         if isinstance(conf_files, str):
             conf_files = [conf_files]
 
-        self.config = Config(conf_files=conf_files)
+        self.config = Config(conf_files=conf_files, conf_dict=conf_dict)
         handlers = self.config.get_handlers()
         datefmt = self.config.get_datefmt()
         level = self.config.get_level()
