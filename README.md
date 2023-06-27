@@ -138,7 +138,7 @@ Example configuration environment variables:
 Colophon
 --------
 
-[Developer's Guide](https://cliffano.github.io/developers_guide.html#nodejs)
+[Developer's Guide](https://cliffano.github.io/developers_guide.html#python)
 
 Build reports:
 
