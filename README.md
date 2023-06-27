@@ -35,7 +35,7 @@ And then use it in your Python code:
 
     from conflog import Conflog
 
-    cfl = conflog.Conflog(conf_files=['conflog.yaml'])
+    cfl = Conflog(conf_files=['conflog.yaml'])
     logger = cfl.get_logger('somename')
     logger.debug('Some debug message')
     logger.info('Some info message')
