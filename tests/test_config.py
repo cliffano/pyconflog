@@ -188,3 +188,37 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_filemode(), 'w')
         self.assertEqual(config.get_format(), '%(message)s')
         self.assertEqual(config.get_level(), logging.CRITICAL)
+
+    def test_get_config_with_uppercase_level(self):
+        conf_dict = {
+            'handlers': 'stream',
+            'datefmt': '%y',
+            'filename': 'overwriteconfdictlog.log',
+            'filemode': 'w',
+            'format': '%(message)s',
+            'level': 'CRITICAL'
+        }
+        config = Config(conf_dict=conf_dict)
+        self.assertEqual(config.get_handlers(), ['stream'])
+        self.assertEqual(config.get_datefmt(), '%y')
+        self.assertEqual(config.get_filename(), 'overwriteconfdictlog.log')
+        self.assertEqual(config.get_filemode(), 'w')
+        self.assertEqual(config.get_format(), '%(message)s')
+        self.assertEqual(config.get_level(), logging.CRITICAL)
+
+    def test_get_config_with_mixed_case_level(self):
+        conf_dict = {
+            'handlers': 'stream',
+            'datefmt': '%y',
+            'filename': 'overwriteconfdictlog.log',
+            'filemode': 'w',
+            'format': '%(message)s',
+            'level': 'WaRning'
+        }
+        config = Config(conf_dict=conf_dict)
+        self.assertEqual(config.get_handlers(), ['stream'])
+        self.assertEqual(config.get_datefmt(), '%y')
+        self.assertEqual(config.get_filename(), 'overwriteconfdictlog.log')
+        self.assertEqual(config.get_filemode(), 'w')
+        self.assertEqual(config.get_format(), '%(message)s')
+        self.assertEqual(config.get_level(), logging.WARNING)

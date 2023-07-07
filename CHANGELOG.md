@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Allow case-insensitive level configuration
+
 ## 1.4.0 - 2023-06-27
 ### Added
 - Add function signature type hints

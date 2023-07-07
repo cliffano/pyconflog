@@ -97,7 +97,7 @@ class Config():
         If log level is not specified, default to 'info'.
         """
         level = self.conf.get('level', DEFAULT_LEVEL)
-        return LEVELS[level]
+        return LEVELS[level.lower()]
 
     def get_extras(self) -> dict:
         """Get extras.
