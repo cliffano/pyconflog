@@ -30,6 +30,6 @@ setuptools.setup(
     ],
     python_requires='>=3.8',
     install_requires=[
-        'PyYAML==6.0'
+        'PyYAML==6.0.1'
     ],
 )

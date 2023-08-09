@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- Fix PyYAML 6.0.1 upgrade missed out from setup.py
+
 ## 1.5.0 - 2023-08-09
 ### Changed
 - Allow case-insensitive level configuration
