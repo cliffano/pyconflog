@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Add Python 3.12 support
+
 ## 1.5.1 - 2023-08-09
 ### Fixed
 - Fix PyYAML 6.0.1 upgrade missed out from setup.py
