@@ -1,88 +1,141 @@
-version=`yq -r .version conf/info.yaml`
+################################################################
+# PieMaker: Makefile for building Python packages
+# https://github.com/cliffano/piemaker
+################################################################
 
+# PieMaker's version number
+PIEMAKER_VERSION = 1.0.0
+
+################################################################
+# User configuration variables
+# These variables should be stored in piemaker.yml config file,
+# and they will be parsed using yq https://github.com/mikefarah/yq
+# Example:
+# ---
+# package_name: somepackage
+# author: Some Author
+
+# PACKAGE_NAME is the name of the Python package
+PACKAGE_NAME=$(shell yq .package_name piemaker.yml)
+
+# AUTHOR is the author of the Python package
+AUTHOR ?= $(shell yq .author piemaker.yml)
+
+$(info ################################################################)
+$(info Building Python package using PieMaker with user configurations:)
+$(info - Package name: ${PACKAGE_NAME})
+$(info - Author: ${AUTHOR})
+
+export POETRY_HOME := /opt/poetry
+export VIRTUAL_ENV := /opt/poetry-venv
+export PATH := ${VIRTUAL_ENV}/bin:${POETRY_HOME}/bin:$(PATH)
+
+################################################################
+# Base targets
+
+# CI target to be executed by CI/CD tool
 ci: clean deps lint test coverage complexity doc package reinstall test-integration
 
-# Exclude complexity due to complexity requiring no uncommited local change
-dev: clean deps lint test coverage doc package reinstall test-integration
-
-clean:
-	rm -rf stage *.egg-info build dist docs/ conflog/_pycache_/ conflog/*.pyc tests/_pycache_/ tests/*.pyc .coverage
-
+# Ensure stage directory exists
 stage:
-	mkdir -p stage stage/ docs/
+	mkdir -p stage
 
+# Remove all temporary (staged, generated, cached) files
+clean:
+	rm -rf stage/ *.lock *.egg-info build dist/ docs/ $(PACKAGE_NAME)/__pycache__/ $(PACKAGE_NAME)/*.pyc tests/__pycache__/ tests/*.pyc .coverage ~/.wily/ .pytest_cache/ .tox/ .mypy_cache/ .coverage.*
+
+# Retrieve the Pyhon package dependencies
 deps:
-	pip3 install --ignore-installed -r requirements.txt
-	pip3 install --ignore-installed -r requirements-dev.txt
+	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install poetry --ignore-installed
+	python3 -m venv ${VIRTUAL_ENV} && PATH=${POETRY_HOME}/bin/:$$PATH poetry install --no-root --compile
 
-deps-extra:
-	apt-get install jq
+deps-extra-apt:
+	apt-get update
+	apt-get install -y python3-venv
 
-doc: stage
-	rm -rf docs/doc/sphinx/ && mkdir -p docs/doc/sphinx/
-	sphinx-apidoc -o stage/doc/sphinx/ --full -H "conflog" -A "Cliffano Subagio" conflog && \
-		cd stage/doc/sphinx/ && \
-		make html && \
-		cp -R _build/html/* ../../../docs/doc/sphinx/
+# Update Makefile to the latest version on origin's main branch
+update-to-latest:
+	curl https://raw.githubusercontent.com/cliffano/piemaker/main/src/Makefile-piemaker -o Makefile
 
-# Due to the difference in pre-release handling between Python setuptools and semver (which RTK supports),
-# we have to massage the version number in conf/info.yaml before and after rtk release.
-release-major:
-	sed -i -e 's/rc0/-rc0/' conf/info.yaml
-	rtk release --release-increment-type major
-	sed -i -e 's/-rc0.0/rc0/' conf/info.yaml
-	git commit conf/info.yaml -m "Switch version to Python setuptools versioning scheme"
+# Update Makefile to the version defined in TARGET_PIEMAKER_VERSION parameter
+update-to-version:
+	curl https://raw.githubusercontent.com/cliffano/piemaker/$(TARGET_PIEMAKER_VERSION)/src/Makefile-piemaker -o Makefile
 
-release-minor:
-	sed -i -e 's/rc0/-rc0/' conf/info.yaml
-	rtk release --release-increment-type minor
-	sed -i -e 's/-rc0.0/rc0/' conf/info.yaml
-	git commit conf/info.yaml -m "Switch version to Python setuptools versioning scheme"
-
-release-patch:
-	sed -i -e 's/rc0/-rc0/' conf/info.yaml
-	rtk release --release-increment-type patch
-	sed -i -e 's/-rc0.0/rc0/' conf/info.yaml
-	git commit conf/info.yaml -m "Switch version to Python setuptools versioning scheme"
+################################################################
+# Testing targets
 
 lint: stage
-	mkdir -p stage/lint/pylint/ docs/lint/pylint/
-	pylint conflog/*.py conflog/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py examples/*.py
-	pylint conflog/*.py conflog/loaders/*.py tests/*.py tests/loaders/*.py tests-integration/*.py examples/*.py --output-format=pylint_report.CustomJsonReporter > stage/lint/pylint/report.json
-	pylint_report stage/lint/pylint/report.json -o docs/lint/pylint/index.html
+	mkdir -p docs/lint/pylint/ docs/lint/pylint/
+	pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo)
+	pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo) --output-format=pylint_report.CustomJsonReporter > docs/lint/pylint/report.json
+	pylint_report docs/lint/pylint/report.json -o docs/lint/pylint/index.html
 
 complexity: stage
-	wily build conflog/
-	wily report docs/complexity/wily/index.html
+	mv poetry.lock  /tmp/poetry.lock || echo "No poetry.lock to backup..."
+	rm -rf docs/complexity/wily/ && mkdir -p docs/complexity/wily/
+	wily clean -y && wily build $(PACKAGE_NAME)/
+	wily report --format HTML --output docs/complexity/wily/index.html $(PACKAGE_NAME)/__init__.py && wily list-metrics
+	mv /tmp/poetry.lock poetry.lock || echo "No backup poetry.lock to restore..."
 
 test:
-	pytest -v tests --html=docs/test/pytest/index.html --self-contained-html
+	rm -rf docs/test/pytest/ && mkdir -p docs/test/pytest/
+	pytest -v tests --html=docs/test/pytest/index.html --self-contained-html --capture=no
 
 test-integration:
-	rm -rf stage/test-integration/ && mkdir -p stage/test-integration/
-	python3 -m unittest tests-integration/*.py
-	cd examples/ && python3 log.py
+	rm -rf docs/test-integration/pytest/ && mkdir -p docs/test-integration/pytest/
+	pytest -v tests-integration --html=docs/test-integration/pytest/index.html --self-contained-html --capture=no
+
+test-examples:
+	for f in examples/*.sh; do \
+	  bash "$$f"; \
+	done
 
 coverage:
-	COVERAGE_FILE=.coverage.unit coverage run --source=./conflog -m unittest discover -s tests
+	rm -rf docs/coverage/coverage/ && mkdir -p docs/coverage/coverage/
+	COVERAGE_FILE=.coverage.unit coverage run --source=./$(PACKAGE_NAME) -m unittest discover -s tests
 	coverage combine
 	coverage report
 	coverage html
 
-install: package
-	pip3 install dist/conflog-`yq -r .version conf/info.yaml | sed "s/-/_/g"`-py3-none-any.whl
+################################################################
+# Release targets
 
-uninstall:
-	pip3 uninstall conflog -y
+release-major:
+	rtk release --release-increment-type major
 
-reinstall:
-	make uninstall || echo "Nothing to uninstall..."
-	make clean deps package install
+release-minor:
+	rtk release --release-increment-type minor
+
+release-patch:
+	rtk release --release-increment-type patch
+
+################################################################
+# Packaging, installation, and publishing targets
 
 package:
-	python3 setup.py sdist bdist_wheel
+	poetry build
+
+install: package
+	poetry install
+
+uninstall:
+	pip3 uninstall $(PACKAGE_NAME) -y || echo "Nothing to uninstall..."
+
+reinstall: uninstall install
 
 publish:
-	twine upload dist/*
+	poetry publish --username __token__ --password $(PASSWORD)
 
-.PHONY: ci dev clean stage deps deps-extra doc release lint complexity test test-integration coverage install uninstall reinstall package publish
+################################################################
+# Documentation targets
+
+doc: stage
+	rm -rf docs/doc/sphinx/ && mkdir -p docs/doc/sphinx/
+	sphinx-apidoc -o docs/doc/sphinx/ --full -H "$(PACKAGE_NAME)" -A "$(AUTHOR)" $(PACKAGE_NAME) && \
+		cd docs/doc/sphinx/ && \
+		make html && \
+		cp -R _build/html/* ../../../docs/doc/sphinx/
+
+################################################################
+
+.PHONY: all ci clean stage deps deps-extra doc release lint complexity test test-integration test-examples coverage install uninstall reinstall package publish

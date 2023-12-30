@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add Python 3.12 support
 
+### Changed
+- Use PieMaker for Makefile build
+- Use Poetry to manage project
+
 ## 1.5.1 - 2023-08-09
 ### Fixed
 - Fix PyYAML 6.0.1 upgrade missed out from setup.py
