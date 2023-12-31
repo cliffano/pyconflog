@@ -71,11 +71,11 @@ lint: stage
 	pylint_report docs/lint/pylint/report.json -o docs/lint/pylint/index.html
 
 complexity: stage
-	mv poetry.lock  /tmp/poetry.lock || echo "No poetry.lock to backup..."
+	# mv poetry.lock  /tmp/poetry.lock || echo "No poetry.lock to backup..."
 	rm -rf docs/complexity/wily/ stage/complexity/ && mkdir -p docs/complexity/wily/ stage/complexity/
 	wily clean -y && wily build $(PACKAGE_NAME)/
 	wily report --format HTML --output docs/complexity/wily/index.html $(PACKAGE_NAME)/__init__.py && wily list-metrics
-	mv /tmp/poetry.lock poetry.lock || echo "No backup poetry.lock to restore..."
+	# mv /tmp/poetry.lock poetry.lock || echo "No backup poetry.lock to restore..."
 
 test:
 	rm -rf docs/test/pytest/ stage/test/ && mkdir -p docs/test/pytest/ stage/test/
