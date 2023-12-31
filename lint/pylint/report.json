@@ -236,7 +236,7 @@
         "statement": 0,
         "warning": 0
       },
-      "tests-integration.test_multi_conf": {
+      "test_multi_conf": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
@@ -245,7 +245,7 @@
         "statement": 71,
         "warning": 0
       },
-      "tests-integration.test_yaml_conf": {
+      "test_yaml_conf": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
@@ -254,7 +254,7 @@
         "statement": 60,
         "warning": 0
       },
-      "tests-integration.test_constructor": {
+      "test_constructor": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
@@ -263,7 +263,7 @@
         "statement": 101,
         "warning": 0
       },
-      "tests-integration.test_xml_conf": {
+      "test_xml_conf": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
@@ -272,7 +272,7 @@
         "statement": 60,
         "warning": 0
       },
-      "tests-integration.test_ini_conf": {
+      "test_ini_conf": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
@@ -281,7 +281,7 @@
         "statement": 60,
         "warning": 0
       },
-      "tests-integration.test_json_conf": {
+      "test_json_conf": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
