@@ -5,15 +5,15 @@
 [![Published Version](https://img.shields.io/pypi/v/conflog.svg)](https://pypi.python.org/pypi/conflog)
 <br/>
 
-Pyconflog
----------
+Conflog
+-------
 
-Pyconflog library provides Python logging setup via environment variables and configuration files.
+Conflog library provides Python logging setup via environment variables and configuration files.
 
 Installation
 ------------
 
-    pip3 install pyconflog
+    pip3 install conflog
 
 Usage
 -----
@@ -30,7 +30,7 @@ Create a configuration file, e.g. `conflog.yaml`:
     extras:
       env: "dev"
       id: "123"
- 
+
 And then use it in your Python code:
 
     from conflog import Conflog
