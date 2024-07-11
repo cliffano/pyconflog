@@ -4,7 +4,7 @@
 ################################################################
 
 # PieMaker's version number
-PIEMAKER_VERSION = 1.1.1
+PIEMAKER_VERSION = 1.3.0
 
 ################################################################
 # User configuration variables
@@ -48,6 +48,10 @@ clean:
 deps:
 	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install poetry --ignore-installed
 	python3 -m venv ${VIRTUAL_ENV} && PATH=${POETRY_HOME}/bin/:$$PATH poetry install --no-root --compile
+	poetry self add poetry-plugin-up
+
+deps-upgrade:
+	poetry up --latest
 
 deps-extra-apt:
 	apt-get update
@@ -86,7 +90,8 @@ test-integration:
 	pytest -v tests-integration --html=docs/test-integration/pytest/index.html --self-contained-html --capture=no
 
 test-examples:
-	for f in examples/*.sh; do \
+	cd examples && \
+	for f in *.sh; do \
 	  bash "$$f"; \
 	done
 
@@ -118,6 +123,9 @@ package:
 install: package
 	poetry install
 
+install-wheel: package
+	pip3 install dist/$(PACKAGE_NAME)-*.whl
+
 uninstall:
 	pip3 uninstall $(PACKAGE_NAME) -y || echo "Nothing to uninstall..."
 
@@ -138,4 +146,4 @@ doc: stage
 
 ################################################################
 
-.PHONY: all ci clean stage deps deps-extra doc release lint complexity test test-integration test-examples coverage install uninstall reinstall package publish
+.PHONY: all ci clean stage deps deps-upgrade deps-extra doc release lint complexity test test-integration test-examples coverage install install-wheel uninstall reinstall package publish
