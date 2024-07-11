@@ -29,31 +29,22 @@
         "statement": 0,
         "warning": 0
       },
-      "conflog.handlers.__init__": {
+      "conflog.__init__": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 0,
+        "statement": 35,
         "warning": 0
       },
-      "conflog.handlers.stream_handler": {
+      "conflog.config": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 10,
-        "warning": 0
-      },
-      "conflog.handlers.file_handler": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 12,
+        "statement": 50,
         "warning": 0
       },
       "conflog.loaders.ini_loader": {
@@ -63,6 +54,15 @@
         "info": 0,
         "refactor": 0,
         "statement": 13,
+        "warning": 0
+      },
+      "conflog.loaders.__init__": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 1,
         "warning": 0
       },
       "conflog.loaders.yaml_loader": {
@@ -83,13 +83,13 @@
         "statement": 10,
         "warning": 0
       },
-      "conflog.loaders.__init__": {
+      "conflog.loaders.xml_loader": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 1,
+        "statement": 12,
         "warning": 0
       },
       "conflog.loaders.environ_loader": {
@@ -101,7 +101,16 @@
         "statement": 9,
         "warning": 0
       },
-      "conflog.loaders.xml_loader": {
+      "conflog.handlers.__init__": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 0,
+        "warning": 0
+      },
+      "conflog.handlers.file_handler": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
@@ -110,112 +119,13 @@
         "statement": 12,
         "warning": 0
       },
-      "conflog.__init__": {
+      "conflog.handlers.stream_handler": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 35,
-        "warning": 0
-      },
-      "conflog.config": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 50,
-        "warning": 0
-      },
-      "tests.handlers.__init__": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 0,
-        "warning": 0
-      },
-      "tests.handlers.test_file_handler": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 21,
-        "warning": 0
-      },
-      "tests.handlers.test_stream_handler": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 19,
-        "warning": 0
-      },
-      "tests.loaders.test_xml_loader": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 45,
-        "warning": 0
-      },
-      "tests.loaders.__init__": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 0,
-        "warning": 0
-      },
-      "tests.loaders.test_yaml_loader": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 48,
-        "warning": 0
-      },
-      "tests.loaders.test_json_loader": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 48,
-        "warning": 0
-      },
-      "tests.loaders.test_environ_loader": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 33,
-        "warning": 0
-      },
-      "tests.loaders.test_ini_loader": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 45,
-        "warning": 0
-      },
-      "tests.test_config": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 149,
+        "statement": 10,
         "warning": 0
       },
       "tests.test_conflog": {
@@ -236,16 +146,115 @@
         "statement": 0,
         "warning": 0
       },
-      "tests-integration.test_multi_conf": {
+      "tests.test_config": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 71,
+        "statement": 149,
+        "warning": 0
+      },
+      "tests.loaders.test_json_loader": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 48,
+        "warning": 0
+      },
+      "tests.loaders.__init__": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 0,
+        "warning": 0
+      },
+      "tests.loaders.test_ini_loader": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 45,
+        "warning": 0
+      },
+      "tests.loaders.test_xml_loader": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 45,
+        "warning": 0
+      },
+      "tests.loaders.test_environ_loader": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 33,
+        "warning": 0
+      },
+      "tests.loaders.test_yaml_loader": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 48,
+        "warning": 0
+      },
+      "tests.handlers.test_stream_handler": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 19,
+        "warning": 0
+      },
+      "tests.handlers.test_file_handler": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 21,
+        "warning": 0
+      },
+      "tests.handlers.__init__": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 0,
         "warning": 0
       },
       "tests-integration.test_yaml_conf": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 60,
+        "warning": 0
+      },
+      "tests-integration.test_ini_conf": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 60,
+        "warning": 0
+      },
+      "tests-integration.test_json_conf": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
@@ -272,22 +281,13 @@
         "statement": 60,
         "warning": 0
       },
-      "tests-integration.test_ini_conf": {
+      "tests-integration.test_multi_conf": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 60,
-        "warning": 0
-      },
-      "tests-integration.test_json_conf": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 60,
+        "statement": 71,
         "warning": 0
       }
     },
