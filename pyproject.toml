@@ -37,17 +37,23 @@ include = "conflog"
 conflog = "conflog:cli"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 PyYAML = "^6.0.1"
 toml = "^0.10.2"
 
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+twine = "^5.1.1"
+wheel = "^0.44.0"
+
 [tool.poetry.group.test.dependencies]
-coverage = "7.2.4"
-pylint = "3.0.1"
-pytest = "7.3.1"
-wily = "1.24.0"
+coverage = "^7.6.4"
+numpy = "1.26.4"
+pylint = "^3.3.1"
+pytest = "^8.3.3"
+wily = "^1.25.0"
 
 [tool.poetry.group.doc.dependencies]
-pylint-report = "2.4.0"
-pytest-html = "3.2.0"
-Sphinx = "6.2.1"
+pylint-report = "^2.4.0"
+pytest-html = "^4.1.1"
+Sphinx = "^8.1.3"

@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Use PieMaker for Makefile build
 - Use Poetry to manage project
 
+### Removed
+- Remove Python 3.8 support
+
 ## 1.5.1 - 2023-08-09
 ### Fixed
 - Fix PyYAML 6.0.1 upgrade missed out from setup.py
