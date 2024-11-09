@@ -171,6 +171,19 @@ Example configuration environment variables:
     CONFLOG_LEVEL="info"
     CONFLOG_EXTRAS="env=dev,id=123"
 
+FAQ
+---
+
+*Q: Why am I getting duplicated log messages?*
+
+A: You might be getting the same log message displayed multiple times when there are other libraries adding handlers to the logger. You can clear those handlers prior to getting a logger from Conflog:
+
+    from conflog import Conflog
+
+    cfl = Conflog(conf_files=['conflog.yaml'])
+    cfl.close_logger_handlers()
+    logger = cfl.get_logger('somename')
+
 Colophon
 --------
 
