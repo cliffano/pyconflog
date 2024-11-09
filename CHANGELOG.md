@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Use PieMaker for Makefile build
 - Use Poetry to manage project
+- Upgrade PyYAML 6.0.2
 
 ### Removed
 - Remove Python 3.8 support
