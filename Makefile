@@ -4,7 +4,7 @@
 ################################################################
 
 # PieMaker's version number
-PIEMAKER_VERSION = 1.3.0
+PIEMAKER_VERSION = 1.4.0
 
 ################################################################
 # User configuration variables
@@ -34,7 +34,7 @@ export PATH := ${VIRTUAL_ENV}/bin:${POETRY_HOME}/bin:$(PATH)
 # Base targets
 
 # CI target to be executed by CI/CD tool
-ci: clean deps lint test coverage complexity doc package reinstall test-integration
+ci: clean deps style lint test coverage complexity doc package reinstall test-integration
 
 # Ensure stage directory exists
 stage:
@@ -64,6 +64,12 @@ update-to-latest:
 # Update Makefile to the version defined in TARGET_PIEMAKER_VERSION parameter
 update-to-version:
 	curl https://raw.githubusercontent.com/cliffano/piemaker/$(TARGET_PIEMAKER_VERSION)/src/Makefile-piemaker -o Makefile
+
+################################################################
+# Formatting targets
+
+style:
+	black $(PACKAGE_NAME) tests
 
 ################################################################
 # Testing targets
