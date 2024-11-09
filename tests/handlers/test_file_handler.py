@@ -5,22 +5,23 @@ import unittest
 import logging
 from conflog.handlers.file_handler import init
 
+
 class TestFileHandler(unittest.TestCase):
 
-    @patch('logging.FileHandler.__new__')
-    @patch('logging.Formatter.__new__')
-    def test_init( # pylint: disable=unused-argument
-            self,
-            func_formatter,
-            func_file_handler):
+    @patch("logging.FileHandler.__new__")
+    @patch("logging.Formatter.__new__")
+    def test_init(  # pylint: disable=unused-argument
+        self, func_formatter, func_file_handler
+    ):
 
         mock_config = unittest.mock.Mock()
-        mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
+        mock_config.get_datefmt.return_value = "%d-%b-%y %H:%M:%S"
         mock_config.get_level.return_value = logging.INFO
-        mock_config.get_format.return_value = '%(asctime)s --> '\
-                                              '%(name)s - %(levelname)s - %(message)s'
-        mock_config.get_filename.return_value = 'conflog.log'
-        mock_config.get_filemode.return_value = 'w'
+        mock_config.get_format.return_value = (
+            "%(asctime)s --> " "%(name)s - %(levelname)s - %(message)s"
+        )
+        mock_config.get_filename.return_value = "conflog.log"
+        mock_config.get_filemode.return_value = "w"
 
         mock_formatter = unittest.mock.Mock()
         func_formatter.return_value = mock_formatter

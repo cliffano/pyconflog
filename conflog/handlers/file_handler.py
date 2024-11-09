@@ -1,11 +1,12 @@
 """File handler module for conflog.
 """
+
 import logging
 from ..config import Config
 
+
 def init(config: Config) -> logging.FileHandler:
-    """Initialise file handler with specified configuration.
-    """
+    """Initialise file handler with specified configuration."""
     _format = config.get_format()
     datefmt = config.get_datefmt()
     level = config.get_level()

@@ -1,11 +1,12 @@
 """Stream handler module for conflog.
 """
+
 import logging
 from ..config import Config
 
+
 def init(config: Config) -> logging.StreamHandler:
-    """Initialise stream handler.
-    """
+    """Initialise stream handler."""
     _format = config.get_format()
     datefmt = config.get_datefmt()
     level = config.get_level()

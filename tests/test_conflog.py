@@ -5,24 +5,26 @@ import unittest
 import logging
 from conflog import Conflog
 
+
 class TestConflog(unittest.TestCase):
 
-    @patch('conflog.config.Config.__new__')
-    @patch('logging.FileHandler.__new__')
-    @patch('logging.StreamHandler.__new__')
-    @patch('logging.Formatter.__new__')
-    @patch('logging.basicConfig')
-    @patch('logging.getLogger')
-    @patch('logging.LoggerAdapter.__new__')
-    def test_conflog( # pylint: disable=too-many-arguments,too-many-positional-arguments
-            self,
-            func_logger_adapter,
-            func_get_logger,
-            func_basic_config,
-            func_formatter,
-            func_stream_handler,
-            func_file_handler,
-            func_config):
+    @patch("conflog.config.Config.__new__")
+    @patch("logging.FileHandler.__new__")
+    @patch("logging.StreamHandler.__new__")
+    @patch("logging.Formatter.__new__")
+    @patch("logging.basicConfig")
+    @patch("logging.getLogger")
+    @patch("logging.LoggerAdapter.__new__")
+    def test_conflog(  # pylint: disable=too-many-arguments,too-many-positional-arguments
+        self,
+        func_logger_adapter,
+        func_get_logger,
+        func_basic_config,
+        func_formatter,
+        func_stream_handler,
+        func_file_handler,
+        func_config,
+    ):
 
         mock_config = unittest.mock.Mock()
         mock_stream_handler = unittest.mock.Mock()
@@ -39,25 +41,25 @@ class TestConflog(unittest.TestCase):
         func_get_logger.return_value = mock_logger
         func_logger_adapter.return_value = mock_adapted_logger
 
-        mock_config.get_handlers.return_value = ['stream', 'file']
-        mock_config.get_datefmt.return_value = '%d-%b-%y %H:%M:%S'
+        mock_config.get_handlers.return_value = ["stream", "file"]
+        mock_config.get_datefmt.return_value = "%d-%b-%y %H:%M:%S"
         mock_config.get_level.return_value = logging.INFO
 
         conflog = Conflog(
-            conf_files=['somefile.ini', 'somefile.json'],
-            conf_dict={'format': '[SOMEAPP] %(message)s'}
+            conf_files=["somefile.ini", "somefile.json"],
+            conf_dict={"format": "[SOMEAPP] %(message)s"},
         )
         mock_stream_handler.setFormatter.assert_called_once_with(mock_formatter)
         mock_stream_handler.setLevel.assert_called_once_with(logging.INFO)
         mock_file_handler.setFormatter.assert_called_once_with(mock_formatter)
         mock_file_handler.setLevel.assert_called_once_with(logging.INFO)
         func_basic_config.assert_called_once_with(
-            datefmt='%d-%b-%y %H:%M:%S',
+            datefmt="%d-%b-%y %H:%M:%S",
             level=logging.INFO,
         )
 
-        logger = conflog.get_logger('someloggername')
-        func_get_logger.assert_called_with('someloggername')
+        logger = conflog.get_logger("someloggername")
+        func_get_logger.assert_called_with("someloggername")
         self.assertEqual(logger, mock_adapted_logger)
         self.assertFalse(mock_logger.propagate)
 
@@ -68,7 +70,7 @@ class TestConflog(unittest.TestCase):
         # should set configured log level
         mock_adapted_logger.setLevel.assert_called_once_with(logging.INFO)
 
-        conflog.close_logger_handlers('someloggername')
+        conflog.close_logger_handlers("someloggername")
         # should close configured handlers
         mock_stream_handler.close.assert_called_once_with()
         mock_file_handler.close.assert_called_once_with()
