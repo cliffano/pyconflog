@@ -18,7 +18,7 @@ class TestStreamHandler(unittest.TestCase):
         mock_config.get_datefmt.return_value = "%d-%b-%y %H:%M:%S"
         mock_config.get_level.return_value = logging.INFO
         mock_config.get_format.return_value = (
-            "%(asctime)s --> " "%(name)s - %(levelname)s - %(message)s"
+            "%(asctime)s --> %(name)s - %(levelname)s - %(message)s"
         )
 
         mock_formatter = unittest.mock.Mock()
