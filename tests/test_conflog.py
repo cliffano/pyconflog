@@ -14,7 +14,7 @@ class TestConflog(unittest.TestCase):
     @patch('logging.basicConfig')
     @patch('logging.getLogger')
     @patch('logging.LoggerAdapter.__new__')
-    def test_conflog( # pylint: disable=too-many-arguments
+    def test_conflog( # pylint: disable=too-many-arguments,too-many-positional-arguments
             self,
             func_logger_adapter,
             func_get_logger,
