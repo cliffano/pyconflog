@@ -7,7 +7,7 @@ no-binary = [ ":none:" ]
 
 [tool.poetry]
 name = "conflog"
-version = "2.0.1"
+version = "2.0.2-pre.0"
 description = "Python logging setup via environment variables and configuration files"
 license = "Apache-2.0"
 authors = [ "Cliffano Subagio <cliffano@gmail.com>" ]
