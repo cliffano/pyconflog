@@ -6,15 +6,11 @@ name: Publish
       - '*'
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: make clean deps package install
-      - run: make publish
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-          TWINE_NON_INTERACTIVE: '1'
+      - run: make publish PASSWORD=${{ secrets.PYPI_TOKEN }}

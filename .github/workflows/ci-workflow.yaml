@@ -1,9 +1,9 @@
 ---
 name: CI
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       max-parallel: 1
       matrix:
@@ -16,6 +16,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: make ci
+      - run: make test-examples
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.STUDIO_GITHUB_TOKEN }}
