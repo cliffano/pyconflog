@@ -1,0 +1,14 @@
+"""TOML configuration loader.
+"""
+import toml
+from . import PARAMS
+
+def load(conf_file: str) -> dict:
+    """Get configuration values from TOML file.
+    """
+    conf = {}
+    conf_toml = toml.load(conf_file)
+    for param in PARAMS:
+        if param in conf_toml:
+            conf[param] = conf_toml[param]
+    return conf
