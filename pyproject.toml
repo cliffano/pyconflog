@@ -56,4 +56,4 @@ wily = "^1.25.0"
 [tool.poetry.group.doc.dependencies]
 pylint-report = "^2.4.0"
 pytest-html = "^4.1.1"
-Sphinx = "^8.1.3"
+Sphinx = "8.1.3" # Pinned for Python 3.10 support
