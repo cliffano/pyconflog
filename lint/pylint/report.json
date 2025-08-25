@@ -125,7 +125,7 @@
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 50,
+        "statement": 58,
         "warning": 0
       },
       "tests.test_config": {
@@ -134,7 +134,7 @@
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 149,
+        "statement": 159,
         "warning": 0
       },
       "tests.test_conflog": {
@@ -291,7 +291,7 @@
         "warning": 0
       }
     },
-    "statement": 1024,
+    "statement": 1042,
     "error": 0,
     "warning": 0,
     "refactor": 0,
