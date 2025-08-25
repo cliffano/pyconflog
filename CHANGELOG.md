@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Add 3.11 and 3.13 to CI run
+
 ### Changed
 - Upgrade PieMaker to 1.10.0
 
