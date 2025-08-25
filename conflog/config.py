@@ -19,6 +19,8 @@ DEFAULT_FILENAME = "conflog.log"
 DEFAULT_FILEMODE = "w"
 DEFAULT_FORMAT = "%(asctime)s --> %(name)s - %(levelname)s - %(message)s"
 DEFAULT_LEVEL = "info"
+DEFAULT_EXTRAS_SEPARATOR = ","
+DEFAULT_EXTRAS_KEY_VALUE_SEPARATOR = "="
 DEFAULT_EXTRAS = {}
 
 
@@ -102,17 +104,36 @@ class Config:
         level = self.conf.get("level", DEFAULT_LEVEL)
         return LEVELS[level.lower()]
 
+    def get_extras_separator(self) -> str:
+        """Get extras separator.
+        If extras separator is not specified, default to ','.
+        """
+        return self.conf.get("extras_separator", DEFAULT_EXTRAS_SEPARATOR)
+
+    def get_extras_key_value_separator(self) -> str:
+        """Get extras key-value separator.
+        If extras key-value separator is not specified, default to '='.
+        """
+        return self.conf.get(
+            "extras_key_value_separator", DEFAULT_EXTRAS_KEY_VALUE_SEPARATOR
+        )
+
     def get_extras(self) -> dict:
         """Get extras.
         Extras is a dictionary of extra message parameters
         to be added to the log.
         If extras is not specified, default to an empty dictionary.
+        For JSON and YAML configuration formats, extras can be passed as a map or as a string.
+        For other configuration formats, extras should be passed as a string.
+        A string representation of extras should be in the format "key1=value1,key2=value2".
         """
         extras = self.conf.get("extras", DEFAULT_EXTRAS)
+        extras_separator = self.get_extras_separator()
+        extras_key_value_separator = self.get_extras_key_value_separator()
         if isinstance(extras, str):
             _extras = {}
-            for pair in extras.split(","):
-                key, value = pair.split("=")
+            for pair in extras.split(extras_separator):
+                key, value = pair.split(extras_key_value_separator)
                 _extras[key] = value
             extras = _extras
         return extras

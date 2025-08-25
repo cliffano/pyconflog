@@ -12,6 +12,8 @@ CUSTOM_CONF = {
     "format": "somelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s",
     "level": "critical",
     "extras": "some_extra1=some_value1,some_extra2=some_value2",
+    "extras_separator": ",",
+    "extras_key_value_separator": "=",
 }
 
 OVERWRITE_CONF = {
@@ -21,7 +23,9 @@ OVERWRITE_CONF = {
     "filemode": "r",
     "format": "overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s",
     "level": "debug",
-    "extras": "some_overwrite_extra1=some_overwrite_value1",
+    "extras": "some_overwrite_extra1:some_overwrite_value1",
+    "extras_separator": "+",
+    "extras_key_value_separator": ":",
 }
 
 
@@ -39,6 +43,8 @@ class TestConfig(unittest.TestCase):
         )
         self.assertEqual(config.get_level(), logging.INFO)
         self.assertEqual(config.get_extras(), {})
+        self.assertEqual(config.get_extras_separator(), ",")
+        self.assertEqual(config.get_extras_key_value_separator(), "=")
 
     @patch("conflog.loaders.ini_loader.load")
     def test_get_config_from_ini(self, func):  # pylint: disable=unused-argument
@@ -142,6 +148,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_datefmt(), "%d%m%y")
         self.assertEqual(config.get_filename(), "overwriteconflog.log")
         self.assertEqual(config.get_filemode(), "r")
+        self.assertEqual(config.get_extras_separator(), "+")
+        self.assertEqual(config.get_extras_key_value_separator(), ":")
         self.assertEqual(
             config.get_format(),
             "overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s",
@@ -163,6 +171,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_datefmt(), "%d%m%y")
         self.assertEqual(config.get_filename(), "overwriteconflog.log")
         self.assertEqual(config.get_filemode(), "r")
+        self.assertEqual(config.get_extras_separator(), "+")
+        self.assertEqual(config.get_extras_key_value_separator(), ":")
         self.assertEqual(
             config.get_format(),
             "overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s",
@@ -182,6 +192,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_datefmt(), "%d%m%y")
         self.assertEqual(config.get_filename(), "overwriteconflog.log")
         self.assertEqual(config.get_filemode(), "r")
+        self.assertEqual(config.get_extras_separator(), "+")
+        self.assertEqual(config.get_extras_key_value_separator(), ":")
         self.assertEqual(
             config.get_format(),
             "overwritelog %(asctime)s --> %(name)s - %(levelname)s - %(message)s",
@@ -211,6 +223,8 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(config.get_filemode(), "w")
         self.assertEqual(config.get_format(), "%(message)s")
         self.assertEqual(config.get_level(), logging.CRITICAL)
+        self.assertEqual(config.get_extras_separator(), "+")
+        self.assertEqual(config.get_extras_key_value_separator(), ":")
 
     def test_get_config_with_uppercase_level(self):
         conf_dict = {

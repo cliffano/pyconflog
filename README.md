@@ -81,6 +81,19 @@ It will write the log messages using the format from configuration dictionary:
     [DICTAPP] [dev-123] 2023-06-07 10:49:01 INFO Some info message
     [DICTAPP] [dev-123] 2023-06-07 10:49:52 CRITICAL Some critical message
 
+If you're passing a string extras and need to have either comma or equal in either the key or the value, you can specify custom separators:
+
+    ---
+    handlers: "stream,file"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+    filename: "conflog.log"
+    filemode: "w"
+    format: "[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
+    level: "info"
+    extras: "dev_123|param1_value1"
+    extras_separator: "|"
+    extras_key_value_separator: "_"
+
 Configuration
 -------------
 
@@ -94,7 +107,9 @@ Configuration properties:
 | filemode | Log file mode | `w` | `w` |
 | format | Log message format | %(asctime)s --> %(name)s - %(levelname)s - %(message)s | `[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s` |
 | level | Log level, supported values are `debug`, `info`, `warning`, `error`, `critical` | `info` | `critical` |
-| extras | Extra fields to be added to log message. It can be comma separated key value pairs with equal separator, or a key value pairs map for JSON and YAML configuration files | None | `env=dev,id=123` |
+| extras_separator | Character used to separate extra fields key value pairs. | `,` | `;` |
+| extras_key_value_separator | Character used to separate key and value in a pair. | `=` | `_` |
+| extras | Extra fields to be added to log message. It can be comma separated key value pairs with equal separator, or a key value pairs map for JSON and YAML configuration files | None | `env=dev,id=123` when using default separators, or `env_dev;id_123` when using custom `;` as extras_separator and `_` as extras_key_value_separator |
 
 Configuration files can be in YAML, JSON, XML, or INI format. Multiple files can be specified in the `conf_files` parameter when initialising `Conflog`, the configuration will be merged in the order of the files, the latter file will overwrites the former file.
 
@@ -171,6 +186,8 @@ Example configuration environment variables:
     CONFLOG_FORMAT="[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
     CONFLOG_LEVEL="info"
     CONFLOG_EXTRAS="env=dev,id=123"
+    CONFLOG_EXTRAS_SEPARATOR=","
+    CONFLOG_EXTRAS_KEY_VALUE_SEPARATOR="="
 
 FAQ
 ---

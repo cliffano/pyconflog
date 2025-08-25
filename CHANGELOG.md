@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add 3.11 and 3.13 to CI run
+- Add extras_separator and extras_key_value_separator configurations #1
 
 ### Changed
 - Upgrade PieMaker to 1.10.0
