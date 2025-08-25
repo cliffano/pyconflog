@@ -4,7 +4,7 @@
 ################################################################
 
 # PieMaker's version number
-PIEMAKER_VERSION = 1.4.0
+PIEMAKER_VERSION = 1.10.0
 
 ################################################################
 # User configuration variables
@@ -27,13 +27,18 @@ $(info - Package name: ${PACKAGE_NAME})
 $(info - Author: ${AUTHOR})
 
 export POETRY_HOME := /opt/poetry
-export VIRTUAL_ENV := /opt/poetry-venv
+export VIRTUAL_ENV := .venv
 export PATH := ${VIRTUAL_ENV}/bin:${POETRY_HOME}/bin:$(PATH)
+
+define python_venv
+	. .venv/bin/activate && $(1)
+endef
 
 ################################################################
 # Base targets
 
 # CI target to be executed by CI/CD tool
+all:ci
 ci: clean deps style lint test coverage complexity doc package reinstall test-integration
 
 # Ensure stage directory exists
@@ -46,19 +51,30 @@ clean:
 
 # Retrieve the Pyhon package dependencies
 deps:
-	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install poetry --ignore-installed
+	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install --force-reinstall poetry==2.1.3 --ignore-installed
 	python3 -m venv ${VIRTUAL_ENV} && PATH=${POETRY_HOME}/bin/:$$PATH poetry install --no-root --compile
-	poetry self add poetry-plugin-up
+	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install --force-reinstall poetry-plugin-up==0.9.0 --ignore-installed
+	$(call python_venv,poetry self add poetry-plugin-export)
+	$(call python_venv,poetry export -f requirements.txt --without-hashes --with dev --output requirements.txt)
 
 deps-upgrade:
-	poetry up --latest
+	$(call python_venv,poetry up --latest)
 
 deps-extra-apt:
 	apt-get update
 	apt-get install -y python3-venv
+	apt-get install -y python3-sphinx # needed by sphinx-apidoc
 
-# Update Makefile to the latest version on origin's main branch
-update-to-latest:
+rmdeps:
+	rm -f poetry.lock requirements.txt
+	rm -rf .venv/
+
+# Update Makefile to the latest version tag
+update-to-latest: TARGET_PIEMAKER_VERSION = $(shell curl -s https://api.github.com/repos/cliffano/piemaker/tags | jq -r '.[0].name')
+update-to-latest: update-to-version
+
+# Update Makefile to the main branch
+update-to-main:
 	curl https://raw.githubusercontent.com/cliffano/piemaker/main/src/Makefile-piemaker -o Makefile
 
 # Update Makefile to the version defined in TARGET_PIEMAKER_VERSION parameter
@@ -69,44 +85,44 @@ update-to-version:
 # Formatting targets
 
 style:
-	black $(PACKAGE_NAME) tests
+	$(call python_venv,black $(PACKAGE_NAME) tests tests-integration examples)
 
 ################################################################
 # Testing targets
 
 lint: stage
 	rm -rf docs/lint/pylint/ stage/lint/ && mkdir -p docs/lint/pylint/ stage/lint/
-	pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo)
-	pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo) --output-format=pylint_report.CustomJsonReporter > docs/lint/pylint/report.json
-	pylint_report docs/lint/pylint/report.json -o docs/lint/pylint/index.html
+	$(call python_venv,pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo))
+	$(call python_venv,pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo) --output-format=pylint_report.CustomJsonReporter > docs/lint/pylint/report.json)
+	$(call python_venv,pylint_report docs/lint/pylint/report.json -o docs/lint/pylint/index.html)
 
 complexity: stage
 	rm -rf docs/complexity/wily/ stage/complexity/ && mkdir -p docs/complexity/wily/ stage/complexity/
-	wily clean -y
-	wily build $(PACKAGE_NAME)/
-	wily report --format HTML --output docs/complexity/wily/index.html $(PACKAGE_NAME)/__init__.py
-	wily list-metrics
+	$(call python_venv,wily clean -y)
+	$(call python_venv,wily build $(PACKAGE_NAME)/)
+	$(call python_venv,wily report --format HTML --output docs/complexity/wily/index.html $(PACKAGE_NAME)/__init__.py)
+	$(call python_venv,wily list-metrics)
 
 test:
 	rm -rf docs/test/pytest/ stage/test/ && mkdir -p docs/test/pytest/ stage/test/
-	pytest -v tests --html=docs/test/pytest/index.html --self-contained-html --capture=no
+	$(call python_venv,pytest -v tests --html=docs/test/pytest/index.html --self-contained-html --capture=no)
 
 test-integration:
 	rm -rf docs/test-integration/pytest/ stage/test-integration/ && mkdir -p docs/test-integration/pytest/ stage/test-integration/
-	pytest -v tests-integration --html=docs/test-integration/pytest/index.html --self-contained-html --capture=no
+	$(call python_venv,pytest -v tests-integration --html=docs/test-integration/pytest/index.html --self-contained-html --capture=no)
 
 test-examples:
 	cd examples && \
 	for f in *.sh; do \
-	  bash "$$f"; \
+	  bash -x "$$f"; \
 	done
 
 coverage:
 	rm -rf docs/coverage/coverage/ stage/coverage/ && mkdir -p docs/coverage/coverage/ stage/coverage/
-	COVERAGE_FILE=.coverage.unit coverage run --source=./$(PACKAGE_NAME) -m unittest discover -s tests
-	coverage combine
-	coverage report
-	coverage html && rm -f docs/coverage/coverage/.gitignore
+	$(call python_venv,COVERAGE_FILE=.coverage.unit coverage run --source=./$(PACKAGE_NAME) -m unittest discover -s tests)
+	$(call python_venv,coverage combine)
+	$(call python_venv,coverage report)
+	$(call python_venv,coverage html && rm -f docs/coverage/coverage/.gitignore)
 
 ################################################################
 # Release targets
@@ -124,32 +140,32 @@ release-patch:
 # Packaging, installation, and publishing targets
 
 package:
-	poetry build
+	$(call python_venv,poetry build)
 
 install: package
-	poetry install
+	$(call python_venv,poetry install)
 
 install-wheel: package
-	pip3 install dist/$(PACKAGE_NAME)-*.whl
+	$(call python_venv,pip3 install dist/$(PACKAGE_NAME)-*.whl)
 
 uninstall:
-	pip3 uninstall $(PACKAGE_NAME) -y || echo "Nothing to uninstall..."
+	$(call python_venv,pip3 uninstall $(PACKAGE_NAME) -y || echo "Nothing to uninstall...")
 
 reinstall: uninstall install
 
 publish:
-	poetry publish --username __token__ --password $(PASSWORD)
+	$(call python_venv,poetry publish --username __token__ --password $(PASSWORD))
 
 ################################################################
 # Documentation targets
 
 doc: stage
 	rm -rf docs/doc/sphinx/ stage/doc/ && mkdir -p docs/doc/sphinx/ stage/doc/
-	sphinx-apidoc -o docs/doc/sphinx/ --full -H "$(PACKAGE_NAME)" -A "$(AUTHOR)" $(PACKAGE_NAME) && \
+	$(call python_venv,sphinx-apidoc -o docs/doc/sphinx/ --full -H "$(PACKAGE_NAME)" -A "$(AUTHOR)" $(PACKAGE_NAME) && \
 		cd docs/doc/sphinx/ && \
 		make html && \
-		cp -R _build/html/* ../../../docs/doc/sphinx/
+		cp -R _build/html/* ../../../docs/doc/sphinx/)
 
 ################################################################
 
-.PHONY: all ci clean stage deps deps-upgrade deps-extra doc release lint complexity test test-integration test-examples coverage install install-wheel uninstall reinstall package publish
+.PHONY: all ci clean complexity configurations coverage deps deps-extra-apt deps-upgrade rmdeps doc export export export install install-wheel lint name package package publish reinstall release-major release-minor release-patch stage style test test-examples test-integration uninstall update-to-latest update-to-latest update-to-main update-to-version

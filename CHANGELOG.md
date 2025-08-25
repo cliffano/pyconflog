@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Upgrade PieMaker to 1.10.0
+
 ## 2.0.1 - 2024-11-09
 ### Fixed
 - Fix publish GH Actions workflow password passing
