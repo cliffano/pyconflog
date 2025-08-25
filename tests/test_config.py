@@ -13,7 +13,7 @@ CUSTOM_CONF = {
     "level": "critical",
     "extras": "some_extra1=some_value1,some_extra2=some_value2",
     "extras_separator": ",",
-    "extras_key_value_separator": "="
+    "extras_key_value_separator": "=",
 }
 
 OVERWRITE_CONF = {
@@ -25,7 +25,7 @@ OVERWRITE_CONF = {
     "level": "debug",
     "extras": "some_overwrite_extra1:some_overwrite_value1",
     "extras_separator": "+",
-    "extras_key_value_separator": ":"
+    "extras_key_value_separator": ":",
 }
 
 
