@@ -18,13 +18,13 @@ conflog.config module
 
 .. automodule:: conflog.config
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: conflog
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
