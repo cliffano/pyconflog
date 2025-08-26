@@ -7,7 +7,7 @@ no-binary = [ ":none:" ]
 
 [tool.poetry]
 name = "conflog"
-version = "2.0.2-pre.0"
+version = "2.1.0"
 description = "Python logging setup via environment variables and configuration files"
 license = "Apache-2.0"
 authors = [ "Cliffano Subagio <cliffano@gmail.com>" ]
@@ -56,4 +56,4 @@ wily = "^1.25.0"
 [tool.poetry.group.doc.dependencies]
 pylint-report = "^2.4.0"
 pytest-html = "^4.1.1"
-Sphinx = "8.1.3" # Pinned for Python 3.10 support
+Sphinx = "8.1.3"
