@@ -1,3 +1,13 @@
 ---
 author: Cliffano Subagio
 package_name: conflog
+generator:
+  component: python-lib
+  inputs:
+    project_id: conflog
+    project_name: Conflog
+    project_desc: Python logging setup via environment variables and configuration files
+    author_name: Cliffano Subagio
+    author_email: cliffano@gmail.com
+    github_id: cliffano
+    github_repo: pyconflog
