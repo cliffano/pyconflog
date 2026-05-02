@@ -1,23 +1,19 @@
-<img align="right" src="https://raw.github.com/cliffano/pyconflog/main/avatar.jpg" alt="Avatar"/>
+![Avatar](avatar.jpg)
 
 [![Build Status](https://github.com/cliffano/pyconflog/workflows/CI/badge.svg)](https://github.com/cliffano/pyconflog/actions?query=workflow%3ACI)
 [![Security Status](https://snyk.io/test/github/cliffano/pyconflog/badge.svg)](https://snyk.io/test/github/cliffano/pyconflog)
 [![Dependencies Status](https://img.shields.io/librariesio/release/pypi/conflog)](https://libraries.io/pypi/conflog)
 [![Published Version](https://img.shields.io/pypi/v/conflog.svg)](https://pypi.python.org/pypi/conflog)
-<br/>
 
-Conflog
--------
+# Conflog
 
 Conflog library provides Python logging setup via environment variables and configuration files.
 
-Installation
-------------
+## Installation
 
     pip3 install conflog
 
-Usage
------
+## Usage
 
 Create a configuration file, e.g. `conflog.yaml`:
 
@@ -94,8 +90,7 @@ If you're passing a string extras and need to have either comma or equal in eith
     extras_separator: "|"
     extras_key_value_separator: "_"
 
-Configuration
--------------
+## Configuration
 
 Configuration properties:
 
@@ -189,8 +184,7 @@ Example configuration environment variables:
     CONFLOG_EXTRAS_SEPARATOR=","
     CONFLOG_EXTRAS_KEY_VALUE_SEPARATOR="="
 
-FAQ
----
+## FAQ
 
 *Q: Why am I getting duplicated log messages?*
 
@@ -202,8 +196,7 @@ A: You might be getting the same log message displayed multiple times when there
     cfl.close_logger_handlers()
     logger = cfl.get_logger('somename')
 
-Colophon
---------
+## Colophon
 
 [Developer's Guide](https://cliffano.github.io/developers_guide.html#python)
 
