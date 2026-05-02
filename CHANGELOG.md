@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Changed
-- Upgrade PieMaker to 2.2.1
+- Upgrade PieMaker to 2.3.0
 
 ## 2.1.0 - 2025-08-26
 ### Added
