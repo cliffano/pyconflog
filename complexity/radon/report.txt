@@ -10,17 +10,17 @@ conflog/loaders/json_loader.py - A
 conflog/loaders/ini_loader.py - A
 conflog/loaders/__init__.py - A
 conflog/config.py
-    M 30:4 Config.__init__ - B (8)
-    C 27:0 Config - A (3)
-    M 121:4 Config.get_extras - A (3)
-    M 66:4 Config.get_handlers - A (1)
-    M 75:4 Config.get_datefmt - A (1)
-    M 81:4 Config.get_filename - A (1)
-    M 87:4 Config.get_filemode - A (1)
-    M 93:4 Config.get_format - A (1)
-    M 100:4 Config.get_level - A (1)
-    M 107:4 Config.get_extras_separator - A (1)
-    M 113:4 Config.get_extras_key_value_separator - A (1)
+    M 29:4 Config.__init__ - B (8)
+    C 26:0 Config - A (3)
+    M 120:4 Config.get_extras - A (3)
+    M 65:4 Config.get_handlers - A (1)
+    M 74:4 Config.get_datefmt - A (1)
+    M 80:4 Config.get_filename - A (1)
+    M 86:4 Config.get_filemode - A (1)
+    M 92:4 Config.get_format - A (1)
+    M 99:4 Config.get_level - A (1)
+    M 106:4 Config.get_extras_separator - A (1)
+    M 112:4 Config.get_extras_key_value_separator - A (1)
 conflog/__init__.py
     M 22:4 Conflog.__init__ - A (4)
     C 19:0 Conflog - A (3)
@@ -28,19 +28,19 @@ conflog/__init__.py
     M 62:4 Conflog.close_logger_handlers - A (2)
     M 71:4 Conflog.get_config_properties - A (1)
 conflog/handlers/file_handler.py
-    F 8:0 init - A (1)
+    F 7:0 init - A (1)
 conflog/handlers/stream_handler.py
-    F 8:0 init - A (1)
+    F 7:0 init - A (1)
 conflog/loaders/yaml_loader.py
-    F 8:0 load - A (4)
+    F 7:0 load - A (4)
 conflog/loaders/environ_loader.py
-    F 8:0 load - A (3)
+    F 7:0 load - A (3)
 conflog/loaders/xml_loader.py
-    F 8:0 load - A (3)
+    F 7:0 load - A (3)
 conflog/loaders/json_loader.py
-    F 8:0 load - A (3)
+    F 7:0 load - A (3)
 conflog/loaders/ini_loader.py
-    F 9:0 load - A (3)
+    F 8:0 load - A (3)
 
 23 blocks (classes, functions, methods) analyzed.
 Average complexity: A (2.260869565217391)
