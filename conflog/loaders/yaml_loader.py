@@ -1,5 +1,4 @@
-"""YAML configuration loader.
-"""
+"""YAML configuration loader."""
 
 import yaml
 from . import PARAMS

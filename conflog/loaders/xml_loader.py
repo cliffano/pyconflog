@@ -1,5 +1,4 @@
-"""XML configuration loader.
-"""
+"""XML configuration loader."""
 
 import xml.etree.ElementTree as ET
 from . import PARAMS

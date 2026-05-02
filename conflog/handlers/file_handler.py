@@ -1,5 +1,4 @@
-"""File handler module for conflog.
-"""
+"""File handler module for conflog."""
 
 import logging
 from ..config import Config

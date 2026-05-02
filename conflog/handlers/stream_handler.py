@@ -1,5 +1,4 @@
-"""Stream handler module for conflog.
-"""
+"""Stream handler module for conflog."""
 
 import logging
 from ..config import Config

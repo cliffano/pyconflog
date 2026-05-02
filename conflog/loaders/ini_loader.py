@@ -1,5 +1,4 @@
-"""INI configuration loader.
-"""
+"""INI configuration loader."""
 
 import configparser
 import io

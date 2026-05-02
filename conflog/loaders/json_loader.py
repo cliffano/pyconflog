@@ -1,5 +1,4 @@
-"""JSON configuration loader.
-"""
+"""JSON configuration loader."""
 
 import json
 from . import PARAMS

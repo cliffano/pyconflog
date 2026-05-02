@@ -1,5 +1,4 @@
-"""Environment variables configuration loader.
-"""
+"""Environment variables configuration loader."""
 
 import os
 from . import PARAMS

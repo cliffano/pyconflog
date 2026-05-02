@@ -1,5 +1,4 @@
-"""A module for managing logging configurations.
-"""
+"""A module for managing logging configurations."""
 
 from typing import Union
 import logging
