@@ -1,13 +1,4 @@
-"""
-conflog
-=======
-Python logging setup via environment variables and configuration files.
-
-This library provides a way to configure logging for Python applications.
-It is intended to be used with configuration files in various formats,
-including JSON, INI, XML, and YAML, along with the ability to overwrite
-a configuration via environment variables.
-"""
+"""Python logging setup via configuration files and environment variables."""
 
 from typing import Union
 import logging
@@ -17,15 +8,24 @@ from .config import Config
 
 
 class Conflog:
-    """A class for managing Python logging logger and handlers."""
+    """Configures Python logging from files, environment variables, and a config dict."""
 
     def __init__(
         self,
         conf_files: Union[None, str, list] = None,
         conf_dict: Union[None, dict] = None,
     ):
-        """Initialise Python logging with configuration from
-        configuration files and configuration dictionary.
+        """Initialise Python logging with configuration from files and an optional dict.
+
+        Configuration is loaded in order: files first, then environment variables,
+        then ``conf_dict`` (which takes highest precedence).
+
+        :param conf_files: Path or list of paths to configuration files.
+            Supported formats: ``.ini``, ``.json``, ``.xml``, ``.yaml``.
+        :type conf_files: str or list[str] or None
+        :param conf_dict: Optional dict of configuration values that override all other
+            sources.
+        :type conf_dict: dict or None
         """
 
         if isinstance(conf_files, str):
@@ -46,8 +46,12 @@ class Conflog:
         logging.basicConfig(datefmt=datefmt, level=level)
 
     def get_logger(self, name: str) -> logging.Logger:
-        """Get the logger based on the given name
-        and add the handlers to the logger.
+        """Return a named logger with all configured handlers attached.
+
+        :param name: Logger name, typically ``__name__`` of the calling module.
+        :type name: str
+        :returns: Configured :class:`logging.LoggerAdapter` wrapping the named logger.
+        :rtype: logging.LoggerAdapter
         """
         logger = logging.getLogger(name)
         logger.propagate = False  # prevent duplicate logging from parent propagation
@@ -60,8 +64,10 @@ class Conflog:
         return logger
 
     def close_logger_handlers(self, name: str) -> None:
-        """Close logger handlers
-        and clear the handlers from logger.
+        """Close and remove all handlers from the named logger.
+
+        :param name: Logger name whose handlers should be closed.
+        :type name: str
         """
         logger = logging.getLogger(name)
         for handler in logger.handlers:
@@ -69,5 +75,9 @@ class Conflog:
         logger.handlers.clear()
 
     def get_config_properties(self) -> dict:
-        """Get the configuration properties dictionary."""
+        """Return the merged configuration properties dictionary.
+
+        :returns: All resolved configuration key-value pairs.
+        :rtype: dict
+        """
         return self.config.conf

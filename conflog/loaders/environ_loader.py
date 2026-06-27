@@ -1,12 +1,17 @@
-"""Environment variables configuration loader."""
+"""Environment variable configuration loader for conflog."""
 
 import os
 from . import PARAMS
 
 
 def load() -> dict:
-    """Get configuration values from environment variables.
-    Configuration values are prefixed with CONFLOG_.
+    """Load configuration values from environment variables.
+
+    Each parameter in :data:`PARAMS` is looked up as ``CONFLOG_<PARAM>``
+    (upper-cased). Only variables that are set are included in the result.
+
+    :returns: Dict of configuration parameters found in the environment.
+    :rtype: dict
     """
     conf = {}
     for param in PARAMS:

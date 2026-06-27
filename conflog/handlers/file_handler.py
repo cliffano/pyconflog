@@ -1,11 +1,17 @@
-"""File handler module for conflog."""
+"""File handler factory for conflog."""
 
 import logging
 from ..config import Config
 
 
 def init(config: Config) -> logging.FileHandler:
-    """Initialise file handler with specified configuration."""
+    """Create and configure a :class:`logging.FileHandler`.
+
+    :param config: Resolved logging configuration to read handler settings from.
+    :type config: Config
+    :returns: Configured file handler ready to be added to a logger.
+    :rtype: logging.FileHandler
+    """
     _format = config.get_format()
     datefmt = config.get_datefmt()
     level = config.get_level()
