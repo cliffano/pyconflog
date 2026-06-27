@@ -15,4 +15,4 @@ jobs:
         with:
           python-version: '3.14'
       - run: make clean deps package install
-      - run: make publish PASSWORD=${{ secrets.PYPI_TOKEN }}
+      - run: make publish PASSWORD=${{ secrets.null_PYPI_TOKEN }}

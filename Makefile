@@ -4,22 +4,31 @@
 ################################################################
 
 # PieMaker's version number
-PIEMAKER_VERSION = 2.3.1
+PIEMAKER_VERSION = 2.7.1
 
 ################################################################
 # User configuration variables
+# https://github.com/cliffano/piemaker#configuration
 # These variables should be stored in piemaker.yml config file,
 # and they will be parsed using yq https://github.com/mikefarah/yq
-# Example:
-# ---
-# package_name: somepackage
-# author: Some Author
 
 # PACKAGE_NAME is the name of the Python package
 PACKAGE_NAME=$(shell yq .package_name piemaker.yml)
 
 # AUTHOR is the author of the Python package
 AUTHOR ?= $(shell yq .author piemaker.yml)
+
+define set_generator_vars
+$(1): GENERATOR_COMPONENT = $$(shell yq .generator.component piemaker.yml)
+$(1): GENERATOR_INPUTS_PROJECT_ID = $$(shell yq .generator.inputs.project_id piemaker.yml)
+$(1): GENERATOR_INPUTS_PROJECT_NAME = $$(shell yq .generator.inputs.project_name piemaker.yml)
+$(1): GENERATOR_INPUTS_PROJECT_DESC = $$(shell yq .generator.inputs.project_desc piemaker.yml)
+$(1): GENERATOR_INPUTS_AUTHOR_NAME = $$(shell yq .generator.inputs.author_name piemaker.yml)
+$(1): GENERATOR_INPUTS_AUTHOR_EMAIL = $$(shell yq .generator.inputs.author_email piemaker.yml)
+$(1): GENERATOR_INPUTS_GITHUB_ID = $$(shell yq .generator.inputs.github_id piemaker.yml)
+$(1): GENERATOR_INPUTS_GITHUB_REPO = $$(shell yq .generator.inputs.github_repo piemaker.yml)
+$(1): GENERATOR_INPUTS_GITHUB_TOKEN_PREFIX = $$(shell yq .generator.inputs.github_token_prefix piemaker.yml)
+endef
 
 $(info ################################################################)
 $(info Building Python package using PieMaker with user configurations...)
@@ -32,6 +41,22 @@ export PATH := ${VIRTUAL_ENV}/bin:${POETRY_HOME}/bin:$(PATH)
 
 define python_venv
 	. .venv/bin/activate && $(1)
+endef
+
+define run_hook
+	@if [ -f Makefile-extras ] && grep -q "^$(1):" Makefile-extras; then \
+		$(MAKE) -f Makefile-extras $(1); \
+	fi
+endef
+
+define deps_extra
+	@if command -v apt-get > /dev/null 2>&1; then \
+		if [ "$$(id -u)" = "0" ]; then \
+			$(MAKE) deps-extra-apt; \
+		else \
+			sudo $(MAKE) deps-extra-apt; \
+		fi; \
+	fi
 endef
 
 ################################################################
@@ -56,6 +81,7 @@ deps:
 	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install --force-reinstall poetry-plugin-up==0.9.0 --ignore-installed
 	$(call python_venv,poetry self add poetry-plugin-export)
 	$(call python_venv,poetry export -f requirements.txt --without-hashes --with dev --output requirements.txt)
+	$(call deps_extra)
 
 deps-upgrade:
 	$(call python_venv,poetry up --latest)
@@ -64,6 +90,8 @@ deps-extra-apt:
 	apt-get update
 	apt-get install -y python3-venv
 	apt-get install -y python3-sphinx # needed by sphinx-apidoc
+	apt-get install -y markdownlint
+	$(call run_hook,x-post-deps-extra-apt)
 
 rmdeps:
 	rm -f poetry.lock requirements.txt
@@ -82,14 +110,7 @@ update-to-version:
 	curl https://raw.githubusercontent.com/cliffano/piemaker/$(TARGET_PIEMAKER_VERSION)/src/Makefile-piemaker -o Makefile
 
 # Update dotfiles using the generator-python
-update-dotfiles: GENERATOR_COMPONENT = $(shell yq .generator.component piemaker.yml)
-update-dotfiles: GENERATOR_INPUTS_PROJECT_ID = $(shell yq .generator.inputs.project_id piemaker.yml)
-update-dotfiles: GENERATOR_INPUTS_PROJECT_NAME = $(shell yq .generator.inputs.project_name piemaker.yml)
-update-dotfiles: GENERATOR_INPUTS_PROJECT_DESC = $(shell yq .generator.inputs.project_desc piemaker.yml)
-update-dotfiles: GENERATOR_INPUTS_AUTHOR_NAME = $(shell yq .generator.inputs.author_name piemaker.yml)
-update-dotfiles: GENERATOR_INPUTS_AUTHOR_EMAIL = $(shell yq .generator.inputs.author_email piemaker.yml)
-update-dotfiles: GENERATOR_INPUTS_GITHUB_ID = $(shell yq .generator.inputs.github_id piemaker.yml)
-update-dotfiles: GENERATOR_INPUTS_GITHUB_REPO = $(shell yq .generator.inputs.github_repo piemaker.yml)
+$(eval $(call set_generator_vars,update-dotfiles))
 update-dotfiles: stage
 	cd stage/ && \
 	  rm -rf generator-python/ && \
@@ -103,13 +124,40 @@ update-dotfiles: stage
 		--author_name "$(GENERATOR_INPUTS_AUTHOR_NAME)" \
 		--author_email "$(GENERATOR_INPUTS_AUTHOR_EMAIL)" \
 		--github_id "$(GENERATOR_INPUTS_GITHUB_ID)" \
-		--github_repo "$(GENERATOR_INPUTS_GITHUB_REPO)"
+		--github_repo "$(GENERATOR_INPUTS_GITHUB_REPO)" \
+		--github_token_prefix "$(GENERATOR_INPUTS_GITHUB_TOKEN_PREFIX)"
 	cd stage/generator-python/stage/$(GENERATOR_COMPONENT) && \
 	  cp -R .github/. ../../../../.github/ && \
 	  cp .coveragerc ../../../../.coveragerc && \
 	  cp .gitignore ../../../../.gitignore && \
 	  cp .pylintrc ../../../../.pylintrc && \
 	  cp .rtk.json ../../../../.rtk.json
+
+# Update partial snippets using the generator-python
+$(eval $(call set_generator_vars,update-partials))
+update-partials: stage
+	cd stage/ && \
+	  rm -rf generator-python/ && \
+	  git clone https://github.com/cliffano/generator-python && \
+	  cd generator-python && \
+	  make deps && \
+	  node_modules/.bin/plop $(GENERATOR_COMPONENT)-partials -- \
+	    --project_id "$(GENERATOR_INPUTS_PROJECT_ID)" \
+		--project_name "$(GENERATOR_INPUTS_PROJECT_NAME)" \
+		--project_desc "$(GENERATOR_INPUTS_PROJECT_DESC)" \
+		--author_name "$(GENERATOR_INPUTS_AUTHOR_NAME)" \
+		--author_email "$(GENERATOR_INPUTS_AUTHOR_EMAIL)" \
+		--github_id "$(GENERATOR_INPUTS_GITHUB_ID)" \
+		--github_repo "$(GENERATOR_INPUTS_GITHUB_REPO)" \
+		--github_token_prefix "$(GENERATOR_INPUTS_GITHUB_TOKEN_PREFIX)"
+	for block in AVATAR BADGES BUILD_REPORTS DEVELOPERS_GUIDE; do \
+	  partial_file=$$(printf "%s" "$$block" | tr "A-Z" "a-z"); \
+	  ex -s \
+	    -c "/<!-- BEGIN:$$block -->/+1,/<!-- END:$$block -->/-1d" \
+	    -c "/<!-- BEGIN:$$block -->/r stage/generator-python/stage/$(GENERATOR_COMPONENT)-partials/$$partial_file.txt" \
+	    -c 'wq' \
+	    README.md; \
+	done
 
 ################################################################
 # Formatting targets
@@ -125,6 +173,7 @@ lint: stage
 	$(call python_venv,pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo))
 	$(call python_venv,pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo) --output-format=pylint_report.CustomJsonReporter > docs/lint/pylint/report.json)
 	$(call python_venv,pylint_report docs/lint/pylint/report.json -o docs/lint/pylint/index.html)
+	mdl -r ~MD013,~MD029 $(shell find . -path ./stage -prune -o -path ./.venv -prune -o -path ./.pytest_cache -prune -o -name "CHANGELOG.md" -prune -o -name "*.md" -print)
 
 complexity: stage
 	rm -rf docs/complexity/radon/ stage/complexity/ && mkdir -p docs/complexity/radon/ stage/complexity/
@@ -189,10 +238,11 @@ publish:
 doc: stage
 	rm -rf docs/doc/sphinx/ stage/doc/ && mkdir -p docs/doc/sphinx/ stage/doc/
 	$(call python_venv,sphinx-apidoc -o docs/doc/sphinx/ --full -H "$(PACKAGE_NAME)" -A "$(AUTHOR)" $(PACKAGE_NAME) && \
+		printf "\nimport os\nimport sys\nsys.path.insert(0, os.path.abspath('../../..'))\n" >> docs/doc/sphinx/conf.py && \
 		cd docs/doc/sphinx/ && \
 		make html && \
 		cp -R _build/html/* ../../../docs/doc/sphinx/)
 
 ################################################################
 
-.PHONY: all ci clean complexity configurations coverage deps deps-extra-apt deps-upgrade rmdeps doc export export export install lint name package package publish reinstall release-major release-minor release-patch stage style test test-examples test-integration uninstall update-dotfiles update-to-latest update-to-latest update-to-main update-to-version
+.PHONY: $(1) all ci clean complexity configurations coverage deps deps-extra-apt deps-upgrade rmdeps doc export export export install lint name package package publish reinstall release-major release-minor release-patch stage style test test-examples test-integration uninstall update-dotfiles update-partials update-to-latest update-to-latest update-to-main update-to-version

@@ -1,9 +1,14 @@
+<!-- BEGIN:AVATAR -->
 ![Avatar](avatar.jpg)
+<!-- END:AVATAR -->
 
+<!-- BEGIN:BADGES -->
 [![Build Status](https://github.com/cliffano/pyconflog/workflows/CI/badge.svg)](https://github.com/cliffano/pyconflog/actions?query=workflow%3ACI)
+[![Code Scanning Status](https://github.com/cliffano/pyconflog/workflows/CodeQL/badge.svg)](https://github.com/cliffano/pyconflog/actions?query=workflow%3ACodeQL)
+[![Dependencies Status](https://img.shields.io/librariesio/release/pypi/conflog)](https://libraries.io/github/cliffano/pyconflog)
 [![Security Status](https://snyk.io/test/github/cliffano/pyconflog/badge.svg)](https://snyk.io/test/github/cliffano/pyconflog)
-[![Dependencies Status](https://img.shields.io/librariesio/release/pypi/conflog)](https://libraries.io/pypi/conflog)
 [![Published Version](https://img.shields.io/pypi/v/conflog.svg)](https://pypi.python.org/pypi/conflog)
+<!-- END:BADGES -->
 
 # Conflog
 
@@ -198,13 +203,18 @@ A: You might be getting the same log message displayed multiple times when there
 
 ## Colophon
 
-[Developer's Guide](https://cliffano.github.io/developers_guide.html#python)
+<!-- BEGIN:DEVELOPERS_GUIDE -->
+[Developer's Guide](https://cliffano.github.io/developers-guide-python.html)
+<!-- END:DEVELOPERS_GUIDE -->
 
+<!-- BEGIN:BUILD_REPORTS -->
 Build reports:
 
 * [Lint report](https://cliffano.github.io/pyconflog/lint/pylint/index.html)
-* [Code complexity report](https://cliffano.github.io/pyconflog/complexity/wily/index.html)
+* [Code complexity report](https://cliffano.github.io/pyconflog/complexity/radon/index.html)
 * [Unit tests report](https://cliffano.github.io/pyconflog/test/pytest/index.html)
 * [Test coverage report](https://cliffano.github.io/pyconflog/coverage/coverage/index.html)
 * [Integration tests report](https://cliffano.github.io/pyconflog/test-integration/pytest/index.html)
 * [API Documentation](https://cliffano.github.io/pyconflog/doc/sphinx/index.html)
+
+<!-- END:BUILD_REPORTS -->
