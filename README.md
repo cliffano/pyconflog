@@ -16,84 +16,102 @@ Conflog library provides Python logging setup via environment variables and conf
 
 ## Installation
 
-    pip3 install conflog
+```shell
+pip3 install conflog
+```
 
 ## Usage
 
 Create a configuration file, e.g. `conflog.yaml`:
 
-    ---
-    handlers: "stream,file"
-    datefmt: "%Y-%m-%d %H:%M:%S"
-    filename: "conflog.log"
-    filemode: "w"
-    format: "[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
-    level: "info"
-    extras:
-      env: "dev"
-      id: "123"
+```yaml
+---
+handlers: "stream,file"
+datefmt: "%Y-%m-%d %H:%M:%S"
+filename: "conflog.log"
+filemode: "w"
+format: "[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
+level: "info"
+extras:
+    env: "dev"
+    id: "123"
+```
 
 And then use it in your Python code:
 
-    from conflog import Conflog
+```python
+from conflog import Conflog
 
-    cfl = Conflog(conf_files=['conflog.yaml'])
-    logger = cfl.get_logger('somename')
-    logger.debug('Some debug message')
-    logger.info('Some info message')
-    logger.critical('Some critical message')
+cfl = Conflog(conf_files=['conflog.yaml'])
+logger = cfl.get_logger('somename')
+logger.debug('Some debug message')
+logger.info('Some info message')
+logger.critical('Some critical message')
+```
 
 It will write the log messages to stdout and file `conflog.log`:
 
-    [SOMEAPP] [dev-123] 2023-06-07 10:49:01 INFO Some info message
-    [SOMEAPP] [dev-123] 2023-06-07 10:49:52 CRITICAL Some critical message
+```text
+[SOMEAPP] [dev-123] 2023-06-07 10:49:01 INFO Some info message
+[SOMEAPP] [dev-123] 2023-06-07 10:49:52 CRITICAL Some critical message
+```
 
 If you specify environment variables configuration, it will overwrite the configuration files:
 
-    import os
-    from conflog import Conflog
+```python
+import os
+from conflog import Conflog
 
-    os.environ['CONFLOG_FORMAT'] = '[ENVAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s'
-    cfl = Conflog(conf_files=['conflog.yaml'])
-    logger.debug('Some debug message')
-    logger.info('Some info message')
-    logger.critical('Some critical message')
+os.environ['CONFLOG_FORMAT'] = '[ENVAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s'
+cfl = Conflog(conf_files=['conflog.yaml'])
+logger.debug('Some debug message')
+logger.info('Some info message')
+logger.critical('Some critical message')
+```
 
 It will write the log messages using the format from `CONFLOG_FORMAT` environment variable:
 
-    [ENVAPP] [dev-123] 2023-06-07 10:49:01 INFO Some info message
-    [ENVAPP] [dev-123] 2023-06-07 10:49:52 CRITICAL Some critical message
+```text
+[ENVAPP] [dev-123] 2023-06-07 10:49:01 INFO Some info message
+[ENVAPP] [dev-123] 2023-06-07 10:49:52 CRITICAL Some critical message
+```
 
 And if you specify configuration dictionary, it will overwrite everything else:
 
-    import os
-    from conflog import Conflog
+```python
+import os
+from conflog import Conflog
 
-    os.environ['CONFLOG_FORMAT'] = '[ENVAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s'
-    cfl = Conflog(
-        conf_files=['conflog.yaml'],
-        conf_dict={'format': '[DICTAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s'})
-    logger.debug('Some debug message')
-    logger.info('Some info message')
-    logger.critical('Some critical message')
+os.environ['CONFLOG_FORMAT'] = '[ENVAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s'
+cfl = Conflog(
+    conf_files=['conflog.yaml'],
+    conf_dict={'format': '[DICTAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s'})
+logger.debug('Some debug message')
+logger.info('Some info message')
+logger.critical('Some critical message')
+```
 
 It will write the log messages using the format from configuration dictionary:
 
-    [DICTAPP] [dev-123] 2023-06-07 10:49:01 INFO Some info message
-    [DICTAPP] [dev-123] 2023-06-07 10:49:52 CRITICAL Some critical message
+```text
+[DICTAPP] [dev-123] 2023-06-07 10:49:01 INFO Some info message
+[DICTAPP] [dev-123] 2023-06-07 10:49:52 CRITICAL Some critical message
+```
 
 If you're passing a string extras and need to have either comma or equal in either the key or the value, you can specify custom separators:
 
-    ---
-    handlers: "stream,file"
-    datefmt: "%Y-%m-%d %H:%M:%S"
-    filename: "conflog.log"
-    filemode: "w"
-    format: "[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
-    level: "info"
-    extras: "dev_123|param1_value1"
-    extras_separator: "|"
-    extras_key_value_separator: "_"
+```yaml
+---
+handlers: "stream,file"
+datefmt: "%Y-%m-%d %H:%M:%S"
+filename: "conflog.log"
+filemode: "w"
+format: "[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
+level: "info"
+extras: "dev_123|param1_value1"
+extras_separator: "|"
+extras_key_value_separator: "_"
+```
 
 ## Configuration
 
@@ -119,75 +137,85 @@ Environment variables configuration overwrites configuration files' properties. 
 
 Example YAML configuration file:
 
-    ---
-    handlers: "stream,file"
-    datefmt: "%Y-%m-%d %H:%M:%S"
-    filename: "conflog.log"
-    filemode: "w"
-    format: "[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
-    level: "info"
-    extras:
-      env: "dev"
-      id: "123"
+```yaml
+---
+handlers: "stream,file"
+datefmt: "%Y-%m-%d %H:%M:%S"
+filename: "conflog.log"
+filemode: "w"
+format: "[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
+level: "info"
+extras:
+    env: "dev"
+    id: "123"
+```
 
 ### JSON
 
 Example JSON configuration file:
 
-    {
-      "handlers": "stream,file",
-      "datefmt": "%Y-%m-%d %H:%M:%S",
-      "filename": "conflog.log",
-      "filemode": "w",
-      "format": "[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s",
-      "level": "info",
-      "extras": {
-        "env": "dev",
-        "id": "123"
-      }
+```json
+{
+    "handlers": "stream,file",
+    "datefmt": "%Y-%m-%d %H:%M:%S",
+    "filename": "conflog.log",
+    "filemode": "w",
+    "format": "[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s",
+    "level": "info",
+    "extras": {
+    "env": "dev",
+    "id": "123"
     }
+}
+```
 
 ### XML
 
 Example XML configuration file:
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <conflog>
-      <handlers>stream,file</handlers>
-      <datefmt>%Y-%m-%d %H:%M:%S</datefmt>
-      <filename>conflog.log</filename>
-      <filemode>w</filemode>
-      <format>[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s</format>
-      <level>info</level>
-      <extras>env=dev,id=123</extras>
-    </conflog>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<conflog>
+    <handlers>stream,file</handlers>
+    <datefmt>%Y-%m-%d %H:%M:%S</datefmt>
+    <filename>conflog.log</filename>
+    <filemode>w</filemode>
+    <format>[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s</format>
+    <level>info</level>
+    <extras>env=dev,id=123</extras>
+</conflog>
+```
 
 ### INI
 
 Example INI configuration file:
 
-    [conflog]
-    handlers: stream,file
-    datefmt: %%Y-%%m-%%d %%H:%%M:%%S
-    filename: conflog.log
-    filemode: w
-    format: [SOMEAPP] [%%(env)s-%%(id)s] %%(asctime)s %%(levelname)s %%(message)s
-    level: info
-    extras: env=dev,id=123
+```ini
+[conflog]
+handlers: stream,file
+datefmt: %%Y-%%m-%%d %%H:%%M:%%S
+filename: conflog.log
+filemode: w
+format: [SOMEAPP] [%%(env)s-%%(id)s] %%(asctime)s %%(levelname)s %%(message)s
+level: info
+extras: env=dev,id=123
+```
 
 ### Environment Variables
 
 Example configuration environment variables:
 
-    CONFLOG_HANDLERS="stream,file"
-    CONFLOG_DATEFMT="%Y-%m-%d %H:%M:%S"
-    CONFLOG_FILENAME="conflog.log"
-    CONFLOG_FILEMODE="w"
-    CONFLOG_FORMAT="[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
-    CONFLOG_LEVEL="info"
-    CONFLOG_EXTRAS="env=dev,id=123"
-    CONFLOG_EXTRAS_SEPARATOR=","
-    CONFLOG_EXTRAS_KEY_VALUE_SEPARATOR="="
+```shell
+CONFLOG_HANDLERS="stream,file"
+CONFLOG_DATEFMT="%Y-%m-%d %H:%M:%S"
+CONFLOG_FILENAME="conflog.log"
+CONFLOG_FILEMODE="w"
+CONFLOG_FORMAT="[SOMEAPP] [%(env)s-%(id)s] %(asctime)s %(levelname)s %(message)s"
+CONFLOG_LEVEL="info"
+CONFLOG_EXTRAS="env=dev,id=123"
+CONFLOG_EXTRAS_SEPARATOR=","
+CONFLOG_EXTRAS_KEY_VALUE_SEPARATOR="="
+```
 
 ## FAQ
 
@@ -195,11 +223,13 @@ Example configuration environment variables:
 
 A: You might be getting the same log message displayed multiple times when there are other libraries adding handlers to the logger. You can clear those handlers prior to getting a logger from Conflog:
 
-    from conflog import Conflog
+```python
+from conflog import Conflog
 
-    cfl = Conflog(conf_files=['conflog.yaml'])
-    cfl.close_logger_handlers()
-    logger = cfl.get_logger('somename')
+cfl = Conflog(conf_files=['conflog.yaml'])
+cfl.close_logger_handlers()
+logger = cfl.get_logger('somename')
+```
 
 ## Colophon
 
