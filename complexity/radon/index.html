@@ -15,15 +15,15 @@
 <pre class="ansi2html-content">
 conflog/__init__.py - A
 conflog/config.py - A
-conflog/handlers/file_handler.py - A
-conflog/handlers/stream_handler.py - A
-conflog/handlers/__init__.py - A
-conflog/loaders/environ_loader.py - A
+conflog/loaders/yaml_loader.py - A
+conflog/loaders/__init__.py - A
+conflog/loaders/xml_loader.py - A
 conflog/loaders/json_loader.py - A
 conflog/loaders/ini_loader.py - A
-conflog/loaders/xml_loader.py - A
-conflog/loaders/__init__.py - A
-conflog/loaders/yaml_loader.py - A
+conflog/loaders/environ_loader.py - A
+conflog/handlers/__init__.py - A
+conflog/handlers/stream_handler.py - A
+conflog/handlers/file_handler.py - A
 conflog/__init__.py
     M 22:4 Conflog.__init__ - A (4)
     C 19:0 Conflog - A (3)
@@ -42,20 +42,20 @@ conflog/config.py
     M 99:4 Config.get_level - A (1)
     M 106:4 Config.get_extras_separator - A (1)
     M 112:4 Config.get_extras_key_value_separator - A (1)
-conflog/handlers/file_handler.py
-    F 7:0 init - A (1)
-conflog/handlers/stream_handler.py
-    F 7:0 init - A (1)
-conflog/loaders/environ_loader.py
+conflog/loaders/yaml_loader.py
+    F 7:0 load - A (4)
+conflog/loaders/xml_loader.py
     F 7:0 load - A (3)
 conflog/loaders/json_loader.py
     F 7:0 load - A (3)
 conflog/loaders/ini_loader.py
     F 8:0 load - A (3)
-conflog/loaders/xml_loader.py
+conflog/loaders/environ_loader.py
     F 7:0 load - A (3)
-conflog/loaders/yaml_loader.py
-    F 7:0 load - A (4)
+conflog/handlers/stream_handler.py
+    F 7:0 init - A (1)
+conflog/handlers/file_handler.py
+    F 7:0 init - A (1)
 
 23 blocks (classes, functions, methods) analyzed.
 Average complexity: A (2.260869565217391)
