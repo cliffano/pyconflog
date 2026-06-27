@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>conflog.config &#8212; conflog  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=cb25574f" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for conflog.config</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Logging configuration container and accessor.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">.loaders</span> <span class="kn">import</span> <span class="n">environ_loader</span><span class="p">,</span> <span class="n">ini_loader</span><span class="p">,</span> <span class="n">json_loader</span><span class="p">,</span> <span class="n">xml_loader</span><span class="p">,</span> <span class="n">yaml_loader</span>
+
+<span class="n">LEVELS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;debug&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+    <span class="s2">&quot;warning&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+    <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+    <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+    <span class="s2">&quot;critical&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;dict: Mapping of lower-case level name strings to :mod:`logging` level integers.&quot;&quot;&quot;</span>
+
+<span class="n">DEFAULT_HANDLERS</span> <span class="o">=</span> <span class="s2">&quot;stream&quot;</span>
+<span class="sd">&quot;&quot;&quot;str: Default handler types, comma-separated.&quot;&quot;&quot;</span>
+
+<span class="n">DEFAULT_DATEFMT</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%b-%y %H:%M:%S&quot;</span>
+<span class="sd">&quot;&quot;&quot;str: Default date format string.&quot;&quot;&quot;</span>
+
+<span class="n">DEFAULT_FILENAME</span> <span class="o">=</span> <span class="s2">&quot;conflog.log&quot;</span>
+<span class="sd">&quot;&quot;&quot;str: Default log file name.&quot;&quot;&quot;</span>
+
+<span class="n">DEFAULT_FILEMODE</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span>
+<span class="sd">&quot;&quot;&quot;str: Default file open mode for the file handler.&quot;&quot;&quot;</span>
+
+<span class="n">DEFAULT_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> --&gt; </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+<span class="sd">&quot;&quot;&quot;str: Default log record format string.&quot;&quot;&quot;</span>
+
+<span class="n">DEFAULT_LEVEL</span> <span class="o">=</span> <span class="s2">&quot;info&quot;</span>
+<span class="sd">&quot;&quot;&quot;str: Default log level name.&quot;&quot;&quot;</span>
+
+<span class="n">DEFAULT_EXTRAS_SEPARATOR</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
+<span class="sd">&quot;&quot;&quot;str: Default separator between extra key-value pairs.&quot;&quot;&quot;</span>
+
+<span class="n">DEFAULT_EXTRAS_KEY_VALUE_SEPARATOR</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span>
+<span class="sd">&quot;&quot;&quot;str: Default separator between a key and its value within an extras pair.&quot;&quot;&quot;</span>
+
+<span class="n">DEFAULT_EXTRAS</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="sd">&quot;&quot;&quot;dict: Default extras dictionary (empty).&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="Config">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config">[docs]</a>
+<span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolved logging configuration built by merging files, environment variables, and a dict.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">conf_files</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">conf_dict</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load and merge configuration from files, environment variables, and an optional dict.</span>
+
+<span class="sd">        Sources are applied in order of increasing precedence:</span>
+
+<span class="sd">        1. Configuration files (in the order supplied).</span>
+<span class="sd">        2. Environment variables prefixed with ``CONFLOG_``.</span>
+<span class="sd">        3. ``conf_dict`` (highest precedence, overwrites everything).</span>
+
+<span class="sd">        :param conf_files: List of configuration file paths to load.</span>
+<span class="sd">            Supported extensions: ``.ini``, ``.json``, ``.xml``, ``.yaml``.</span>
+<span class="sd">        :type conf_files: list[str] or None</span>
+<span class="sd">        :param conf_dict: Optional dict of configuration values that override all other</span>
+<span class="sd">            sources.</span>
+<span class="sd">        :type conf_dict: dict or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Load configurations from files</span>
+        <span class="k">for</span> <span class="n">conf_file</span> <span class="ow">in</span> <span class="n">conf_files</span> <span class="ow">or</span> <span class="p">[]:</span>
+
+            <span class="n">curr_conf</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="k">if</span> <span class="n">conf_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.ini&quot;</span><span class="p">):</span>
+                <span class="n">curr_conf</span> <span class="o">=</span> <span class="n">ini_loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">conf_file</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">conf_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.json&quot;</span><span class="p">):</span>
+                <span class="n">curr_conf</span> <span class="o">=</span> <span class="n">json_loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">conf_file</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">conf_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.xml&quot;</span><span class="p">):</span>
+                <span class="n">curr_conf</span> <span class="o">=</span> <span class="n">xml_loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">conf_file</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">conf_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.yaml&quot;</span><span class="p">):</span>
+                <span class="n">curr_conf</span> <span class="o">=</span> <span class="n">yaml_loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">conf_file</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">,</span> <span class="o">**</span><span class="n">curr_conf</span><span class="p">}</span>
+
+        <span class="c1"># Load configurations from environment variables</span>
+        <span class="c1"># Environment variables configuration overwrites all configuration</span>
+        <span class="c1"># files supplied</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">,</span> <span class="o">**</span><span class="n">environ_loader</span><span class="o">.</span><span class="n">load</span><span class="p">()}</span>
+
+        <span class="c1"># Overwrite everything if configuration dictionary is supplied</span>
+        <span class="k">if</span> <span class="n">conf_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">,</span> <span class="o">**</span><span class="n">conf_dict</span><span class="p">}</span>
+
+<div class="viewcode-block" id="Config.get_handlers">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config.get_handlers">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_handlers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the list of handler type names to use.</span>
+
+<span class="sd">        Reads the ``handlers`` config key, which is a comma-separated string of</span>
+<span class="sd">        handler type names. Supported values are ``stream`` and ``file``.</span>
+
+<span class="sd">        :returns: List of handler type name strings.</span>
+<span class="sd">            Defaults to ``[&#39;stream&#39;]`` when not configured.</span>
+<span class="sd">        :rtype: list[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;handlers&quot;</span><span class="p">,</span> <span class="n">DEFAULT_HANDLERS</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Config.get_datefmt">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config.get_datefmt">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_datefmt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the date format string for log records.</span>
+
+<span class="sd">        :returns: strftime-compatible date format string.</span>
+<span class="sd">            Defaults to ``&#39;%d-%b-%y %H:%M:%S&#39;`` when not configured.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;datefmt&quot;</span><span class="p">,</span> <span class="n">DEFAULT_DATEFMT</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Config.get_filename">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config.get_filename">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the log file path for the file handler.</span>
+
+<span class="sd">        :returns: Log file path string.</span>
+<span class="sd">            Defaults to ``&#39;conflog.log&#39;`` when not configured.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="n">DEFAULT_FILENAME</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Config.get_filemode">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config.get_filemode">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_filemode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the file open mode for the file handler.</span>
+
+<span class="sd">        :returns: File open mode string (e.g. ``&#39;w&#39;``, ``&#39;a&#39;``).</span>
+<span class="sd">            Defaults to ``&#39;w&#39;`` when not configured.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filemode&quot;</span><span class="p">,</span> <span class="n">DEFAULT_FILEMODE</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Config.get_format">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config.get_format">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_format</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the log record format string.</span>
+
+<span class="sd">        :returns: :func:`logging.Formatter`-compatible format string.</span>
+<span class="sd">            Defaults to ``&#39;%(asctime)s --&gt; %(name)s - %(levelname)s - %(message)s&#39;``</span>
+<span class="sd">            when not configured.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="n">DEFAULT_FORMAT</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Config.get_level">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config.get_level">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the numeric log level.</span>
+
+<span class="sd">        :returns: :mod:`logging` level integer corresponding to the configured level name.</span>
+<span class="sd">            Defaults to :data:`logging.INFO` when not configured.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;level&quot;</span><span class="p">,</span> <span class="n">DEFAULT_LEVEL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">LEVELS</span><span class="p">[</span><span class="n">level</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span></div>
+
+
+<div class="viewcode-block" id="Config.get_extras_separator">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config.get_extras_separator">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_extras_separator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the separator used between extra key-value pairs in string form.</span>
+
+<span class="sd">        :returns: Separator character or string.</span>
+<span class="sd">            Defaults to ``&#39;,&#39;`` when not configured.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;extras_separator&quot;</span><span class="p">,</span> <span class="n">DEFAULT_EXTRAS_SEPARATOR</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Config.get_extras_key_value_separator">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config.get_extras_key_value_separator">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_extras_key_value_separator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the separator used between a key and its value within an extras pair.</span>
+
+<span class="sd">        :returns: Key-value separator character or string.</span>
+<span class="sd">            Defaults to ``&#39;=&#39;`` when not configured.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;extras_key_value_separator&quot;</span><span class="p">,</span> <span class="n">DEFAULT_EXTRAS_KEY_VALUE_SEPARATOR</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Config.get_extras">
+<a class="viewcode-back" href="../../conflog.html#conflog.config.Config.get_extras">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_extras</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the extras dictionary to be injected into every log record.</span>
+
+<span class="sd">        For JSON and YAML sources, extras may be supplied as a mapping directly.</span>
+<span class="sd">        For all other sources (INI, XML, environment variables), extras must be a</span>
+<span class="sd">        string of the form ``key1=value1,key2=value2`` (separators are configurable</span>
+<span class="sd">        via :meth:`get_extras_separator` and :meth:`get_extras_key_value_separator`).</span>
+
+<span class="sd">        :returns: Dict of extra fields added to each log record.</span>
+<span class="sd">            Defaults to an empty dict when not configured.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">extras</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;extras&quot;</span><span class="p">,</span> <span class="n">DEFAULT_EXTRAS</span><span class="p">)</span>
+        <span class="n">extras_separator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_extras_separator</span><span class="p">()</span>
+        <span class="n">extras_key_value_separator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_extras_key_value_separator</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">extras</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">_extras</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">extras</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">extras_separator</span><span class="p">):</span>
+                <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">pair</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">extras_key_value_separator</span><span class="p">)</span>
+                <span class="n">_extras</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="n">extras</span> <span class="o">=</span> <span class="n">_extras</span>
+        <span class="k">return</span> <span class="n">extras</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">conflog</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../conflog.html">conflog package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../conflog.html">conflog</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, Cliffano Subagio.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

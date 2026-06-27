@@ -44,7 +44,7 @@
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 58,
+        "statement": 68,
         "warning": 0
       },
       "conflog.loaders.yaml_loader": {
@@ -62,7 +62,7 @@
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 1,
+        "statement": 2,
         "warning": 0
       },
       "conflog.loaders.xml_loader": {
@@ -291,7 +291,7 @@
         "warning": 0
       }
     },
-    "statement": 1077,
+    "statement": 1088,
     "error": 0,
     "warning": 0,
     "refactor": 0,

@@ -39,19 +39,43 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="conflog.handlers.html">conflog.handlers package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="conflog.handlers.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.handlers.html#conflog-handlers-file-handler-module">conflog.handlers.file_handler module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.handlers.html#conflog-handlers-stream-handler-module">conflog.handlers.stream_handler module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.handlers.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.handlers.html#module-conflog.handlers.file_handler">conflog.handlers.file_handler module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conflog.handlers.html#conflog.handlers.file_handler.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.handlers.html#module-conflog.handlers.stream_handler">conflog.handlers.stream_handler module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conflog.handlers.html#conflog.handlers.stream_handler.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.handlers.html#module-conflog.handlers">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="conflog.loaders.html">conflog.loaders package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#conflog-loaders-environ-loader-module">conflog.loaders.environ_loader module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#conflog-loaders-ini-loader-module">conflog.loaders.ini_loader module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#conflog-loaders-json-loader-module">conflog.loaders.json_loader module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#conflog-loaders-xml-loader-module">conflog.loaders.xml_loader module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#conflog-loaders-yaml-loader-module">conflog.loaders.yaml_loader module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#module-conflog.loaders.environ_loader">conflog.loaders.environ_loader module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conflog.loaders.html#conflog.loaders.environ_loader.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#module-conflog.loaders.ini_loader">conflog.loaders.ini_loader module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conflog.loaders.html#conflog.loaders.ini_loader.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#module-conflog.loaders.json_loader">conflog.loaders.json_loader module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conflog.loaders.html#conflog.loaders.json_loader.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#module-conflog.loaders.xml_loader">conflog.loaders.xml_loader module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conflog.loaders.html#conflog.loaders.xml_loader.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#module-conflog.loaders.yaml_loader">conflog.loaders.yaml_loader module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conflog.loaders.html#conflog.loaders.yaml_loader.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.loaders.html#module-conflog.loaders">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conflog.loaders.html#conflog.loaders.PARAMS"><code class="docutils literal notranslate"><span class="pre">PARAMS</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -60,11 +84,271 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
-<section id="conflog-config-module">
-<h2>conflog.config module<a class="headerlink" href="#conflog-config-module" title="Link to this heading">¶</a></h2>
+<section id="module-conflog.config">
+<span id="conflog-config-module"></span><h2>conflog.config module<a class="headerlink" href="#module-conflog.config" title="Link to this heading">¶</a></h2>
+<p>Logging configuration container and accessor.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="conflog.config.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conf_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conflog/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Resolved logging configuration built by merging files, environment variables, and a dict.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.config.Config.get_datefmt">
+<span class="sig-name descname"><span class="pre">get_datefmt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/conflog/config.html#Config.get_datefmt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config.get_datefmt" title="Link to this definition">¶</a></dt>
+<dd><p>Return the date format string for log records.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>strftime-compatible date format string.
+Defaults to <code class="docutils literal notranslate"><span class="pre">'%d-%b-%y</span> <span class="pre">%H:%M:%S'</span></code> when not configured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.config.Config.get_extras">
+<span class="sig-name descname"><span class="pre">get_extras</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/conflog/config.html#Config.get_extras"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config.get_extras" title="Link to this definition">¶</a></dt>
+<dd><p>Return the extras dictionary to be injected into every log record.</p>
+<p>For JSON and YAML sources, extras may be supplied as a mapping directly.
+For all other sources (INI, XML, environment variables), extras must be a
+string of the form <code class="docutils literal notranslate"><span class="pre">key1=value1,key2=value2</span></code> (separators are configurable
+via <a class="reference internal" href="#conflog.config.Config.get_extras_separator" title="conflog.config.Config.get_extras_separator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_extras_separator()</span></code></a> and <a class="reference internal" href="#conflog.config.Config.get_extras_key_value_separator" title="conflog.config.Config.get_extras_key_value_separator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_extras_key_value_separator()</span></code></a>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict of extra fields added to each log record.
+Defaults to an empty dict when not configured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.config.Config.get_extras_key_value_separator">
+<span class="sig-name descname"><span class="pre">get_extras_key_value_separator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/conflog/config.html#Config.get_extras_key_value_separator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config.get_extras_key_value_separator" title="Link to this definition">¶</a></dt>
+<dd><p>Return the separator used between a key and its value within an extras pair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Key-value separator character or string.
+Defaults to <code class="docutils literal notranslate"><span class="pre">'='</span></code> when not configured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.config.Config.get_extras_separator">
+<span class="sig-name descname"><span class="pre">get_extras_separator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/conflog/config.html#Config.get_extras_separator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config.get_extras_separator" title="Link to this definition">¶</a></dt>
+<dd><p>Return the separator used between extra key-value pairs in string form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Separator character or string.
+Defaults to <code class="docutils literal notranslate"><span class="pre">','</span></code> when not configured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.config.Config.get_filemode">
+<span class="sig-name descname"><span class="pre">get_filemode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/conflog/config.html#Config.get_filemode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config.get_filemode" title="Link to this definition">¶</a></dt>
+<dd><p>Return the file open mode for the file handler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>File open mode string (e.g. <code class="docutils literal notranslate"><span class="pre">'w'</span></code>, <code class="docutils literal notranslate"><span class="pre">'a'</span></code>).
+Defaults to <code class="docutils literal notranslate"><span class="pre">'w'</span></code> when not configured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.config.Config.get_filename">
+<span class="sig-name descname"><span class="pre">get_filename</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/conflog/config.html#Config.get_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config.get_filename" title="Link to this definition">¶</a></dt>
+<dd><p>Return the log file path for the file handler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Log file path string.
+Defaults to <code class="docutils literal notranslate"><span class="pre">'conflog.log'</span></code> when not configured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.config.Config.get_format">
+<span class="sig-name descname"><span class="pre">get_format</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/conflog/config.html#Config.get_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config.get_format" title="Link to this definition">¶</a></dt>
+<dd><p>Return the log record format string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-func docutils literal notranslate"><span class="pre">logging.Formatter()</span></code>-compatible format string.
+Defaults to <code class="docutils literal notranslate"><span class="pre">'%(asctime)s</span> <span class="pre">--&gt;</span> <span class="pre">%(name)s</span> <span class="pre">-</span> <span class="pre">%(levelname)s</span> <span class="pre">-</span> <span class="pre">%(message)s'</span></code>
+when not configured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.config.Config.get_handlers">
+<span class="sig-name descname"><span class="pre">get_handlers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/conflog/config.html#Config.get_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config.get_handlers" title="Link to this definition">¶</a></dt>
+<dd><p>Return the list of handler type names to use.</p>
+<p>Reads the <code class="docutils literal notranslate"><span class="pre">handlers</span></code> config key, which is a comma-separated string of
+handler type names. Supported values are <code class="docutils literal notranslate"><span class="pre">stream</span></code> and <code class="docutils literal notranslate"><span class="pre">file</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of handler type name strings.
+Defaults to <code class="docutils literal notranslate"><span class="pre">['stream']</span></code> when not configured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.config.Config.get_level">
+<span class="sig-name descname"><span class="pre">get_level</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/conflog/config.html#Config.get_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.config.Config.get_level" title="Link to this definition">¶</a></dt>
+<dd><p>Return the numeric log level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> level integer corresponding to the configured level name.
+Defaults to <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.INFO</span></code> when not configured.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.DEFAULT_DATEFMT">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_DATEFMT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'%d-%b-%y</span> <span class="pre">%H:%M:%S'</span></em><a class="headerlink" href="#conflog.config.DEFAULT_DATEFMT" title="Link to this definition">¶</a></dt>
+<dd><p>str: Default date format string.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.DEFAULT_EXTRAS">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_EXTRAS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#conflog.config.DEFAULT_EXTRAS" title="Link to this definition">¶</a></dt>
+<dd><p>dict: Default extras dictionary (empty).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.DEFAULT_EXTRAS_KEY_VALUE_SEPARATOR">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_EXTRAS_KEY_VALUE_SEPARATOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'='</span></em><a class="headerlink" href="#conflog.config.DEFAULT_EXTRAS_KEY_VALUE_SEPARATOR" title="Link to this definition">¶</a></dt>
+<dd><p>str: Default separator between a key and its value within an extras pair.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.DEFAULT_EXTRAS_SEPARATOR">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_EXTRAS_SEPARATOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">','</span></em><a class="headerlink" href="#conflog.config.DEFAULT_EXTRAS_SEPARATOR" title="Link to this definition">¶</a></dt>
+<dd><p>str: Default separator between extra key-value pairs.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.DEFAULT_FILEMODE">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_FILEMODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'w'</span></em><a class="headerlink" href="#conflog.config.DEFAULT_FILEMODE" title="Link to this definition">¶</a></dt>
+<dd><p>str: Default file open mode for the file handler.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.DEFAULT_FILENAME">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_FILENAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'conflog.log'</span></em><a class="headerlink" href="#conflog.config.DEFAULT_FILENAME" title="Link to this definition">¶</a></dt>
+<dd><p>str: Default log file name.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.DEFAULT_FORMAT">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_FORMAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'%(asctime)s</span> <span class="pre">--&gt;</span> <span class="pre">%(name)s</span> <span class="pre">-</span> <span class="pre">%(levelname)s</span> <span class="pre">-</span> <span class="pre">%(message)s'</span></em><a class="headerlink" href="#conflog.config.DEFAULT_FORMAT" title="Link to this definition">¶</a></dt>
+<dd><p>str: Default log record format string.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.DEFAULT_HANDLERS">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_HANDLERS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'stream'</span></em><a class="headerlink" href="#conflog.config.DEFAULT_HANDLERS" title="Link to this definition">¶</a></dt>
+<dd><p>str: Default handler types, comma-separated.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.DEFAULT_LEVEL">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_LEVEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'info'</span></em><a class="headerlink" href="#conflog.config.DEFAULT_LEVEL" title="Link to this definition">¶</a></dt>
+<dd><p>str: Default log level name.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="conflog.config.LEVELS">
+<span class="sig-prename descclassname"><span class="pre">conflog.config.</span></span><span class="sig-name descname"><span class="pre">LEVELS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'critical':</span> <span class="pre">50,</span> <span class="pre">'debug':</span> <span class="pre">10,</span> <span class="pre">'error':</span> <span class="pre">40,</span> <span class="pre">'info':</span> <span class="pre">20,</span> <span class="pre">'warning':</span> <span class="pre">30}</span></em><a class="headerlink" href="#conflog.config.LEVELS" title="Link to this definition">¶</a></dt>
+<dd><p>dict: Mapping of lower-case level name strings to <code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> level integers.</p>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="module-conflog">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-conflog" title="Link to this heading">¶</a></h2>
+<p>Python logging setup via configuration files and environment variables.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="conflog.Conflog">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">conflog.</span></span><span class="sig-name descname"><span class="pre">Conflog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conf_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conflog.html#Conflog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.Conflog" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Configures Python logging from files, environment variables, and a config dict.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.Conflog.close_logger_handlers">
+<span class="sig-name descname"><span class="pre">close_logger_handlers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/conflog.html#Conflog.close_logger_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.Conflog.close_logger_handlers" title="Link to this definition">¶</a></dt>
+<dd><p>Close and remove all handlers from the named logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Logger name whose handlers should be closed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.Conflog.get_config_properties">
+<span class="sig-name descname"><span class="pre">get_config_properties</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/conflog.html#Conflog.get_config_properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.Conflog.get_config_properties" title="Link to this definition">¶</a></dt>
+<dd><p>Return the merged configuration properties dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>All resolved configuration key-value pairs.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conflog.Conflog.get_logger">
+<span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="reference internal" href="_modules/conflog.html#Conflog.get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.Conflog.get_logger" title="Link to this definition">¶</a></dt>
+<dd><p>Return a named logger with all configured handlers attached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Logger name, typically <code class="docutils literal notranslate"><span class="pre">__name__</span></code> of the calling module.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configured <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.LoggerAdapter</span></code> wrapping the named logger.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.LoggerAdapter</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -94,8 +378,40 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#conflog-config-module">conflog.config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-conflog.config">conflog.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.config.Config.get_datefmt"><code class="docutils literal notranslate"><span class="pre">Config.get_datefmt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.config.Config.get_extras"><code class="docutils literal notranslate"><span class="pre">Config.get_extras()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.config.Config.get_extras_key_value_separator"><code class="docutils literal notranslate"><span class="pre">Config.get_extras_key_value_separator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.config.Config.get_extras_separator"><code class="docutils literal notranslate"><span class="pre">Config.get_extras_separator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.config.Config.get_filemode"><code class="docutils literal notranslate"><span class="pre">Config.get_filemode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.config.Config.get_filename"><code class="docutils literal notranslate"><span class="pre">Config.get_filename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.config.Config.get_format"><code class="docutils literal notranslate"><span class="pre">Config.get_format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.config.Config.get_handlers"><code class="docutils literal notranslate"><span class="pre">Config.get_handlers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.config.Config.get_level"><code class="docutils literal notranslate"><span class="pre">Config.get_level()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.DEFAULT_DATEFMT"><code class="docutils literal notranslate"><span class="pre">DEFAULT_DATEFMT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.DEFAULT_EXTRAS"><code class="docutils literal notranslate"><span class="pre">DEFAULT_EXTRAS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.DEFAULT_EXTRAS_KEY_VALUE_SEPARATOR"><code class="docutils literal notranslate"><span class="pre">DEFAULT_EXTRAS_KEY_VALUE_SEPARATOR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.DEFAULT_EXTRAS_SEPARATOR"><code class="docutils literal notranslate"><span class="pre">DEFAULT_EXTRAS_SEPARATOR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.DEFAULT_FILEMODE"><code class="docutils literal notranslate"><span class="pre">DEFAULT_FILEMODE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.DEFAULT_FILENAME"><code class="docutils literal notranslate"><span class="pre">DEFAULT_FILENAME</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.DEFAULT_FORMAT"><code class="docutils literal notranslate"><span class="pre">DEFAULT_FORMAT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.DEFAULT_HANDLERS"><code class="docutils literal notranslate"><span class="pre">DEFAULT_HANDLERS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.DEFAULT_LEVEL"><code class="docutils literal notranslate"><span class="pre">DEFAULT_LEVEL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.config.LEVELS"><code class="docutils literal notranslate"><span class="pre">LEVELS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-conflog">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conflog.Conflog"><code class="docutils literal notranslate"><span class="pre">Conflog</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.Conflog.close_logger_handlers"><code class="docutils literal notranslate"><span class="pre">Conflog.close_logger_handlers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.Conflog.get_config_properties"><code class="docutils literal notranslate"><span class="pre">Conflog.get_config_properties()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conflog.Conflog.get_logger"><code class="docutils literal notranslate"><span class="pre">Conflog.get_logger()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

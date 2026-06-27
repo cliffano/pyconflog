@@ -36,14 +36,51 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
-<section id="conflog-handlers-file-handler-module">
-<h2>conflog.handlers.file_handler module<a class="headerlink" href="#conflog-handlers-file-handler-module" title="Link to this heading">¶</a></h2>
+<section id="module-conflog.handlers.file_handler">
+<span id="conflog-handlers-file-handler-module"></span><h2>conflog.handlers.file_handler module<a class="headerlink" href="#module-conflog.handlers.file_handler" title="Link to this heading">¶</a></h2>
+<p>File handler factory for conflog.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="conflog.handlers.file_handler.init">
+<span class="sig-prename descclassname"><span class="pre">conflog.handlers.file_handler.</span></span><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="conflog.html#conflog.config.Config" title="conflog.config.Config"><span class="pre">Config</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FileHandler</span></span></span><a class="reference internal" href="_modules/conflog/handlers/file_handler.html#init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.handlers.file_handler.init" title="Link to this definition">¶</a></dt>
+<dd><p>Create and configure a <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.FileHandler</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference internal" href="conflog.html#conflog.config.Config" title="conflog.config.Config"><em>Config</em></a>) – Resolved logging configuration to read handler settings from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configured file handler ready to be added to a logger.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.FileHandler</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="conflog-handlers-stream-handler-module">
-<h2>conflog.handlers.stream_handler module<a class="headerlink" href="#conflog-handlers-stream-handler-module" title="Link to this heading">¶</a></h2>
+<section id="module-conflog.handlers.stream_handler">
+<span id="conflog-handlers-stream-handler-module"></span><h2>conflog.handlers.stream_handler module<a class="headerlink" href="#module-conflog.handlers.stream_handler" title="Link to this heading">¶</a></h2>
+<p>Stream handler factory for conflog.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="conflog.handlers.stream_handler.init">
+<span class="sig-prename descclassname"><span class="pre">conflog.handlers.stream_handler.</span></span><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="conflog.html#conflog.config.Config" title="conflog.config.Config"><span class="pre">Config</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">StreamHandler</span></span></span><a class="reference internal" href="_modules/conflog/handlers/stream_handler.html#init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conflog.handlers.stream_handler.init" title="Link to this definition">¶</a></dt>
+<dd><p>Create and configure a <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.StreamHandler</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference internal" href="conflog.html#conflog.config.Config" title="conflog.config.Config"><em>Config</em></a>) – Resolved logging configuration to read handler settings from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configured stream handler ready to be added to a logger.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.StreamHandler</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="module-conflog.handlers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-conflog.handlers" title="Link to this heading">¶</a></h2>
+<p>Logging handler factories for stream and file output.</p>
 </section>
 </section>
 
@@ -70,17 +107,17 @@
 <li class="toctree-l2 current"><a class="reference internal" href="conflog.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">conflog.handlers package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#conflog-handlers-file-handler-module">conflog.handlers.file_handler module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#conflog-handlers-stream-handler-module">conflog.handlers.stream_handler module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-conflog.handlers.file_handler">conflog.handlers.file_handler module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-conflog.handlers.stream_handler">conflog.handlers.stream_handler module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-conflog.handlers">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="conflog.loaders.html">conflog.loaders package</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="conflog.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.html#conflog-config-module">conflog.config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflog.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.html#module-conflog.config">conflog.config module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conflog.html#module-conflog">Module contents</a></li>
 </ul>
 </li>
 </ul>
